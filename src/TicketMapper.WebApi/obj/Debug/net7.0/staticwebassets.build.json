@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "f7FCD+lSAKC2Vyx34ck0v5pWi2rF7h5avZfZwpmrH3o=",
+  "Source": "TicketMapper.WebApi",
+  "BasePath": "_content/TicketMapper.WebApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
