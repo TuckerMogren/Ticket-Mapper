@@ -1,4 +1,10 @@
 ﻿<Properties StartupConfiguration="{A226387A-D8A6-488F-AAEB-87549E288B5C}|https">
+  <MonoDevelop.Ide.ItemProperties.Tests.TicketMapper.Test.Application FirstBuild="True" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.Tests.TicketMapper.Test.Domain FirstBuild="True" />
+  <MonoDevelop.Ide.ItemProperties.Tests.TicketMapper.Test.WebApi FirstBuild="True" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench>
     <Files>
       <File FileName="TicketMapper.Application/IntergrationEventHandlers/TimeToDeleteNotificationHandler.cs" Line="16" Column="10" />
@@ -19,11 +25,6 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.Services.TicketMapper.WebApi PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints />
 </Properties>
