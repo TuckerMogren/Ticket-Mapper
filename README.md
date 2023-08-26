@@ -14,8 +14,7 @@ Briefly describe what your project does. Include any background information and 
 
 ## Installation
 
-## Application Archtiecure
+## Application Architecture
 
 ## How to use locally
 
-## Libraraies used
