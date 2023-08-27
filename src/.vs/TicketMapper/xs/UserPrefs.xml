@@ -4,16 +4,20 @@
     <String>TicketMapper.Test.Domain/TicketMapper.Test.Application/TicketMapper.Test.Application.csproj</String>
     <String>TicketMapper.Test.Domain/TicketMapper.Test.WebApi/TicketMapper.Test.WebApi.csproj</String>
   </DisabledProjects>
+  <MonoDevelop.Ide.ItemProperties.Infrastructure.TicketMapper.Infrastructure.FileIO FirstBuild="True" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Infrastructure.TicketMapper.Infrastructure.Document FirstBuild="True" />
   <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="TicketMapper">
             <Node name="Core" expanded="True" />
-            <Node name="Tests" expanded="True">
-              <Node name="TicketMapper.Test.WebApi" selected="True" />
+            <Node name="Tests">
+              <Node name="TicketMapper.Test.Domain">
+                <Node name="Dependencies" expanded="True" />
+              </Node>
             </Node>
           </Node>
         </State>
@@ -21,7 +25,5 @@
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.ItemProperties.Services.TicketMapper.WebApi PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints />
 </Properties>
