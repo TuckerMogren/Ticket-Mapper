@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/tuckermogren/Projects/TicketMapper/src/TicketMapper.WebApi/TicketMapper.WebApi.csproj": {}
+    "/Users/tuckermogren/Projects/Ticket-Mapper/src/TicketMapper.WebApi/TicketMapper.WebApi.csproj": {}
   },
   "projects": {
-    "/Users/tuckermogren/Projects/TicketMapper/src/TicketMapper.Application/TicketMapper.Application.csproj": {
+    "/Users/tuckermogren/Projects/Ticket-Mapper/src/TicketMapper.Application/TicketMapper.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/tuckermogren/Projects/TicketMapper/src/TicketMapper.Application/TicketMapper.Application.csproj",
+        "projectUniqueName": "/Users/tuckermogren/Projects/Ticket-Mapper/src/TicketMapper.Application/TicketMapper.Application.csproj",
         "projectName": "TicketMapper.Application",
-        "projectPath": "/Users/tuckermogren/Projects/TicketMapper/src/TicketMapper.Application/TicketMapper.Application.csproj",
+        "projectPath": "/Users/tuckermogren/Projects/Ticket-Mapper/src/TicketMapper.Application/TicketMapper.Application.csproj",
         "packagesPath": "/Users/tuckermogren/.nuget/packages/",
-        "outputPath": "/Users/tuckermogren/Projects/TicketMapper/src/TicketMapper.Application/obj/",
+        "outputPath": "/Users/tuckermogren/Projects/Ticket-Mapper/src/TicketMapper.Application/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/tuckermogren/.nuget/NuGet/NuGet.Config"
@@ -26,8 +26,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "/Users/tuckermogren/Projects/TicketMapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj": {
-                "projectPath": "/Users/tuckermogren/Projects/TicketMapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj"
+              "/Users/tuckermogren/Projects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj": {
+                "projectPath": "/Users/tuckermogren/Projects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj"
               }
             }
           }
@@ -83,14 +83,14 @@
         }
       }
     },
-    "/Users/tuckermogren/Projects/TicketMapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj": {
+    "/Users/tuckermogren/Projects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/tuckermogren/Projects/TicketMapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj",
+        "projectUniqueName": "/Users/tuckermogren/Projects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj",
         "projectName": "TicketMapper.Domain",
-        "projectPath": "/Users/tuckermogren/Projects/TicketMapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj",
+        "projectPath": "/Users/tuckermogren/Projects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj",
         "packagesPath": "/Users/tuckermogren/.nuget/packages/",
-        "outputPath": "/Users/tuckermogren/Projects/TicketMapper/src/TicketMapper.Domain/obj/",
+        "outputPath": "/Users/tuckermogren/Projects/Ticket-Mapper/src/TicketMapper.Domain/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/tuckermogren/.nuget/NuGet/NuGet.Config"
@@ -142,14 +142,14 @@
         }
       }
     },
-    "/Users/tuckermogren/Projects/TicketMapper/src/TicketMapper.WebApi/TicketMapper.WebApi.csproj": {
+    "/Users/tuckermogren/Projects/Ticket-Mapper/src/TicketMapper.WebApi/TicketMapper.WebApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/tuckermogren/Projects/TicketMapper/src/TicketMapper.WebApi/TicketMapper.WebApi.csproj",
+        "projectUniqueName": "/Users/tuckermogren/Projects/Ticket-Mapper/src/TicketMapper.WebApi/TicketMapper.WebApi.csproj",
         "projectName": "TicketMapper.WebApi",
-        "projectPath": "/Users/tuckermogren/Projects/TicketMapper/src/TicketMapper.WebApi/TicketMapper.WebApi.csproj",
+        "projectPath": "/Users/tuckermogren/Projects/Ticket-Mapper/src/TicketMapper.WebApi/TicketMapper.WebApi.csproj",
         "packagesPath": "/Users/tuckermogren/.nuget/packages/",
-        "outputPath": "/Users/tuckermogren/Projects/TicketMapper/src/TicketMapper.WebApi/obj/",
+        "outputPath": "/Users/tuckermogren/Projects/Ticket-Mapper/src/TicketMapper.WebApi/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/tuckermogren/.nuget/NuGet/NuGet.Config"
@@ -165,11 +165,11 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "/Users/tuckermogren/Projects/TicketMapper/src/TicketMapper.Application/TicketMapper.Application.csproj": {
-                "projectPath": "/Users/tuckermogren/Projects/TicketMapper/src/TicketMapper.Application/TicketMapper.Application.csproj"
+              "/Users/tuckermogren/Projects/Ticket-Mapper/src/TicketMapper.Application/TicketMapper.Application.csproj": {
+                "projectPath": "/Users/tuckermogren/Projects/Ticket-Mapper/src/TicketMapper.Application/TicketMapper.Application.csproj"
               },
-              "/Users/tuckermogren/Projects/TicketMapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj": {
-                "projectPath": "/Users/tuckermogren/Projects/TicketMapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj"
+              "/Users/tuckermogren/Projects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj": {
+                "projectPath": "/Users/tuckermogren/Projects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj"
               }
             }
           }

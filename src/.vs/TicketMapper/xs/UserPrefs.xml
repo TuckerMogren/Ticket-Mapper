@@ -6,22 +6,14 @@
   </DisabledProjects>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="TicketMapper.Test.WebApi/obj/Debug/net7.0/.NETCoreApp,Version=v7.0.AssemblyAttributes.cs">
-    <Files>
-      <File FileName="TicketMapper.Test.Domain/TicketMapper.Test.WebApi/TicketMapper.Test.WebApi.csproj" Line="1" Column="1" />
-      <File FileName="TicketMapper.Test.Domain/obj/Debug/net7.0/.NETCoreApp,Version=v7.0.AssemblyAttributes.cs" Line="1" Column="1" />
-      <File FileName="TicketMapper.Test.Domain/TicketMapper.Test.WebApi/obj/Debug/net7.0/.NETCoreApp,Version=v7.0.AssemblyAttributes.cs" Line="1" Column="1" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="TicketMapper">
             <Node name="Core" expanded="True" />
-            <Node name="Services" expanded="True" />
             <Node name="Tests" expanded="True">
-              <Node name="TicketMapper.Test.Domain" expanded="True">
-                <Node name="TicketMapper.Test.Domain" expanded="True" />
-              </Node>
+              <Node name="TicketMapper.Test.WebApi" selected="True" />
             </Node>
           </Node>
         </State>
