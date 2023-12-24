@@ -1,34 +1,70 @@
-# Ticket Mapper
+# Ticket-Mapper-Dev Project
 
-## Overview
-Ticket Mapper is a .NET 7.0 application designed to manage and generate tickets. It utilizes MediatR for CQRS and is structured into three main projects:
-- `TicketMapper.Application`: Handles commands and queries.
-- `TicketMapper.Domain`: Contains data models and notifications.
-- `TicketMapper.WebApi`: Exposes the functionality via RESTful API.
+## Description
+Ticket-Mapper is a robust .NET application that was created to streamline the process of creating ticket for the [Lake George Alumni Association (LGAA)]([https://www.example.com](https://lgalumni.com)) raffle that took place in the fall of 2023. This project is structured with a clear separation of concerns, dividing the application into domain, application, infrastructure, and presentation layers, each with dedicated test projects to ensure stability and performance.
 
-## Features
+---
 
-### Create Document
-- **Command**: `CreateDocumentCommand`
-- Generates a Word document with ticket details.
-- Saves each ticket as an image and embeds it in the document.
+## Installation and Setup
 
-### Delete Document
-- **Command**: `DeleteDocumentCommand`
-- Deletes a specified document from the file system.
+### Prerequisites:
+- .NET [8.0]
+- 
 
-### Time to Delete Notification
-- **Notification**: `TimeToDeleteNotification`
-- Notifies when it's time to delete a document.
+### Setting up the environment:
+1. Clone the repository to your local machine.
+2. Navigate to the project's root directory.
+3. Fill out the application secrets.
+4. Set the Web API project as startup project.
+5. Run and communcaite with API using swagger.
 
-### Get Document
-- **Query**: `GetDocumentQuery`
-- Reads a document from the file system and returns it as a byte array.
+---
 
-## Installation
-1. Clone the repository
-2. Build the solution
-3. Run `TicketMapper.WebApi`
+## Running the Project
 
-## API Endpoints
-- `GET /api/v1/Document/DownloadDocument`: Downloads a document based on ticket details.
+### Building the Project:
+1. Open the `TicketMapper.sln` in your preferred IDE.
+2. Restore the NuGet packages.
+3. Build the solution to verify everything is set up correctly.
+
+### Running the Application:
+1. Set `TicketMapper.WebApi` as the startup project.
+2. Run the application. This should start the web server and make the API accessible.
+
+---
+
+## Testing
+
+### Running the Tests:
+- Navigate to the test directories (`TicketMapper.Test.Application`, `TicketMapper.Test.Domain`, `TicketMapper.Test.WebApi`).
+- Use the test runner in your IDE or a CLI tool to run the tests.
+- Ensure all tests pass to verify system integrity.
+
+---
+
+## Project Structure Overview
+
+- **TicketMapper.Application**: Contains application logic and orchestrates domain and infrastructure interactions.
+- **TicketMapper.Domain**: Defines the business models and rules.
+- **TicketMapper.Infrastructure**: 
+  - **FileIO**: Manages file input/output operations.
+  - **Document**: Handles document processing tasks.
+- **TicketMapper.WebApi**: Exposes the application's functionality over HTTP.
+- **Test Projects**: Ensure the reliability and correctness of the application through automated tests.
+
+---
+
+## Contribution Guidelines
+
+To contribute to Ticket-Mapper:
+1. Fork the repository.
+2. Create a feature branch.
+3. Make your changes and write tests to ensure they work and don't break existing features.
+4. Submit a pull request with a clear list of what you've done.
+
+
+---
+
+## License
+
+This project is licensed under the [License Name] - see the `LICENSE` file for details.
