@@ -1,7 +1,7 @@
 # Ticket-Mapper-Dev Project
 
 ## Description
-Ticket-Mapper is a robust .NET application that was created to streamline the process of creating ticket for the [Lake George Alumni Association (LGAA)]([https://www.example.com](https://lgalumni.com)) raffle that took place in the fall of 2023. This project is structured with a clear separation of concerns, dividing the application into domain, application, infrastructure, and presentation layers, each with dedicated test projects to ensure stability and performance.
+Ticket-Mapper is a robust .NET application that was created to streamline the process of creating ticket for the [Lake George Alumni Association (LGAA)](https://lgalumni.com) raffle that took place in the fall of 2023. This project is structured with a clear separation of concerns, dividing the application into domain, application, infrastructure, and presentation layers, each with dedicated test projects to ensure stability and performance.
 
 ---
 
