@@ -2,18 +2,34 @@
   "version": 3,
   "targets": {
     "net8.0": {
-      "DocumentFormat.OpenXml/2.20.0": {
+      "DocumentFormat.OpenXml/3.0.0": {
         "type": "package",
         "dependencies": {
-          "System.IO.Packaging": "4.7.0"
+          "DocumentFormat.OpenXml.Framework": "3.0.0"
         },
         "compile": {
-          "lib/net6.0/DocumentFormat.OpenXml.dll": {
+          "lib/netstandard2.0/DocumentFormat.OpenXml.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net6.0/DocumentFormat.OpenXml.dll": {
+          "lib/netstandard2.0/DocumentFormat.OpenXml.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "DocumentFormat.OpenXml.Framework/3.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.IO.Packaging": "8.0.0"
+        },
+        "compile": {
+          "lib/net6.0/DocumentFormat.OpenXml.Framework.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/DocumentFormat.OpenXml.Framework.dll": {
             "related": ".xml"
           }
         }
@@ -93,17 +109,20 @@
           }
         }
       },
-      "System.IO.Packaging/4.7.0": {
+      "System.IO.Packaging/8.0.0": {
         "type": "package",
         "compile": {
-          "ref/netstandard2.0/System.IO.Packaging.dll": {
+          "lib/net8.0/System.IO.Packaging.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/netstandard2.0/System.IO.Packaging.dll": {
+          "lib/net8.0/System.IO.Packaging.dll": {
             "related": ".xml"
           }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
         }
       },
       "TicketMapper.Domain/1.0.0": {
@@ -122,28 +141,44 @@
     }
   },
   "libraries": {
-    "DocumentFormat.OpenXml/2.20.0": {
-      "sha512": "+oFMsEppo/W6KpGTRXaJl2jTFYn9zeon4FaZuDoCijQ1/0JaPENaCef7d4Y3f8v116eKhVBwd4Ya+/NDglxkjw==",
+    "DocumentFormat.OpenXml/3.0.0": {
+      "sha512": "o2xu17+4VOT4gKwpEcL5UBNYWrP1HQGkfe+K+LHvq5/07UjpzoGMBQzWMhGimzgL1Q2lEPYAp7JgBNZWTcfGKw==",
       "type": "package",
-      "path": "documentformat.openxml/2.20.0",
+      "path": "documentformat.openxml/3.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "documentformat.openxml.2.20.0.nupkg.sha512",
+        "documentformat.openxml.3.0.0.nupkg.sha512",
         "documentformat.openxml.nuspec",
         "icon.png",
         "lib/net35/DocumentFormat.OpenXml.dll",
         "lib/net35/DocumentFormat.OpenXml.xml",
         "lib/net40/DocumentFormat.OpenXml.dll",
         "lib/net40/DocumentFormat.OpenXml.xml",
-        "lib/net46/DocumentFormat.OpenXml.dll",
-        "lib/net46/DocumentFormat.OpenXml.xml",
-        "lib/net6.0/DocumentFormat.OpenXml.dll",
-        "lib/net6.0/DocumentFormat.OpenXml.xml",
-        "lib/netstandard1.3/DocumentFormat.OpenXml.dll",
-        "lib/netstandard1.3/DocumentFormat.OpenXml.xml",
         "lib/netstandard2.0/DocumentFormat.OpenXml.dll",
         "lib/netstandard2.0/DocumentFormat.OpenXml.xml"
+      ]
+    },
+    "DocumentFormat.OpenXml.Framework/3.0.0": {
+      "sha512": "kWjZuwFsdbbKA5U3o2X6tQn0yI9gr2Oy4CHWvbc5eHRUcbl5FUi1Si44I3SW3CxyK/3AcMiC4/99wjBVLOk54A==",
+      "type": "package",
+      "path": "documentformat.openxml.framework/3.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "documentformat.openxml.framework.3.0.0.nupkg.sha512",
+        "documentformat.openxml.framework.nuspec",
+        "icon.png",
+        "lib/net35/DocumentFormat.OpenXml.Framework.dll",
+        "lib/net35/DocumentFormat.OpenXml.Framework.xml",
+        "lib/net40/DocumentFormat.OpenXml.Framework.dll",
+        "lib/net40/DocumentFormat.OpenXml.Framework.xml",
+        "lib/net46/DocumentFormat.OpenXml.Framework.dll",
+        "lib/net46/DocumentFormat.OpenXml.Framework.xml",
+        "lib/net6.0/DocumentFormat.OpenXml.Framework.dll",
+        "lib/net6.0/DocumentFormat.OpenXml.Framework.xml",
+        "lib/netstandard2.0/DocumentFormat.OpenXml.Framework.dll",
+        "lib/netstandard2.0/DocumentFormat.OpenXml.Framework.xml"
       ]
     },
     "MediatR/11.1.0": {
@@ -232,31 +267,33 @@
         "sixlabors.imagesharp.drawing.nuspec"
       ]
     },
-    "System.IO.Packaging/4.7.0": {
-      "sha512": "9VV4KAbgRQZ79iEoG40KIeZy38O30oWwewScAST879+oki8g/Wa2HXZQgrhDDxQM4GkP1PnRJll05NMiVPbYAw==",
+    "System.IO.Packaging/8.0.0": {
+      "sha512": "8g1V4YRpdGAxFcK8v9OjuMdIOJSpF30Zb1JGicwVZhly3I994WFyBdV6mQEo8d3T+URQe55/M0U0eIH0Hts1bg==",
       "type": "package",
-      "path": "system.io.packaging/4.7.0",
+      "path": "system.io.packaging/8.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
+        "Icon.png",
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
-        "lib/net46/System.IO.Packaging.dll",
-        "lib/net46/System.IO.Packaging.xml",
-        "lib/netstandard1.3/System.IO.Packaging.dll",
-        "lib/netstandard1.3/System.IO.Packaging.xml",
+        "buildTransitive/net461/System.IO.Packaging.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net6.0/_._",
+        "buildTransitive/netcoreapp2.0/System.IO.Packaging.targets",
+        "lib/net462/System.IO.Packaging.dll",
+        "lib/net462/System.IO.Packaging.xml",
+        "lib/net6.0/System.IO.Packaging.dll",
+        "lib/net6.0/System.IO.Packaging.xml",
+        "lib/net7.0/System.IO.Packaging.dll",
+        "lib/net7.0/System.IO.Packaging.xml",
+        "lib/net8.0/System.IO.Packaging.dll",
+        "lib/net8.0/System.IO.Packaging.xml",
         "lib/netstandard2.0/System.IO.Packaging.dll",
         "lib/netstandard2.0/System.IO.Packaging.xml",
-        "ref/net46/System.IO.Packaging.dll",
-        "ref/net46/System.IO.Packaging.xml",
-        "ref/netstandard1.3/System.IO.Packaging.dll",
-        "ref/netstandard1.3/System.IO.Packaging.xml",
-        "ref/netstandard2.0/System.IO.Packaging.dll",
-        "ref/netstandard2.0/System.IO.Packaging.xml",
-        "system.io.packaging.4.7.0.nupkg.sha512",
+        "system.io.packaging.8.0.0.nupkg.sha512",
         "system.io.packaging.nuspec",
-        "useSharedDesignerContext.txt",
-        "version.txt"
+        "useSharedDesignerContext.txt"
       ]
     },
     "TicketMapper.Domain/1.0.0": {
@@ -267,7 +304,7 @@
   },
   "projectFileDependencyGroups": {
     "net8.0": [
-      "DocumentFormat.OpenXml >= 2.20.0",
+      "DocumentFormat.OpenXml >= 3.0.0",
       "MediatR >= 11.1.0",
       "SixLabors.Fonts >= 1.0.0",
       "SixLabors.ImageSharp >= 3.0.1",
@@ -318,7 +355,7 @@
         "dependencies": {
           "DocumentFormat.OpenXml": {
             "target": "Package",
-            "version": "[2.20.0, )"
+            "version": "[3.0.0, )"
           },
           "MediatR": {
             "target": "Package",

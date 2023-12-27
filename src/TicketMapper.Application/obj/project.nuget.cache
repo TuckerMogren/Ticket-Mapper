@@ -1,16 +1,17 @@
 {
   "version": 2,
-  "dgSpecHash": "hMTRut4CzQJLddzPpT6g7e3ZkxdnfGm1wd8/xOaHHRMZMMLmPGGQCyDBXSIWrcifR/vfFh8ar3fLMXqpHut4XQ==",
+  "dgSpecHash": "7OV+3Vz6dqu2fU6SGS9O6HpTl2eK7UC4C9Q3PojwuyMS7NQKCQXesHO6+8JRjkBItZZjtTPwK7VbFY6Imgd2Vw==",
   "success": true,
   "projectFilePath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Application/TicketMapper.Application.csproj",
   "expectedPackageFiles": [
-    "/Users/tuckermogren/.nuget/packages/documentformat.openxml/2.20.0/documentformat.openxml.2.20.0.nupkg.sha512",
+    "/Users/tuckermogren/.nuget/packages/documentformat.openxml/3.0.0/documentformat.openxml.3.0.0.nupkg.sha512",
+    "/Users/tuckermogren/.nuget/packages/documentformat.openxml.framework/3.0.0/documentformat.openxml.framework.3.0.0.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/mediatr/11.1.0/mediatr.11.1.0.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/mediatr.contracts/1.0.1/mediatr.contracts.1.0.1.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/sixlabors.fonts/1.0.0/sixlabors.fonts.1.0.0.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/sixlabors.imagesharp/3.0.1/sixlabors.imagesharp.3.0.1.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/sixlabors.imagesharp.drawing/1.0.0/sixlabors.imagesharp.drawing.1.0.0.nupkg.sha512",
-    "/Users/tuckermogren/.nuget/packages/system.io.packaging/4.7.0/system.io.packaging.4.7.0.nupkg.sha512"
+    "/Users/tuckermogren/.nuget/packages/system.io.packaging/8.0.0/system.io.packaging.8.0.0.nupkg.sha512"
   ],
   "logs": []
 }
