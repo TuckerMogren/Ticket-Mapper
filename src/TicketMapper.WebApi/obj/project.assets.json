@@ -1,7 +1,7 @@
 {
   "version": 3,
   "targets": {
-    "net7.0": {
+    "net8.0": {
       "DocumentFormat.OpenXml/2.20.0": {
         "type": "package",
         "dependencies": {
@@ -352,7 +352,7 @@
       },
       "TicketMapper.Application/1.0.0": {
         "type": "project",
-        "framework": ".NETCoreApp,Version=v7.0",
+        "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
           "DocumentFormat.OpenXml": "2.20.0",
           "MediatR": "11.1.0",
@@ -370,7 +370,7 @@
       },
       "TicketMapper.Domain/1.0.0": {
         "type": "project",
-        "framework": ".NETCoreApp,Version=v7.0",
+        "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
           "MediatR": "11.1.0"
         },
@@ -1135,7 +1135,7 @@
     }
   },
   "projectFileDependencyGroups": {
-    "net7.0": [
+    "net8.0": [
       "MediatR >= 11.1.0",
       "MediatR.Extensions.Microsoft.DependencyInjection >= 11.1.0",
       "Microsoft.AspNetCore.OpenApi >= 7.0.10",
@@ -1153,31 +1153,30 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/tuckermogren/Projects/Ticket-Mapper/src/TicketMapper.WebApi/TicketMapper.WebApi.csproj",
+      "projectUniqueName": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.WebApi/TicketMapper.WebApi.csproj",
       "projectName": "TicketMapper.WebApi",
-      "projectPath": "/Users/tuckermogren/Projects/Ticket-Mapper/src/TicketMapper.WebApi/TicketMapper.WebApi.csproj",
+      "projectPath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.WebApi/TicketMapper.WebApi.csproj",
       "packagesPath": "/Users/tuckermogren/.nuget/packages/",
-      "outputPath": "/Users/tuckermogren/Projects/Ticket-Mapper/src/TicketMapper.WebApi/obj/",
+      "outputPath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.WebApi/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/tuckermogren/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
-        "net7.0"
+        "net8.0"
       ],
       "sources": {
-        "/usr/local/share/dotnet/sdk/7.0.307/Sdks/Microsoft.NET.Sdk.Web/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "net7.0": {
-          "targetAlias": "net7.0",
+        "net8.0": {
+          "targetAlias": "net8.0",
           "projectReferences": {
-            "/Users/tuckermogren/Projects/Ticket-Mapper/src/TicketMapper.Application/TicketMapper.Application.csproj": {
-              "projectPath": "/Users/tuckermogren/Projects/Ticket-Mapper/src/TicketMapper.Application/TicketMapper.Application.csproj"
+            "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Application/TicketMapper.Application.csproj": {
+              "projectPath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Application/TicketMapper.Application.csproj"
             },
-            "/Users/tuckermogren/Projects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj": {
-              "projectPath": "/Users/tuckermogren/Projects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj"
+            "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj": {
+              "projectPath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj"
             }
           }
         }
@@ -1189,8 +1188,8 @@
       }
     },
     "frameworks": {
-      "net7.0": {
-        "targetAlias": "net7.0",
+      "net8.0": {
+        "targetAlias": "net8.0",
         "dependencies": {
           "MediatR": {
             "target": "Package",
@@ -1240,7 +1239,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.307/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

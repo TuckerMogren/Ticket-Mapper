@@ -1,7 +1,7 @@
 {
   "version": 3,
   "targets": {
-    "net7.0": {
+    "net8.0": {
       "MediatR/11.1.0": {
         "type": "package",
         "dependencies": {
@@ -66,7 +66,7 @@
     }
   },
   "projectFileDependencyGroups": {
-    "net7.0": [
+    "net8.0": [
       "MediatR >= 11.1.0"
     ]
   },
@@ -76,24 +76,24 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/tuckermogren/Projects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj",
+      "projectUniqueName": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj",
       "projectName": "TicketMapper.Domain",
-      "projectPath": "/Users/tuckermogren/Projects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj",
+      "projectPath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj",
       "packagesPath": "/Users/tuckermogren/.nuget/packages/",
-      "outputPath": "/Users/tuckermogren/Projects/Ticket-Mapper/src/TicketMapper.Domain/obj/",
+      "outputPath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Domain/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/tuckermogren/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
-        "net7.0"
+        "net8.0"
       ],
       "sources": {
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "net7.0": {
-          "targetAlias": "net7.0",
+        "net8.0": {
+          "targetAlias": "net8.0",
           "projectReferences": {}
         }
       },
@@ -104,8 +104,8 @@
       }
     },
     "frameworks": {
-      "net7.0": {
-        "targetAlias": "net7.0",
+      "net8.0": {
+        "targetAlias": "net8.0",
         "dependencies": {
           "MediatR": {
             "target": "Package",
@@ -128,7 +128,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.307/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

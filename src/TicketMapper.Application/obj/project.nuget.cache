@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5uYHrxLbf6v/CgOykxgHff58j7aUK5pLQlJo+BfBl/9a0kanCdfH96ZZsY5rFHw3zdqJnaWOiXJPt/z5iBRLcA==",
+  "dgSpecHash": "hMTRut4CzQJLddzPpT6g7e3ZkxdnfGm1wd8/xOaHHRMZMMLmPGGQCyDBXSIWrcifR/vfFh8ar3fLMXqpHut4XQ==",
   "success": true,
-  "projectFilePath": "/Users/tuckermogren/Projects/Ticket-Mapper/src/TicketMapper.Application/TicketMapper.Application.csproj",
+  "projectFilePath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Application/TicketMapper.Application.csproj",
   "expectedPackageFiles": [
     "/Users/tuckermogren/.nuget/packages/documentformat.openxml/2.20.0/documentformat.openxml.2.20.0.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/mediatr/11.1.0/mediatr.11.1.0.nupkg.sha512",

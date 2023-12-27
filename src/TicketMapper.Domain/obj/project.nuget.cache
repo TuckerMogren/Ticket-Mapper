@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "fZpg7U+S+vRwFwnGaDhD1JyeS7G5UztHT0Neie1vXWPnq9+TgiCKdWPaB2FRup8SFDPaxSwOtEBnfoaq/D0vyg==",
+  "dgSpecHash": "280XGZjtZ4Oso2qDkm2KbKoKRYNL1rQmCoQQoUenC8CWpDHVAXlWQQR019WJUM3AP+PADYSiLqM7hi4clDfoDw==",
   "success": true,
-  "projectFilePath": "/Users/tuckermogren/Projects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj",
+  "projectFilePath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj",
   "expectedPackageFiles": [
     "/Users/tuckermogren/.nuget/packages/mediatr/11.1.0/mediatr.11.1.0.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/mediatr.contracts/1.0.1/mediatr.contracts.1.0.1.nupkg.sha512"
