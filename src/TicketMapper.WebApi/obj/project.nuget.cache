@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Nth1qQ/Kfoj8hZ+bvnpdQXO6vyNzGqFKwAVVq6px+T1ApMN6+a7DAi8QJPB8xcoIUAIaIrlYuv7DpxCmsMT/Ww==",
+  "dgSpecHash": "QUklEHTwlMlZoDPzF4qmuGcGgBCcubz8omCkgysg+NyqHtzkkzPtma8y8RQV7mHat0otVH+a5snAk5ZqL+ju+Q==",
   "success": true,
   "projectFilePath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.WebApi/TicketMapper.WebApi.csproj",
   "expectedPackageFiles": [
@@ -18,6 +18,8 @@
     "/Users/tuckermogren/.nuget/packages/microsoft.extensions.options/8.0.0/microsoft.extensions.options.8.0.0.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/microsoft.extensions.primitives/8.0.0/microsoft.extensions.primitives.8.0.0.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/microsoft.openapi/1.4.3/microsoft.openapi.1.4.3.nupkg.sha512",
+    "/Users/tuckermogren/.nuget/packages/serilog/3.1.1/serilog.3.1.1.nupkg.sha512",
+    "/Users/tuckermogren/.nuget/packages/serilog.sinks.file/5.0.0/serilog.sinks.file.5.0.0.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/sixlabors.fonts/1.0.0/sixlabors.fonts.1.0.0.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/sixlabors.imagesharp/3.0.1/sixlabors.imagesharp.3.0.1.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/sixlabors.imagesharp.drawing/1.0.0/sixlabors.imagesharp.drawing.1.0.0.nupkg.sha512",

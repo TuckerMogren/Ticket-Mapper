@@ -11,6 +11,8 @@
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
+    <PackageReference Include="Serilog" Version="3.1.1" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
@@ -34,7 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Input Files\" />
+    <Folder Include="Logs\" />
     <Folder Include="Settings\" />
-    <Folder Include="Configs\" />
   </ItemGroup>
 </Project>

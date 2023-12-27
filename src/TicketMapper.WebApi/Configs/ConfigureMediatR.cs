@@ -3,23 +3,17 @@ using MediatR;
 using TicketMapper.Application.Commands;
 using TicketMapper.Application.Queries;
 
-namespace TicketMapper.WebApi.Configs
-{
-    [ExcludeFromCodeCoverage]
-    public static class MediatRConfiguration
-    {
+namespace TicketMapper.WebApi.Configs;
 
-        public static void ConfigureMediatR(this IServiceCollection services)
-        {
+[ExcludeFromCodeCoverage]
+public static class MediatRConfiguration
+{
+
+    public static void ConfigureMediatR(this IServiceCollection services)
+    {
         services.AddMediatR(
             typeof(Program).Assembly,
             typeof(GetDocumentQuery).Assembly,
             typeof(CreateDocumentCommand).Assembly);
-
-
-        }
-
-
     }
 }
-
