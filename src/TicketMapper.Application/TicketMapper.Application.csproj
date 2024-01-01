@@ -20,6 +20,7 @@
     <Folder Include="IntergrationEventHandlers\" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
     <PackageReference Include="SixLabors.ImageSharp" Version="3.0.1" />
     <PackageReference Include="SixLabors.Fonts" Version="1.0.0" />
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0" />

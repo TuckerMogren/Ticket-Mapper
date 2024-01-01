@@ -1,14 +1,22 @@
 ﻿using Microsoft.OpenApi.Models;
 using TicketMapper.WebApi.Configs;
+using Serilog;
+using Serilog.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Example of calling ConfigureLogging correctly
+var configuration = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json")
+    .Build();
 
-builder.Services.AddControllers();
+// Set up Serilog here before any logging is done
+Log.Logger = builder.Services.ConfigureLogging(configuration).CreateLogger();
+builder.Host.UseSerilog();
+
+// Continue with your service and application setup
 builder.Services.ConfigureMediatR();
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(c =>
@@ -27,10 +35,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
-
