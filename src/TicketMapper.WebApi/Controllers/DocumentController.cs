@@ -35,8 +35,6 @@ public class DocumentController : ControllerBase
             StartNumber = startNumber,
             FileName = $"Output Files/{Guid.NewGuid().ToString()}.docx"
         };
-
-        _logger.LogInformation("Hello!!!!!!");
         try
         {
 

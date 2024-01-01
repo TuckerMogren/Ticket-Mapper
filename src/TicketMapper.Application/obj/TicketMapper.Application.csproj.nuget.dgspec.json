@@ -50,6 +50,10 @@
               "target": "Package",
               "version": "[11.1.0, )"
             },
+            "Microsoft.Extensions.Logging": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "SixLabors.Fonts": {
               "target": "Package",
               "version": "[1.0.0, )"

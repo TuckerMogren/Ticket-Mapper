@@ -765,6 +765,7 @@
         "dependencies": {
           "DocumentFormat.OpenXml": "3.0.0",
           "MediatR": "11.1.0",
+          "Microsoft.Extensions.Logging": "8.0.0",
           "SixLabors.Fonts": "1.0.0",
           "SixLabors.ImageSharp": "3.0.1",
           "SixLabors.ImageSharp.Drawing": "1.0.0",

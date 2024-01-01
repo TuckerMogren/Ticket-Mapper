@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "nRrofGFvDvcePW36v3fykkQl2sCQVCkwHyxaqyVFUruU5jWKxks/ClLA6cOPTJF13KBzy32WkdkDicnzb+4zIQ==",
+  "dgSpecHash": "cCX0rJJ0z8cNKFSTmfHjpQ/bjsQSeXPpMwY+BNICCDsevDq77XxeFuGqguj32bR9CfWytSyRQVp1uKneHpmcMA==",
   "success": true,
   "projectFilePath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.WebApi/TicketMapper.WebApi.csproj",
   "expectedPackageFiles": [
