@@ -12,15 +12,9 @@ using Color = SixLabors.ImageSharp.Color;
 
 namespace TicketMapper.Application.Commands
 {   
-	public class CreateDocumentCommand : IRequest
-	{
-
-        public TicketDetails TicketDetails { get; set; }
-
-		public CreateDocumentCommand(TicketDetails ticketDetails)
-		{
-            TicketDetails = ticketDetails;
-		}
+	public class CreateDocumentCommand(TicketDetails ticketDetails) : IRequest
+    {
+        public TicketDetails TicketDetails { get; set; } = ticketDetails;
 
         public class CreateDocumentCommandHandler : IRequestHandler<CreateDocumentCommand, Unit>
         {
