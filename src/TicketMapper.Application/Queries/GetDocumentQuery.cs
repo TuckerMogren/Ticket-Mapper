@@ -2,14 +2,9 @@
 
 namespace TicketMapper.Application.Queries
 {
-	public class GetDocumentQuery : IRequest<byte[]>
-	{
-        public string Path { get; set; }
-
-        public GetDocumentQuery(string path) 
-		{
-            Path = path ?? throw new ArgumentNullException(nameof(path));
-		}
+	public class GetDocumentQuery(string path) : IRequest<byte[]>
+    {
+        public string Path { get; set; } = path ?? throw new ArgumentNullException(nameof(path));
 
         public class GetDocumentQueryHandler : IRequestHandler<GetDocumentQuery, byte[]>
         {

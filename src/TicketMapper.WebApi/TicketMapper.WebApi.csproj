@@ -38,9 +38,19 @@
     <None Remove="Input Files\" />
     <None Remove="Settings\" />
     <None Remove="Configs\" />
+    <None Remove="Output Files\**" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Input Files\" />
     <Folder Include="Logs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Output Files\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="Output Files\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="Output Files\**" />
   </ItemGroup>
 </Project>
