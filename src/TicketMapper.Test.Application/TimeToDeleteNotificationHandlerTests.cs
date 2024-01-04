@@ -65,10 +65,8 @@ public class TimeToDeleteNotificationHandlerTests
         };
 
         var deleteDocumentCommand = new DeleteDocumentCommand("testfile.txt");
-        _mediatorMock
-            .Setup(m => m.Send(It.IsAny<DeleteDocumentCommand>(), It.IsAny<CancellationToken>()))
-            .Callback<IRequest, CancellationToken>((request, token) => deleteDocumentCommand = request as DeleteDocumentCommand)
-            .Returns((Task<Unit>)Task.CompletedTask);
+
+        _mediatorMock.Setup(s => s.Send(It.IsAny<DeleteDocumentCommand>(), It.IsAny<CancellationToken>()));
 
         // Act
         await _handler.Handle(notification, new CancellationToken());
