@@ -10,16 +10,10 @@ namespace TicketMapper.WebApi.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-public class DocumentController : ControllerBase
+public class DocumentController(ILogger<DocumentController> logger, IMediator mediator) : ControllerBase
 {
-    private readonly ILogger<DocumentController> _logger; 
-    private readonly IMediator _mediatr;
-
-    public DocumentController(ILogger<DocumentController> logger, IMediator mediator)
-    {
-        _logger = logger ?? throw new ArgumentNullException((nameof(logger)));
-        _mediatr = mediator ?? throw new ArgumentNullException((nameof(mediator)));
-    }
+    private readonly ILogger<DocumentController> _logger = logger ?? throw new ArgumentNullException((nameof(logger))); 
+    private readonly IMediator _mediatr = mediator ?? throw new ArgumentNullException((nameof(mediator)));
 
     [HttpGet("DownloadDocument")]
     [SwaggerOperation(Summary = "This service will generate and allow user to download file.")]
