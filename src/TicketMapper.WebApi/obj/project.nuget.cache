@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "cCX0rJJ0z8cNKFSTmfHjpQ/bjsQSeXPpMwY+BNICCDsevDq77XxeFuGqguj32bR9CfWytSyRQVp1uKneHpmcMA==",
+  "dgSpecHash": "8vew8sEl9gqNVkKfIoa017FeN7coI3zO9gI6fmMK49zTX8OQw/RrTxMXocTtSCjilk325Y+skwALw22bvQMRCQ==",
   "success": true,
   "projectFilePath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.WebApi/TicketMapper.WebApi.csproj",
   "expectedPackageFiles": [
+    "/Users/tuckermogren/.nuget/packages/diffengine/11.3.0/diffengine.11.3.0.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/documentformat.openxml/3.0.0/documentformat.openxml.3.0.0.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/documentformat.openxml.framework/3.0.0/documentformat.openxml.framework.3.0.0.nupkg.sha512",
+    "/Users/tuckermogren/.nuget/packages/emptyfiles/4.4.0/emptyfiles.4.4.0.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/mediatr/11.1.0/mediatr.11.1.0.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/mediatr.contracts/1.0.1/mediatr.contracts.1.0.1.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/mediatr.extensions.microsoft.dependencyinjection/11.1.0/mediatr.extensions.microsoft.dependencyinjection.11.1.0.nupkg.sha512",
@@ -35,6 +37,7 @@
     "/Users/tuckermogren/.nuget/packages/serilog.extensions.logging/8.0.0/serilog.extensions.logging.8.0.0.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/serilog.settings.configuration/8.0.0/serilog.settings.configuration.8.0.0.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/serilog.sinks.file/5.0.0/serilog.sinks.file.5.0.0.nupkg.sha512",
+    "/Users/tuckermogren/.nuget/packages/shouldly/4.2.1/shouldly.4.2.1.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/sixlabors.fonts/1.0.0/sixlabors.fonts.1.0.0.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/sixlabors.imagesharp/3.0.1/sixlabors.imagesharp.3.0.1.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/sixlabors.imagesharp.drawing/1.0.0/sixlabors.imagesharp.drawing.1.0.0.nupkg.sha512",
@@ -43,8 +46,10 @@
     "/Users/tuckermogren/.nuget/packages/swashbuckle.aspnetcore.swagger/6.5.0/swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.5.0/swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.5.0/swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512",
+    "/Users/tuckermogren/.nuget/packages/system.codedom/6.0.0/system.codedom.6.0.0.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/system.diagnostics.diagnosticsource/8.0.0/system.diagnostics.diagnosticsource.8.0.0.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/system.io.packaging/8.0.0/system.io.packaging.8.0.0.nupkg.sha512",
+    "/Users/tuckermogren/.nuget/packages/system.management/6.0.1/system.management.6.0.1.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/system.text.encodings.web/8.0.0/system.text.encodings.web.8.0.0.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/system.text.json/8.0.0/system.text.json.8.0.0.nupkg.sha512"
   ],

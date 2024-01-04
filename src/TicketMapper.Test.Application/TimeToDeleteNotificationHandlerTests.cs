@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using TicketMapper.Application.Commands;
 using TicketMapper.Domain.Notifications;
 using TicketMapper.Application.IntegrationEventHandlers;
+using Shouldly;
 
 namespace TicketMapper.Test.Application;
 public class TimeToDeleteNotificationHandlerTests
@@ -32,8 +33,8 @@ public class TimeToDeleteNotificationHandlerTests
         // Act
         await _handler.Handle(notification, new CancellationToken());
 
-        // Assert
-        _loggerMock.Verify(l => l.LogInformation(It.IsAny<string>()), Times.Once);
+        _loggerMock.Invocations.Count(i => i.Arguments[2].ToString()!.Contains("Cancelled:")).ShouldBe(1);
+
     }
 
     [Fact]
@@ -49,7 +50,7 @@ public class TimeToDeleteNotificationHandlerTests
         await _handler.Handle(notification, new CancellationToken());
 
         // Assert
-        _loggerMock.Verify(l => l.LogError(It.IsAny<string>()), Times.Once);
+        _loggerMock.Invocations.Count(i => i.Arguments[2].ToString()!.Contains("An error occurred")).ShouldBe(1);
     }
     
     [Fact]

@@ -18,7 +18,7 @@ namespace TicketMapper.Application.IntegrationEventHandlers
             }
             catch (OperationCanceledException e)
             {
-                _logger.LogInformation($"Operation was canceled {e.Message}");
+                _logger.LogInformation($"Cancelled: {e.Message}");
             }
             catch (Exception ex)
             {
