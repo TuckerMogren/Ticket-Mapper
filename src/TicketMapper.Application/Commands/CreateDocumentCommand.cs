@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using TicketMapper.Domain.DataModels;
 using SixLabors.Fonts;
 using SixLabors.ImageSharp.Drawing.Processing;
 using DocumentFormat.OpenXml;
@@ -10,6 +9,7 @@ using A = DocumentFormat.OpenXml.Drawing;
 using PIC = DocumentFormat.OpenXml.Drawing.Pictures;
 using Color = SixLabors.ImageSharp.Color;
 using Microsoft.Extensions.Logging;
+using TicketMapper.Domain.DataModels;
 
 namespace TicketMapper.Application.Commands
 {   
@@ -117,6 +117,10 @@ namespace TicketMapper.Application.Commands
                         }
                     } 
                     _logger.LogInformation("Tickets created and added to Word document successfully!");
+                }
+                catch (OperationCanceledException e)
+                {
+                    _logger.LogInformation($"Operation was canceled {e.Message}");
                 }
                 catch (Exception ex)
                 {
