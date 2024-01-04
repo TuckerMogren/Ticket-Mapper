@@ -10,28 +10,20 @@ using PIC = DocumentFormat.OpenXml.Drawing.Pictures;
 using Color = SixLabors.ImageSharp.Color;
 using Microsoft.Extensions.Logging;
 using TicketMapper.Domain.DataModels;
+using TicketMapper.Domain.Interfaces.Commands;
 
 namespace TicketMapper.Application.Commands
 {   
-    public class CreateDocumentCommand : IRequest<Unit>
+    public class CreateDocumentCommand(TicketDetails ticketDetails) : ICreateDocumentCommand
     {
-        public TicketDetails TicketDetails { get; private set; }
+        public TicketDetails TicketDetails { get; private set; } = ticketDetails ?? throw new ArgumentNullException(nameof(ticketDetails));
 
-        public CreateDocumentCommand(TicketDetails ticketDetails)
+        public class CreateDocumentCommandHandler(ILogger<CreateDocumentCommandHandler> logger)
+            : IRequestHandler<ICreateDocumentCommand, Unit>
         {
-            TicketDetails = ticketDetails ?? throw new ArgumentNullException(nameof(ticketDetails));
-        }
-        
-        public class CreateDocumentCommandHandler : IRequestHandler<CreateDocumentCommand, Unit>
-        {
-            private readonly ILogger<CreateDocumentCommandHandler> _logger;
+            private readonly ILogger<CreateDocumentCommandHandler> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-            public CreateDocumentCommandHandler(ILogger<CreateDocumentCommandHandler> logger)
-            {
-                _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            }
-
-            public async Task<Unit> Handle(CreateDocumentCommand request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(ICreateDocumentCommand request, CancellationToken cancellationToken)
             {
                 try
                 {
