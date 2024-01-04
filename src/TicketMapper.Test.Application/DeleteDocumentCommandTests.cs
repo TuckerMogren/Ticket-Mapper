@@ -8,13 +8,13 @@ namespace TicketMapper.Test.Application;
 
 public class DeleteDocumentCommandTests
 {
-        private readonly Mock<ILogger<DeleteDocumentCommandHandler>> _loggerMock;
+        private readonly Mock<ILogger<DeleteDocumentCommand.DeleteDocumentCommandHandler>> _loggerMock;
         private readonly IRequestHandler<IDeleteDocumentCommand, Unit> _handler;
 
         public DeleteDocumentCommandTests()
         {
-            _loggerMock = new Mock<ILogger<DeleteDocumentCommandHandler>>();
-            _handler = new DeleteDocumentCommandHandler(_loggerMock.Object);
+            _loggerMock = new Mock<ILogger<DeleteDocumentCommand.DeleteDocumentCommandHandler>>();
+            _handler = new DeleteDocumentCommand.DeleteDocumentCommandHandler(_loggerMock.Object);
         }
 
         [Fact]

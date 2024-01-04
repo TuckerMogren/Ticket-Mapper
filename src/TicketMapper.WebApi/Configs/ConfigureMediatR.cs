@@ -12,10 +12,6 @@ public static class MediatRConfiguration
     public static void ConfigureMediatR(this IServiceCollection services)
     {
         services.AddMediatR(
-            typeof(Program).Assembly,
-            typeof(CreateDocumentCommand).Assembly,
-            typeof(DeleteDocumentCommand).Assembly,
-            typeof(IDeleteDocumentCommand).Assembly,
-            typeof(ICreateDocumentCommand).Assembly);
+            typeof(Program).Assembly);
     }
 }
