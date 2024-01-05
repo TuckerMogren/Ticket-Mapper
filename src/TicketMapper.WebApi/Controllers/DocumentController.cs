@@ -20,7 +20,7 @@ public class DocumentController(ILogger<DocumentController> logger, IMediator me
     [SwaggerResponse(200, "Returns the file as byte array", typeof(FileContentResult))]
     [SwaggerResponse(404, "File not found")]
     [SwaggerResponse(500, "Internal server error")]
-    public async Task<IActionResult> DownloadFile([FromQuery, SwaggerParameter("Denotes the start", Required = true)] int startNumber, [FromQuery, SwaggerParameter("Denotes the end", Required = true)] int endNumber)
+    public async Task<IActionResult> DownloadFile([FromQuery, SwaggerParameter("Denotes the start", Required = true)] int startNumber, [FromQuery, SwaggerParameter("Denotes the end", Required = true)] int endNumber, CancellationToken cancellationToken)
     {
 
         var ticketDetails = new TicketDetails
@@ -33,7 +33,12 @@ public class DocumentController(ILogger<DocumentController> logger, IMediator me
         {
 
             CreateDocumentCommand cmd = new(ticketDetails);
-            await _mediatr.Send(cmd);
+            await _mediatr.Send(cmd,cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            _logger.LogInformation("Operation was canceled");
+            return StatusCode(400, "Operation was canceled by the client");
         }
         catch(Exception ex)
         {
@@ -44,7 +49,7 @@ public class DocumentController(ILogger<DocumentController> logger, IMediator me
         try
         {
             GetDocumentQuery request = new(ticketDetails.FileName); // Initialize with required parameters
-            var fileBytes = await _mediatr.Send(request);
+            var fileBytes = await _mediatr.Send(request,cancellationToken);
 
             //Send a notification saying the file can be deleted, and then handle that to delete
 
@@ -56,12 +61,17 @@ public class DocumentController(ILogger<DocumentController> logger, IMediator me
             };
 
 
-            await _mediatr.Publish(notify);
+            await _mediatr.Publish(notify, cancellationToken);
 
             return new FileContentResult(fileBytes, "application/octet-stream")
             {
                 FileDownloadName = "Tickets.docx"
             };
+        }
+        catch (OperationCanceledException)
+        {
+            _logger.LogInformation("Operation was canceled");
+            return StatusCode(400, "Operation was canceled by the client");
         }
         catch (Exception ex)
         {

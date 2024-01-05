@@ -65,6 +65,10 @@
             "SixLabors.ImageSharp.Drawing": {
               "target": "Package",
               "version": "[1.0.0, )"
+            },
+            "System.IO.Abstractions": {
+              "target": "Package",
+              "version": "[20.0.4, )"
             }
           },
           "imports": [
@@ -230,6 +234,10 @@
             "Serilog.Sinks.File": {
               "target": "Package",
               "version": "[5.0.0, )"
+            },
+            "Shouldly": {
+              "target": "Package",
+              "version": "[4.2.1, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

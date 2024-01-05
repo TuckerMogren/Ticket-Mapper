@@ -16,6 +16,7 @@ builder.Host.UseSerilog();
 
 // Continue with your service and application setup
 builder.Services.ConfigureMediatR();
+builder.Services.DependencyConfiguration();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
