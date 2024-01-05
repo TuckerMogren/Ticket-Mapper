@@ -150,6 +150,66 @@
         }
       }
     },
+    "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Infrastructure.Persistence/TicketMapper.Infrastructure.Persistence.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Infrastructure.Persistence/TicketMapper.Infrastructure.Persistence.csproj",
+        "projectName": "TicketMapper.Infrastructure.Persistence",
+        "projectPath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Infrastructure.Persistence/TicketMapper.Infrastructure.Persistence.csproj",
+        "packagesPath": "/Users/tuckermogren/.nuget/packages/",
+        "outputPath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Infrastructure.Persistence/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/tuckermogren/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Application/TicketMapper.Application.csproj": {
+                "projectPath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Application/TicketMapper.Application.csproj"
+              },
+              "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj": {
+                "projectPath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
     "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.WebApi/TicketMapper.WebApi.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -177,6 +237,9 @@
               },
               "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj": {
                 "projectPath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj"
+              },
+              "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Infrastructure.Persistence/TicketMapper.Infrastructure.Persistence.csproj": {
+                "projectPath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Infrastructure.Persistence/TicketMapper.Infrastructure.Persistence.csproj"
               }
             }
           }

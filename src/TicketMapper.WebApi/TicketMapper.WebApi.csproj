@@ -34,6 +34,7 @@
     <ProjectReference Include="..\TicketMapper.Domain\TicketMapper.Domain.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+    <ProjectReference Include="..\TicketMapper.Infrastructure.Persistence\TicketMapper.Infrastructure.Persistence.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Input Files\" />

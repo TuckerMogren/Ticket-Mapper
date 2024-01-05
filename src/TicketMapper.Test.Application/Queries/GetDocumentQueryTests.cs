@@ -22,7 +22,7 @@ public class GetDocumentQueryTests
         mockFileSystem.Setup(f => f.File.ReadAllBytesAsync(filePath, CancellationToken.None)).ReturnsAsync((expectedContent));    
         
         var query = new GetDocumentQuery(filePath);
-        var handler = new GetDocumentQuery.GetDocumentQueryHandler(mockFileSystem.Object, mockLogger.Object);
+        var handler = new GetDocumentQuery.GetDocumentQueryHandler( mockLogger.Object);
         
 
         // Act
@@ -36,12 +36,12 @@ public class GetDocumentQueryTests
     [InlineData("")]
     [InlineData(" ")]
     [InlineData("             ")]
-    public async Task Handle_ArgumentNullExceptionThrownEmptyStringsPath_LogsInformation(string? path)
+    public async Task Handle_ArgumentNullExceptionThrownEmptyStringsPath_LogsInformation(string path)
     {
         // Arrange
         var mockFileSystem = new Mock<IFileSystem>();
         var mockLogger = new Mock<ILogger<GetDocumentQuery.GetDocumentQueryHandler>>();
-        var handler = new GetDocumentQuery.GetDocumentQueryHandler(mockFileSystem.Object, mockLogger.Object);
+        var handler = new GetDocumentQuery.GetDocumentQueryHandler( mockLogger.Object);
         var loggerMock = new Mock<ILogger<GetDocumentQuery.GetDocumentQueryHandler>>();
         var query = new GetDocumentQuery(path);
 
@@ -52,14 +52,13 @@ public class GetDocumentQueryTests
         mockLogger.Invocations.Count(i => i.Arguments[2].ToString()!.Contains("Value cannot be null")).ShouldBe(1);
     }
 
-    [Theory]
-    [InlineData(null)]
-    public async Task Handle_ArgumentNullException_logs(string? path)
+    [Fact]
+    public async Task Handle_ArgumentNullException_logs()
     {
         // Arrange
         var mockFileSystem = new Mock<IFileSystem>();
         var mockLogger = new Mock<ILogger<GetDocumentQuery.GetDocumentQueryHandler>>();
-        var handler = new GetDocumentQuery.GetDocumentQueryHandler(mockFileSystem.Object, mockLogger.Object);
+        var handler = new GetDocumentQuery.GetDocumentQueryHandler( mockLogger.Object);
         var interfaceMock = new Mock<IGetDocumentsQuery<byte[]>>();
         
         // Act & Assert

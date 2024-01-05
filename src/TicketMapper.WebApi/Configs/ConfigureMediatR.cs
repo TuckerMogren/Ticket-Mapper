@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.IO.Abstractions;
 using MediatR;
 using TicketMapper.Application.Commands;
 using TicketMapper.Domain.Interfaces.Commands;

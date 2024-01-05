@@ -931,6 +931,20 @@
         "runtime": {
           "bin/placeholder/TicketMapper.Domain.dll": {}
         }
+      },
+      "TicketMapper.Infrastructure.Persistence/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "TicketMapper.Application": "1.0.0",
+          "TicketMapper.Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/TicketMapper.Infrastructure.Persistence.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/TicketMapper.Infrastructure.Persistence.dll": {}
+        }
       }
     }
   },
@@ -2617,6 +2631,11 @@
       "type": "project",
       "path": "../TicketMapper.Domain/TicketMapper.Domain.csproj",
       "msbuildProject": "../TicketMapper.Domain/TicketMapper.Domain.csproj"
+    },
+    "TicketMapper.Infrastructure.Persistence/1.0.0": {
+      "type": "project",
+      "path": "../TicketMapper.Infrastructure.Persistence/TicketMapper.Infrastructure.Persistence.csproj",
+      "msbuildProject": "../TicketMapper.Infrastructure.Persistence/TicketMapper.Infrastructure.Persistence.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -2636,7 +2655,8 @@
       "Swashbuckle.AspNetCore >= 6.5.0",
       "Swashbuckle.AspNetCore.Annotations >= 6.5.0",
       "TicketMapper.Application >= 1.0.0",
-      "TicketMapper.Domain >= 1.0.0"
+      "TicketMapper.Domain >= 1.0.0",
+      "TicketMapper.Infrastructure.Persistence >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -2669,6 +2689,9 @@
             },
             "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj": {
               "projectPath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj"
+            },
+            "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Infrastructure.Persistence/TicketMapper.Infrastructure.Persistence.csproj": {
+              "projectPath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Infrastructure.Persistence/TicketMapper.Infrastructure.Persistence.csproj"
             }
           }
         }
