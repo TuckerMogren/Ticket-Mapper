@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "8vew8sEl9gqNVkKfIoa017FeN7coI3zO9gI6fmMK49zTX8OQw/RrTxMXocTtSCjilk325Y+skwALw22bvQMRCQ==",
+  "dgSpecHash": "0Jvg3TnZyhULbirA6mrG/Bz7clIkAn0dS3OTYCqvNfA1R7zmmaLpp9uXVA7sf11pxLz5PBUS4JOLRbXjHNnMfA==",
   "success": true,
   "projectFilePath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.WebApi/TicketMapper.WebApi.csproj",
   "expectedPackageFiles": [
@@ -48,10 +48,13 @@
     "/Users/tuckermogren/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.5.0/swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/system.codedom/6.0.0/system.codedom.6.0.0.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/system.diagnostics.diagnosticsource/8.0.0/system.diagnostics.diagnosticsource.8.0.0.nupkg.sha512",
+    "/Users/tuckermogren/.nuget/packages/system.io.abstractions/20.0.4/system.io.abstractions.20.0.4.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/system.io.packaging/8.0.0/system.io.packaging.8.0.0.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/system.management/6.0.1/system.management.6.0.1.nupkg.sha512",
     "/Users/tuckermogren/.nuget/packages/system.text.encodings.web/8.0.0/system.text.encodings.web.8.0.0.nupkg.sha512",
-    "/Users/tuckermogren/.nuget/packages/system.text.json/8.0.0/system.text.json.8.0.0.nupkg.sha512"
+    "/Users/tuckermogren/.nuget/packages/system.text.json/8.0.0/system.text.json.8.0.0.nupkg.sha512",
+    "/Users/tuckermogren/.nuget/packages/testableio.system.io.abstractions/20.0.4/testableio.system.io.abstractions.20.0.4.nupkg.sha512",
+    "/Users/tuckermogren/.nuget/packages/testableio.system.io.abstractions.wrappers/20.0.4/testableio.system.io.abstractions.wrappers.20.0.4.nupkg.sha512"
   ],
   "logs": []
 }
