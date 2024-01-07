@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
+using System.IO.Abstractions;
 using TicketMapper.Domain.Interfaces.Queries;
 
 namespace TicketMapper.Application.Queries
@@ -8,22 +9,21 @@ namespace TicketMapper.Application.Queries
     {
         public string Path { get; set; } = path ?? throw new ArgumentNullException(nameof(path));
 
-        public class GetDocumentQueryHandler(ILogger<GetDocumentQueryHandler> logger)
+        public class GetDocumentQueryHandler(ILogger<GetDocumentQueryHandler> logger, IFileSystem fileSystem)
             : IRequestHandler<IGetDocumentsQuery<byte[]>, byte[]>
         {
             public async Task<byte[]> Handle(IGetDocumentsQuery<byte[]> request, CancellationToken cancellationToken)
             {
-                var file = Array.Empty<byte>();
-                
+                byte[]? file;
                 try
                 {
                     if (string.IsNullOrWhiteSpace(request.Path))
                     {
-                        throw new ArgumentNullException(nameof(request.Path));
+                        throw new ArgumentNullException(nameof(request));
                     }
 
                     logger.LogInformation($"Starting to get the document at path: {request.Path}");
-                    file = await ReadFileToByteArray(request.Path);
+                    file = await fileSystem.File.ReadAllBytesAsync(request.Path, cancellationToken);
                 }
                 catch (ArgumentNullException e)
                 {
@@ -42,11 +42,6 @@ namespace TicketMapper.Application.Queries
                 }
 
                 return file;
-            }
-
-            private async Task<byte[]> ReadFileToByteArray(string filePath)
-            {
-                return await File.ReadAllBytesAsync(filePath);
             }
         }
 

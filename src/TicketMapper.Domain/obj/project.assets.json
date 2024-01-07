@@ -71,24 +71,31 @@
     ]
   },
   "packageFolders": {
-    "/Users/tuckermogren/.nuget/packages/": {}
+    "C:\\Users\\TuckerMogren\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj",
+      "projectUniqueName": "C:\\Users\\TuckerMogren\\source\\repos\\Ticket-Mapper\\src\\TicketMapper.Domain\\TicketMapper.Domain.csproj",
       "projectName": "TicketMapper.Domain",
-      "projectPath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj",
-      "packagesPath": "/Users/tuckermogren/.nuget/packages/",
-      "outputPath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Domain/obj/",
+      "projectPath": "C:\\Users\\TuckerMogren\\source\\repos\\Ticket-Mapper\\src\\TicketMapper.Domain\\TicketMapper.Domain.csproj",
+      "packagesPath": "C:\\Users\\TuckerMogren\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\TuckerMogren\\source\\repos\\Ticket-Mapper\\src\\TicketMapper.Domain\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "/Users/tuckermogren/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\TuckerMogren\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -128,7 +135,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

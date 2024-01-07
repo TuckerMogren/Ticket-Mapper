@@ -20,7 +20,7 @@ namespace TicketMapper.Application.Commands
                 }
 
                 try
-                {
+                {   
                     await Task.Run(() => File.Delete(request.Path), cancellationToken);
                 }
                 catch (OperationCanceledException e)

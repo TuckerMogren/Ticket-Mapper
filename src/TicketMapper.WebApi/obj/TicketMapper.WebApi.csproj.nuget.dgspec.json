@@ -1,33 +1,39 @@
 {
   "format": 1,
   "restore": {
-    "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.WebApi/TicketMapper.WebApi.csproj": {}
+    "C:\\Users\\TuckerMogren\\source\\repos\\Ticket-Mapper\\src\\TicketMapper.WebApi\\TicketMapper.WebApi.csproj": {}
   },
   "projects": {
-    "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Application/TicketMapper.Application.csproj": {
+    "C:\\Users\\TuckerMogren\\source\\repos\\Ticket-Mapper\\src\\TicketMapper.Application\\TicketMapper.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Application/TicketMapper.Application.csproj",
+        "projectUniqueName": "C:\\Users\\TuckerMogren\\source\\repos\\Ticket-Mapper\\src\\TicketMapper.Application\\TicketMapper.Application.csproj",
         "projectName": "TicketMapper.Application",
-        "projectPath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Application/TicketMapper.Application.csproj",
-        "packagesPath": "/Users/tuckermogren/.nuget/packages/",
-        "outputPath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Application/obj/",
+        "projectPath": "C:\\Users\\TuckerMogren\\source\\repos\\Ticket-Mapper\\src\\TicketMapper.Application\\TicketMapper.Application.csproj",
+        "packagesPath": "C:\\Users\\TuckerMogren\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\TuckerMogren\\source\\repos\\Ticket-Mapper\\src\\TicketMapper.Application\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/Users/tuckermogren/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\TuckerMogren\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj": {
-                "projectPath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj"
+              "C:\\Users\\TuckerMogren\\source\\repos\\Ticket-Mapper\\src\\TicketMapper.Domain\\TicketMapper.Domain.csproj": {
+                "projectPath": "C:\\Users\\TuckerMogren\\source\\repos\\Ticket-Mapper\\src\\TicketMapper.Domain\\TicketMapper.Domain.csproj"
               }
             }
           }
@@ -87,26 +93,32 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj": {
+    "C:\\Users\\TuckerMogren\\source\\repos\\Ticket-Mapper\\src\\TicketMapper.Domain\\TicketMapper.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\TuckerMogren\\source\\repos\\Ticket-Mapper\\src\\TicketMapper.Domain\\TicketMapper.Domain.csproj",
         "projectName": "TicketMapper.Domain",
-        "projectPath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj",
-        "packagesPath": "/Users/tuckermogren/.nuget/packages/",
-        "outputPath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Domain/obj/",
+        "projectPath": "C:\\Users\\TuckerMogren\\source\\repos\\Ticket-Mapper\\src\\TicketMapper.Domain\\TicketMapper.Domain.csproj",
+        "packagesPath": "C:\\Users\\TuckerMogren\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\TuckerMogren\\source\\repos\\Ticket-Mapper\\src\\TicketMapper.Domain\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/Users/tuckermogren/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\TuckerMogren\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -146,37 +158,43 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Infrastructure.Persistence/TicketMapper.Infrastructure.Persistence.csproj": {
+    "C:\\Users\\TuckerMogren\\source\\repos\\Ticket-Mapper\\src\\TicketMapper.Infrastructure.Persistence\\TicketMapper.Infrastructure.Persistence.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Infrastructure.Persistence/TicketMapper.Infrastructure.Persistence.csproj",
+        "projectUniqueName": "C:\\Users\\TuckerMogren\\source\\repos\\Ticket-Mapper\\src\\TicketMapper.Infrastructure.Persistence\\TicketMapper.Infrastructure.Persistence.csproj",
         "projectName": "TicketMapper.Infrastructure.Persistence",
-        "projectPath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Infrastructure.Persistence/TicketMapper.Infrastructure.Persistence.csproj",
-        "packagesPath": "/Users/tuckermogren/.nuget/packages/",
-        "outputPath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Infrastructure.Persistence/obj/",
+        "projectPath": "C:\\Users\\TuckerMogren\\source\\repos\\Ticket-Mapper\\src\\TicketMapper.Infrastructure.Persistence\\TicketMapper.Infrastructure.Persistence.csproj",
+        "packagesPath": "C:\\Users\\TuckerMogren\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\TuckerMogren\\source\\repos\\Ticket-Mapper\\src\\TicketMapper.Infrastructure.Persistence\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/Users/tuckermogren/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\TuckerMogren\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Application/TicketMapper.Application.csproj": {
-                "projectPath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Application/TicketMapper.Application.csproj"
+              "C:\\Users\\TuckerMogren\\source\\repos\\Ticket-Mapper\\src\\TicketMapper.Application\\TicketMapper.Application.csproj": {
+                "projectPath": "C:\\Users\\TuckerMogren\\source\\repos\\Ticket-Mapper\\src\\TicketMapper.Application\\TicketMapper.Application.csproj"
               },
-              "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj": {
-                "projectPath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj"
+              "C:\\Users\\TuckerMogren\\source\\repos\\Ticket-Mapper\\src\\TicketMapper.Domain\\TicketMapper.Domain.csproj": {
+                "projectPath": "C:\\Users\\TuckerMogren\\source\\repos\\Ticket-Mapper\\src\\TicketMapper.Domain\\TicketMapper.Domain.csproj"
               }
             }
           }
@@ -206,40 +224,46 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.WebApi/TicketMapper.WebApi.csproj": {
+    "C:\\Users\\TuckerMogren\\source\\repos\\Ticket-Mapper\\src\\TicketMapper.WebApi\\TicketMapper.WebApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.WebApi/TicketMapper.WebApi.csproj",
+        "projectUniqueName": "C:\\Users\\TuckerMogren\\source\\repos\\Ticket-Mapper\\src\\TicketMapper.WebApi\\TicketMapper.WebApi.csproj",
         "projectName": "TicketMapper.WebApi",
-        "projectPath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.WebApi/TicketMapper.WebApi.csproj",
-        "packagesPath": "/Users/tuckermogren/.nuget/packages/",
-        "outputPath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.WebApi/obj/",
+        "projectPath": "C:\\Users\\TuckerMogren\\source\\repos\\Ticket-Mapper\\src\\TicketMapper.WebApi\\TicketMapper.WebApi.csproj",
+        "packagesPath": "C:\\Users\\TuckerMogren\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\TuckerMogren\\source\\repos\\Ticket-Mapper\\src\\TicketMapper.WebApi\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/Users/tuckermogren/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\TuckerMogren\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Application/TicketMapper.Application.csproj": {
-                "projectPath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Application/TicketMapper.Application.csproj"
+              "C:\\Users\\TuckerMogren\\source\\repos\\Ticket-Mapper\\src\\TicketMapper.Application\\TicketMapper.Application.csproj": {
+                "projectPath": "C:\\Users\\TuckerMogren\\source\\repos\\Ticket-Mapper\\src\\TicketMapper.Application\\TicketMapper.Application.csproj"
               },
-              "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj": {
-                "projectPath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Domain/TicketMapper.Domain.csproj"
+              "C:\\Users\\TuckerMogren\\source\\repos\\Ticket-Mapper\\src\\TicketMapper.Domain\\TicketMapper.Domain.csproj": {
+                "projectPath": "C:\\Users\\TuckerMogren\\source\\repos\\Ticket-Mapper\\src\\TicketMapper.Domain\\TicketMapper.Domain.csproj"
               },
-              "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Infrastructure.Persistence/TicketMapper.Infrastructure.Persistence.csproj": {
-                "projectPath": "/Users/tuckermogren/RiderProjects/Ticket-Mapper/src/TicketMapper.Infrastructure.Persistence/TicketMapper.Infrastructure.Persistence.csproj"
+              "C:\\Users\\TuckerMogren\\source\\repos\\Ticket-Mapper\\src\\TicketMapper.Infrastructure.Persistence\\TicketMapper.Infrastructure.Persistence.csproj": {
+                "projectPath": "C:\\Users\\TuckerMogren\\source\\repos\\Ticket-Mapper\\src\\TicketMapper.Infrastructure.Persistence\\TicketMapper.Infrastructure.Persistence.csproj"
               }
             }
           }
@@ -330,7 +354,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
