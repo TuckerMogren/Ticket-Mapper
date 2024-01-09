@@ -69,8 +69,8 @@ To contribute to Ticket-Mapper:
 
 To run APIs via Docker
 1. Navigate to src folder
-1. run command docker build -t ticketmapperwebapi .
-1. Then run command docker run -d -p 8080:80 --name myticketmappercontainer ticketmapperwebapi to run container
+1. run command `docker build -t ticketmapperwebapi .`
+1. Then run command `docker run -d -p 8080:80 --name myticketmappercontainer ticketmapperwebapi` to run container
 
 
 ---
