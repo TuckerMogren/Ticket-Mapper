@@ -13,6 +13,6 @@ public static class ConfigureDependencies
     {
         services.AddTransient<IRequestHandler<DeleteDocumentCommand, Unit>, DeleteDocumentCommand.DeleteDocumentCommandHandler>(); 
         services.AddTransient<IRequestHandler<CreateDocumentCommand, Unit>, CreateDocumentCommand.CreateDocumentCommandHandler>();
-        services.AddTransient<IRequestHandler<GetDocumentQuery,byte[]>, GetDocumentQuery.GetDocumentQueryHandler>();
+        //services.AddTransient<IRequestHandler<GetDocumentQuery,byte[]>, GetDocumentQuery.GetDocumentQueryHandler>();
     }
 }
