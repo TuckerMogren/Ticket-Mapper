@@ -66,10 +66,8 @@ To contribute to Ticket-Mapper:
 
 ## Docker Commands
 
-To run APIs via Docker
-1. Navigate to src folder
-1. run command `docker build -t ticketmapperwebapi .`
-1. Then run command `docker run -d -p 8080:80 --name myticketmappercontainer ticketmapperwebapi` to run container
+To run APIs via Docker all you need to do is run the command `docker compose up -d` from the repo root.
+This will create a docker container with rabbitmq and the webapi running.
 
 
 ---
