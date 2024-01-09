@@ -14,6 +14,10 @@ var configuration = new ConfigurationBuilder()
 Log.Logger = builder.Services.ConfigureLogging(configuration).CreateLogger();
 builder.Host.UseSerilog();
 
+
+Log.Logger.Information("Application is starting...");
+
+
 // Continue with your service and application setup
 builder.Services.ConfigureMediatR();
 builder.Services.DependencyConfiguration();
@@ -27,9 +31,14 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
-
+Log.Logger.Information($"You are in: {app.Environment.IsDevelopment()}");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+else
 {
     app.UseSwagger();
     app.UseSwaggerUI();

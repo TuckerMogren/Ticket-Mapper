@@ -9,7 +9,6 @@ Ticket-Mapper is a robust .NET application that was created to streamline the pr
 
 ### Prerequisites:
 - .NET [8.0]
-- 
 
 ### Setting up the environment:
 1. Clone the repository to your local machine.
@@ -61,6 +60,14 @@ To contribute to Ticket-Mapper:
 2. Create a feature branch.
 3. Make your changes and write tests to ensure they work and don't break existing features.
 4. Submit a pull request with a clear list of what you've done.
+
+
+---
+
+## Docker Commands
+
+To run APIs via Docker all you need to do is run the command `docker compose up -d` from the repo root.
+This will create a docker container with rabbitmq and the webapi running.
 
 
 ---
