@@ -1,7 +1,7 @@
 # Use the official image as a parent image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
-EXPOSE 80
+EXPOSE 81
 EXPOSE 443
 
 # Use SDK image to build the solution
