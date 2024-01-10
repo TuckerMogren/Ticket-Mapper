@@ -7,7 +7,7 @@ namespace TestWebApi.Controllers
     [Route("api/v1/[controller]")]
     public class TestController(ILogger<TestController> logger) : ControllerBase
     {
-        [HttpGet("Recieve")]
+        [HttpGet("Receive")]
         [SwaggerOperation(Summary = "This service will allow us to test to make sure we can connect to apis")]
         [SwaggerResponse(200, "Will always return Ok", typeof(OkResult))]
         public IActionResult Get()

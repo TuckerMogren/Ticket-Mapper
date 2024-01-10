@@ -1,8 +1,19 @@
+# CURL inside container
+FROM alpine
+RUN apk add --no-cache curl
+
+FROM ubuntu:16.04
+
+# Install prerequisites
+RUN apt-get update && apt-get install -y \
+curl
+CMD /bin/bash
+
 # Use the official image as a parent image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+EXPOSE 8080
+EXPOSE 8081
 
 # Use SDK image to build the solution
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
