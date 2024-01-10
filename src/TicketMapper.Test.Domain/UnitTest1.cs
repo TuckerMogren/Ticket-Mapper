@@ -1,5 +1,6 @@
-﻿namespace TicketMapper.Test.Domain;
+﻿using Xunit;
 
+namespace TicketMapper.Test.Domain;
 public class UnitTest1
 {
     [Fact]

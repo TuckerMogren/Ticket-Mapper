@@ -1,5 +1,6 @@
-﻿namespace TicketMapper.Test.WebApi;
+﻿using Xunit;
 
+namespace TicketMapper.Test.WebApi;
 public class UnitTest1
 {
     [Fact]
