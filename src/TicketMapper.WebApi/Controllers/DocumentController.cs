@@ -63,7 +63,7 @@ public class DocumentController(ILogger<DocumentController> logger, IMediator me
 
             await _mediatr.Publish(notify, cancellationToken);
 
-            return new FileContentResult(fileBytes, "application/octet-stream")
+            return new FileContentResult(fileBytes, "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
             {
                 FileDownloadName = "Tickets.docx"
             };
