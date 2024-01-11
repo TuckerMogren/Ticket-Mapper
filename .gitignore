@@ -281,3 +281,4 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder
 .mfractor/
+/src/TicketMapper.WebApi/Output Files
