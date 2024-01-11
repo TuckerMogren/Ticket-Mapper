@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using Moq;
+using System.IO.Abstractions;
 using TicketMapper.Application.Commands;
 using TicketMapper.Domain.Interfaces.Commands;
 using Xunit;
@@ -10,12 +11,14 @@ namespace TicketMapper.Test.Application.Commands;
 public class DeleteDocumentCommandTests
 {
         private readonly Mock<ILogger<DeleteDocumentCommand.DeleteDocumentCommandHandler>> _loggerMock;
+        private readonly Mock<IFileSystem> _fileSystemMock;
         private readonly IRequestHandler<IDeleteDocumentCommand, Unit> _handler;
 
         public DeleteDocumentCommandTests()
         {
             _loggerMock = new Mock<ILogger<DeleteDocumentCommand.DeleteDocumentCommandHandler>>();
-            _handler = new DeleteDocumentCommand.DeleteDocumentCommandHandler(_loggerMock.Object);
+            _fileSystemMock = new Mock<IFileSystem>();
+            _handler = new DeleteDocumentCommand.DeleteDocumentCommandHandler(_loggerMock.Object, _fileSystemMock.Object);
         }
 
         [Fact]

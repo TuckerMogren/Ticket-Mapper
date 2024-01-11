@@ -31,17 +31,16 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
-Log.Logger.Information($"You are in: {app.Environment.IsDevelopment()}");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    Log.Logger.Information($"You are in: Dev.");
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 else
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    Log.Logger.Information($"You are in: Prod.");
 }
 
 app.UseHttpsRedirection();

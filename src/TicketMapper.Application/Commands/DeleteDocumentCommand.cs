@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
+using System.IO.Abstractions;
 using TicketMapper.Domain.Interfaces.Commands;
 
 namespace TicketMapper.Application.Commands
@@ -9,7 +10,7 @@ namespace TicketMapper.Application.Commands
         public string Path { get; set; } = path ?? throw new ArgumentNullException(nameof(path));
 
 
-        public class DeleteDocumentCommandHandler(ILogger<DeleteDocumentCommandHandler> logger)
+        public class DeleteDocumentCommandHandler(ILogger<DeleteDocumentCommandHandler> logger, IFileSystem fileSystem)
             : IRequestHandler<IDeleteDocumentCommand, Unit>
         {
             public async Task<Unit> Handle(IDeleteDocumentCommand request, CancellationToken cancellationToken)
@@ -21,7 +22,21 @@ namespace TicketMapper.Application.Commands
 
                 try
                 {
-                    await Task.Run(() => File.Delete(request.Path), cancellationToken);
+                    logger.LogInformation($"Starting to delete document...");
+                    await Task.Run(() => fileSystem.File.Delete(request.Path), cancellationToken);
+
+                    var isFileStillAlive = fileSystem.File.Exists(request.Path);
+
+                    if (!isFileStillAlive)
+                    {
+                        logger.LogInformation($"File has been removed.");
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException($"Deletion failed. File still exists at {request.Path}.");
+                    }
+
+
                 }
                 catch (OperationCanceledException e)
                 {

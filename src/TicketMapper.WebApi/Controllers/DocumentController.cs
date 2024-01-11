@@ -27,7 +27,7 @@ public class DocumentController(ILogger<DocumentController> logger, IMediator me
         {
             EndNumber = endNumber,
             StartNumber = startNumber,
-            FileName = $"Output Files/{Guid.NewGuid().ToString()}.docx"
+            FileName = $"Output Files/{Guid.NewGuid()}.docx"
         };
         try
         {
