@@ -1,11 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO.Abstractions;
+using Infrastructure.DocumentService;
+using Infrastructure.DocumentService.Interfaces;
 using Infrastructure.Persistence.Repositories;
 using MediatR;
 using TicketMapper.Application.Commands;
 using TicketMapper.Application.IntegrationEventHandlers;
 using TicketMapper.Application.Queries;
-using TicketMapper.Domain.Interfaces.Commands;
 using TicketMapper.Domain.Interfaces.Repositories;
 using TicketMapper.Domain.Notifications;
 
@@ -17,6 +18,7 @@ public static class ConfigureDependencies
     public static void DependencyConfiguration(this IServiceCollection services)
     {
         //Repositories
+        services.AddTransient<IGoogleDrive, GoogleDrive>();
         services.AddTransient<IFileSystem, FileSystem>();
         services.AddTransient<IGoogleDriveRepository, GoogleDriveRepository>();
         //MediatR
