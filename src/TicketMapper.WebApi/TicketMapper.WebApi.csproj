@@ -40,7 +40,7 @@
     <None Remove="Settings\" />
     <None Remove="Configs\" />
     <None Update="Output Files\placeholder.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
