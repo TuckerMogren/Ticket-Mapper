@@ -1,8 +1,8 @@
 ﻿using Google.Apis.Drive.v3;
-using Infrastructure.DocumentService.Data_Models;
-using Infrastructure.DocumentService.Interfaces;
+using TicketMapper.Infrastructure.DocumentService.Data_Models;
+using TicketMapper.Infrastructure.DocumentService.Interfaces;
 
-namespace Infrastructure.DocumentService;
+namespace TicketMapper.Infrastructure.DocumentService;
 
 public class GoogleDrive(DriveService driveService) : IGoogleDrive
 {

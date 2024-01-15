@@ -1,9 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO.Abstractions;
 using Google.Apis.Drive.v3;
-using Infrastructure.DocumentService;
-using Infrastructure.DocumentService.Interfaces;
-using Infrastructure.Persistence.Repositories;
+using TicketMapper.Infrastructure.DocumentService;
+using TicketMapper.Infrastructure.DocumentService.Interfaces;
+using TicketMapper.Infrastructure.Persistence.Repositories;
 using MediatR;
 using TicketMapper.Application.Commands;
 using TicketMapper.Application.IntegrationEventHandlers;

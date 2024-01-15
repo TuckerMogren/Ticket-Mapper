@@ -1,6 +1,6 @@
-using Infrastructure.DocumentService.Data_Models;
+using TicketMapper.Infrastructure.DocumentService.Data_Models;
 
-namespace Infrastructure.DocumentService.Interfaces;
+namespace TicketMapper.Infrastructure.DocumentService.Interfaces;
 
 public interface IGoogleDrive
 {

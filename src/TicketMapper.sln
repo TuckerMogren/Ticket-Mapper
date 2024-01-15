@@ -23,9 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicketMapper.Test.WebApi", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{A957E140-91DF-47DD-ABBD-68F0E375FFF6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Persistence", "Infrastructure.Persistence\Infrastructure.Persistence.csproj", "{F4563C36-6217-45FD-96C8-9FC05006FB43}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketMapper.Infrastructure.Persistence", "TicketMapper.Infrastructure.Persistence\TicketMapper.Infrastructure.Persistence.csproj", "{F4563C36-6217-45FD-96C8-9FC05006FB43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.DocumentService", "Infrastructure.DocumentService\Infrastructure.DocumentService.csproj", "{940283C8-81BA-4FE9-9E01-6CEACF5E1B44}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketMapper.Infrastructure.DocumentService", "TicketMapper.Infrastructure.DocumentService\TicketMapper.Infrastructure.DocumentService.csproj", "{940283C8-81BA-4FE9-9E01-6CEACF5E1B44}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

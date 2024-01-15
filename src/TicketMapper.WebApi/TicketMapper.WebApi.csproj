@@ -30,8 +30,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Infrastructure.DocumentService\Infrastructure.DocumentService.csproj" />
-    <ProjectReference Include="..\Infrastructure.Persistence\Infrastructure.Persistence.csproj" />
+    <ProjectReference Include="..\TicketMapper.Infrastructure.DocumentService\TicketMapper.Infrastructure.DocumentService.csproj" />
+    <ProjectReference Include="..\TicketMapper.Infrastructure.Persistence\TicketMapper.Infrastructure.Persistence.csproj" />
     <ProjectReference Include="..\TicketMapper.Application\TicketMapper.Application.csproj"/>
     <ProjectReference Include="..\TicketMapper.Domain\TicketMapper.Domain.csproj"/>
   </ItemGroup>
