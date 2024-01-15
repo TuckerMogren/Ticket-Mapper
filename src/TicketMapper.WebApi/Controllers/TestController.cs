@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace TestWebApi.Controllers
+namespace TicketMapper.WebApi.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
     public class TestController(ILogger<TestController> logger) : ControllerBase
     {
-        [HttpGet("Receive")]
+        [HttpGet("Test")]
         [SwaggerOperation(Summary = "This service will allow us to test to make sure we can connect to apis")]
         [SwaggerResponse(200, "Will always return Ok", typeof(OkResult))]
         public IActionResult Get()
