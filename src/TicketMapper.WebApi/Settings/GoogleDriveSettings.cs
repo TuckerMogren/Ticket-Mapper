@@ -11,4 +11,5 @@ public class GoogleDriveSettings()
     public string TokenUri { get; set; }
     public string AuthProviderCertUrl { get; set; }
     public string ClientSecret { get; set; }
+    public string ApplicationName { get; set; }
 }

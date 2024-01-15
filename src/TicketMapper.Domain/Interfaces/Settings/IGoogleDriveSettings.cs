@@ -8,4 +8,5 @@ public interface IGoogleDriveSettings
     string TokenUri { get; set; }
     string AuthProviderCertUrl { get; set; }
     string ClientSecret { get; set; }
+    string ApplicationName { get; set; }
 }

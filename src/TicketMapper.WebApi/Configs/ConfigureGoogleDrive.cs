@@ -1,13 +1,37 @@
+using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v3;
-namespace TicketMapper.WebApi.Configs;
+using Google.Apis.Services;
+using Google.Apis.Util.Store;
+using TicketMapper.Domain.Interfaces.Settings;
 
-public static class ConfigureGoogleDrive
+namespace TicketMapper.WebApi.Configs
 {
-    public static DriveService GoogleDriveConfiguration(this ServiceCollection services)
+    public static class ConfigureGoogleDrive
     {
-        services.AddSingleton<DriveService>(provider =>
+        public static void AddGoogleDriveConfiguration(this IServiceCollection services, IApplicationSettings applicationSettings)
         {
-            return new DriveService();
-        });
+            services.AddSingleton(async provider =>
+            {
+                var credential = await GetUserCredentialAsync();
+                return new DriveService(new BaseClientService.Initializer()
+                {
+                    HttpClientInitializer = credential,
+                    ApplicationName = applicationSettings.GoogleDriveSettings.ApplicationName,
+                });
+            });
+        }
+
+        private static async Task<UserCredential> GetUserCredentialAsync()
+        {
+            using var stream = new FileStream("client_secrets.json", FileMode.Open, FileAccess.Read);
+            string credPath = "token.json"; // Path to store the user token
+
+            return await GoogleWebAuthorizationBroker.AuthorizeAsync(
+                GoogleClientSecrets.Load(stream).Secrets,
+                new[] { DriveService.Scope.Drive },
+                "user",
+                CancellationToken.None,
+                new FileDataStore(credPath, true));
+        }
     }
 }

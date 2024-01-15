@@ -1,4 +1,5 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.OpenApi.Models;
 using TicketMapper.WebApi.Configs;
 using Serilog;
 using Serilog.Core;
@@ -24,6 +25,8 @@ builder.Services.ConfigureMediatR();
 builder.Services.DependencyConfiguration();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+var appSettings = builder.Services.AppSettingsConfiguration(); 
+builder.Services.AddGoogleDriveConfiguration(appSettings);
 builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(c =>
 {
