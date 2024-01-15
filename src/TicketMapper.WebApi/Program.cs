@@ -10,12 +10,13 @@ var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
     .Build();
 
+
 // Set up Serilog here before any logging is done
 Log.Logger = builder.Services.ConfigureLogging(configuration).CreateLogger();
 builder.Host.UseSerilog();
 
 
-Log.Logger.Information("Application is starting...");
+Log.Logger.Information($"Application is starting...");
 
 
 // Continue with your service and application setup
