@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Example of calling ConfigureLogging correctly
 var configuration = new ConfigurationBuilder()
+    .AddUserSecrets<Program>()
     .AddJsonFile("appsettings.json")
     .Build();
 
@@ -22,10 +23,10 @@ Log.Logger.Information($"Application is starting...");
 
 // Continue with your service and application setup
 builder.Services.ConfigureMediatR();
-builder.Services.DependencyConfiguration();
+//builder.Services.DependencyConfiguration();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-var appSettings = builder.Services.AppSettingsConfiguration(); 
+var appSettings = configuration.AppSettingsConfiguration();
 builder.Services.AddGoogleDriveConfiguration(appSettings);
 builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(c =>

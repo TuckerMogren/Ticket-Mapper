@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using DocumentFormat.OpenXml.Spreadsheet;
 using TicketMapper.Domain.Interfaces.Settings;
 using TicketMapper.WebApi.Settings;
 
@@ -7,14 +8,20 @@ namespace TicketMapper.WebApi.Configs;
 [ExcludeFromCodeCoverage]
 public static class ConfigureApplicationSettings
 {
-    public static IApplicationSettings AppSettingsConfiguration(this IServiceCollection services)
+    public static IApplicationSettings AppSettingsConfiguration(this IConfiguration config)
     {
-        // Build the configuration
-        IConfiguration configuration = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-            .Build();
+        if(config is null)
+        {
+            throw new ArgumentNullException(nameof(config));
+        }
 
-        return new ApplicationSettings();
+        var applicationSettings = new ApplicationSettings();
+
+        var test = applicationSettings;
+
+        config.Bind(applicationSettings);
+
+
+        return applicationSettings;
     }
 }
