@@ -9,7 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Example of calling ConfigureLogging correctly
 var configuration = new ConfigurationBuilder()
     .AddUserSecrets<Program>()
-    .AddJsonFile("appsettings.json")
+    .AddEnvironmentVariables()
+    .SetBasePath(Directory.GetCurrentDirectory())
+    //.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
     .Build();
 
 
