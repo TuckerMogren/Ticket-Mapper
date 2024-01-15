@@ -21,8 +21,8 @@ WORKDIR /src
 COPY ["TicketMapper.WebApi/TicketMapper.WebApi.csproj", "TicketMapper.WebApi/"]
 COPY ["TicketMapper.Application/TicketMapper.Application.csproj", "TicketMapper.Application/"]
 COPY ["TicketMapper.Domain/TicketMapper.Domain.csproj", "TicketMapper.Domain/"]
-COPY ["TicketMapper.Infrastructure.Document/TicketMapper.Infrastructure.Document.csproj", "TicketMapper.Infrastructure.Document/"]
-COPY ["TicketMapper.Infrastructure.FileIO/TicketMapper.Infrastructure.FileIO.csproj", "TicketMapper.Infrastructure.FileIO/"]
+COPY ["TicketMapper.Infrastructure.DocumentService/TicketMapper.Infrastructure.DocumentService.csproj", "TicketMapper.Infrastructure.DocumentService/"]
+COPY ["TicketMapper.Infrastructure.Persistence/TicketMapper.Infrastructure.Persistence.csproj", "TicketMapper.Infrastructure.Persistence/"]
 # Repeat the COPY command for other projects that your WebApi depends on
 RUN dotnet restore "TicketMapper.WebApi/TicketMapper.WebApi.csproj"
 COPY . .
