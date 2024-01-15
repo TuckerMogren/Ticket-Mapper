@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO.Abstractions;
+using Google.Apis.Drive.v3;
 using Infrastructure.DocumentService;
 using Infrastructure.DocumentService.Interfaces;
 using Infrastructure.Persistence.Repositories;
@@ -8,6 +9,7 @@ using TicketMapper.Application.Commands;
 using TicketMapper.Application.IntegrationEventHandlers;
 using TicketMapper.Application.Queries;
 using TicketMapper.Domain.Interfaces.Repositories;
+using TicketMapper.Domain.Interfaces.Settings;
 using TicketMapper.Domain.Notifications;
 
 namespace TicketMapper.WebApi.Configs;
@@ -15,7 +17,7 @@ namespace TicketMapper.WebApi.Configs;
 [ExcludeFromCodeCoverage]
 public static class ConfigureDependencies
 {
-    public static void DependencyConfiguration(this IServiceCollection services)
+    public static void DependencyConfiguration(this IServiceCollection services, IApplicationSettings applicationSettings)
     {
         //Repositories
         services.AddTransient<IGoogleDrive, GoogleDrive>();

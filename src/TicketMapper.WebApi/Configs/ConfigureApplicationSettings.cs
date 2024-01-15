@@ -10,10 +10,7 @@ public static class ConfigureApplicationSettings
 {
     public static IApplicationSettings AppSettingsConfiguration(this IConfiguration config)
     {
-        if(config is null)
-        {
-            throw new ArgumentNullException(nameof(config));
-        }
+        ArgumentNullException.ThrowIfNull(config);
 
         var applicationSettings = new ApplicationSettings();
 

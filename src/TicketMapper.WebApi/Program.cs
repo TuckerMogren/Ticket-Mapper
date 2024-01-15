@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi.Models;
 using TicketMapper.WebApi.Configs;
 using Serilog;
-using Serilog.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,12 +22,12 @@ Log.Logger.Information($"Application is starting...");
 
 
 // Continue with your service and application setup
+var appSettings = configuration.AppSettingsConfiguration();
+builder.Services.DependencyConfiguration(appSettings);
+builder.Services.AddGoogleDriveConfiguration(appSettings);
 builder.Services.ConfigureMediatR();
-//builder.Services.DependencyConfiguration();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-var appSettings = configuration.AppSettingsConfiguration();
-builder.Services.AddGoogleDriveConfiguration(appSettings);
 builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(c =>
 {

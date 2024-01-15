@@ -8,11 +8,11 @@ namespace TicketMapper.WebApi.Configs
 {
     public static class ConfigureGoogleDrive
     {
-        public static void AddGoogleDriveConfiguration(this IServiceCollection services, IApplicationSettings applicationSettings)
+        public static IServiceCollection AddGoogleDriveConfiguration(this IServiceCollection services, IApplicationSettings applicationSettings)
         {
-            services.AddSingleton(async provider =>
+            return services.AddSingleton(x =>
             {
-                var credential = await GetUserCredentialAsync();
+                var credential =  GetUserCredentialAsync().Result;
                 return new DriveService(new BaseClientService.Initializer()
                 {
                     HttpClientInitializer = credential,
