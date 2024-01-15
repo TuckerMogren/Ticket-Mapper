@@ -13,6 +13,7 @@
   <ItemGroup>
     <PackageReference Include="Google.Apis.Drive.v3" Version="1.65.0.3256" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Configuration.ConfigurationBuilders.UserSecrets" Version="3.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.0" />
     <PackageReference Include="Serilog" Version="3.1.1" />
@@ -31,12 +32,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure.DocumentService\Infrastructure.DocumentService.csproj" />
     <ProjectReference Include="..\Infrastructure.Persistence\Infrastructure.Persistence.csproj" />
-    <ProjectReference Include="..\TicketMapper.Application\TicketMapper.Application.csproj">
-      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-    </ProjectReference>
-    <ProjectReference Include="..\TicketMapper.Domain\TicketMapper.Domain.csproj">
-      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-    </ProjectReference>
+    <ProjectReference Include="..\TicketMapper.Application\TicketMapper.Application.csproj"/>
+    <ProjectReference Include="..\TicketMapper.Domain\TicketMapper.Domain.csproj"/>
   </ItemGroup>
   <ItemGroup>
     <None Remove="Input Files\" />
