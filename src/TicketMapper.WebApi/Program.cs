@@ -1,5 +1,6 @@
 ﻿using Microsoft.OpenApi.Models;
 using TicketMapper.WebApi.Configs;
+using TicketMapper.WebApi.Settings; // Added for GoogleDriveSettings
 using Serilog;
 using Serilog.Core;
 
@@ -25,6 +26,9 @@ builder.Services.AddSwaggerGen(c =>
     c.EnableAnnotations();
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Document API", Version = "v1" });
 });
+
+// Configure GoogleDriveSettings
+builder.Services.Configure<GoogleDriveSettings>(builder.Configuration.GetSection("GoogleDriveSettings"));
 
 var app = builder.Build();
 
