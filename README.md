@@ -1,77 +1,40 @@
-# Ticket-Mapper-Dev Project
+# Ticket Mapper
 
-## Description
-Ticket-Mapper is a robust .NET application that was created to streamline the process of creating ticket for the [Lake George Alumni Association (LGAA)](https://lgalumni.com) raffle that took place in the fall of 2023. This project is structured with a clear separation of concerns, dividing the application into domain, application, infrastructure, and presentation layers, each with dedicated test projects to ensure stability and performance.
+Ticket Mapper is a .NET 8 API created for the Lake George Alumni Association's
+fall 2023 raffle. It places sequential numbers onto a ticket image and returns a
+downloadable Word document. Swagger is the development interface; this repository
+does not contain a separate frontend.
 
----
+## Documentation
 
-## Installation and Setup
+The application context package starts at **[context/index.md](context/index.md)**.
+AI agents should read **[context/agents.md](context/agents.md)** first; root
+`AGENTS.md` and `CLAUDE.md` both point there.
 
-### Prerequisites:
-- .NET [8.0]
+- [Purpose and usage](context/docs/overview-and-usage.md)
+- [Architecture and request flow](context/docs/architecture.md)
+- [Local setup and testing](context/docs/development.md)
+- [API contract](context/docs/api.md)
+- [Configuration](context/docs/configuration.md)
+- [Information security](context/docs/security.md)
+- [Deployment](context/docs/deployment.md)
+- [Operations and troubleshooting](context/docs/operations.md)
 
-### Setting up the environment:
-1. Clone the repository to your local machine.
-2. Navigate to the project's root directory.
-3. Fill out the application secrets.
-4. Set the Web API project as startup project.
-5. Run and communcaite with API using swagger.
+## Current build status
 
----
+The reviewed `dev` baseline references two infrastructure `.csproj` files that are
+not committed. A clean solution restore therefore fails with `MSB3202`. See
+[known issues](context/docs/known-issues.md) before following the setup guide.
+Docker Compose is a development scaffold, not a verified production deployment.
 
-## Running the Project
+## Contributing
 
-### Building the Project:
-1. Open the `TicketMapper.sln` in your preferred IDE.
-2. Restore the NuGet packages.
-3. Build the solution to verify everything is set up correctly.
-
-### Running the Application:
-1. Set `TicketMapper.WebApi` as the startup project.
-2. Run the application. This should start the web server and make the API accessible.
-
----
-
-## Testing
-
-### Running the Tests:
-- Navigate to the test directories (`TicketMapper.Test.Application`, `TicketMapper.Test.Domain`, `TicketMapper.Test.WebApi`).
-- Use the test runner in your IDE or a CLI tool to run the tests.
-- Ensure all tests pass to verify system integrity.
-
----
-
-## Project Structure Overview
-
-- **TicketMapper.Application**: Contains application logic and orchestrates domain and infrastructure interactions.
-- **TicketMapper.Domain**: Defines the business models and rules.
-- **TicketMapper.Infrastructure**: 
-  - **FileIO**: Manages file input/output operations.
-  - **Document**: Handles document processing tasks.
-- **TicketMapper.WebApi**: Exposes the application's functionality over HTTP.
-- **Test Projects**: Ensure the reliability and correctness of the application through automated tests.
-
----
-
-## Contribution Guidelines
-
-To contribute to Ticket-Mapper:
-1. Fork the repository.
-2. Create a feature branch.
-3. Make your changes and write tests to ensure they work and don't break existing features.
-4. Submit a pull request with a clear list of what you've done.
-
-
----
-
-## Docker Commands
-
-To run APIs via Docker all you need to do is run the command `docker compose up -d` from the repo root.
-This will create a docker container with rabbitmq and the webapi running.
-
-
----
+Create a branch from the intended base, follow the [agent guide](context/agents.md),
+make a focused change, and run the relevant checks in the
+[development guide](context/docs/development.md). Update affected documentation
+alongside behavior changes and report baseline blockers separately from regressions.
 
 ## License
 
-This project is licensed under the [License Name] - see the `LICENSE` file for details.
+The repository includes the GNU General Public License, version 3 text in
+[LICENSE](LICENSE).
