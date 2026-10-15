@@ -15,7 +15,7 @@ second case-variant copy.
 Read [index.md](index.md) for topic navigation, then
 [known issues](docs/known-issues.md) before attempting a build or deployment.
 For top-to-bottom architecture documentation, start with the
-[Wally / Lenscape model](docs/architecture-model.md). It links actor, runtime,
+[architecture model](docs/architecture-model.md). It links actor, runtime,
 component, sequence and traceability views with stable IDs and explicit status
 labels. Preserve the distinction between implemented source and verified deployment.
 Documentation reflects source reviewed on **2026-10-14**, based on `origin/dev`

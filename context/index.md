@@ -11,7 +11,7 @@ Baseline: `origin/dev` at `5cfca982c59cd3afd3c0101a0dcc0b257a57a297`, reviewed
 | --- | --- |
 | [Overview and usage](docs/overview-and-usage.md) | What is it for? How do I generate, review, and print tickets? |
 | [Architecture](docs/architecture.md) | What are the layers, dependencies, and request lifecycle? |
-| [Architecture model for Wally / Lenscape](docs/architecture-model.md) | How do the top-to-bottom views, IDs, statuses and system boundary fit together? |
+| [Architecture model](docs/architecture-model.md) | How do the top-to-bottom views, IDs, statuses and system boundary fit together? |
 | [Actors and use cases](docs/actors-and-use-cases.md) | Who interacts with the app, for what goals, and which activities are manual? |
 | [Runtime and deployment view](docs/runtime-view.md) | Which processes, hosts, ports, resources and trust boundaries exist or remain unverified? |
 | [Component map and DI](docs/component-map.md) | Which classes implement each responsibility, contract and dependency? |
@@ -33,9 +33,9 @@ Baseline: `origin/dev` at `5cfca982c59cd3afd3c0101a0dcc0b257a57a297`, reviewed
 - **Use the app:** overview and usage → API → operations.
 - **Deploy or review security:** configuration → security → deployment → operations.
 - **Change ticket output:** data and rendering → API → development.
-- **Document in Lenscape:** architecture model → actors → runtime → components →
-  sequences → traceability. Preserve status labels and evidence gaps; no Lenscape
-  import schema or live production architecture has been verified.
+- **Explore the architecture:** architecture model → actors → runtime → components →
+  sequences → traceability. Preserve status labels and evidence gaps; live
+  production architecture has not been verified.
 
 ## Evidence and maintenance
 

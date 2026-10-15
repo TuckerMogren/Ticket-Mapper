@@ -56,7 +56,7 @@ the listed evidence is obtained. The source-based diagrams can be used now.
 | Drive use | Decision to enable/remove; explicit caller, account grant/scope and token storage without secret values | C10/C11/E01 optional status and UC07 evidence. |
 | RabbitMQ use | Decision to remove scaffold or evidence of new producer/consumer/queue code | R02 edges; do not add a business edge without implementation. |
 | Release and recovery | Real CI/release process, rollback artifact and exercised recovery results | UC05 and P04 if implemented; deployment/operations docs. |
-| Lenscape interchange requirements | Required schema/template, supported diagram format, import or review result | Tool-specific export/mapping; do not claim compatibility beforehand. |
+| Architecture interchange requirements | Target schema/template, supported diagram format, import or review result | Tool-specific export/mapping; do not claim compatibility beforehand. |
 
 ## Updating this model
 

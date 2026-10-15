@@ -76,7 +76,7 @@ source baseline. Across the expanded documentation, 22 Markdown files and 246
 relative links passed target/exact-case and balanced-fence checks; all 51 model IDs
 matched the architecture catalogs. All eight Mermaid diagrams (seven new, one
 existing) passed Mermaid syntax parsing. This validates syntax, not visual layout
-in Lenscape or successful model import. Application tests and runtime checks were
+in a particular viewer or successful model import. Application tests and runtime checks were
 not repeated for this documentation-only expansion; the existing restore blocker
 remains unchanged.
 

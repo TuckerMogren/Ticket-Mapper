@@ -13,7 +13,7 @@ AI agents should read **[context/agents.md](context/agents.md)** first; root
 
 - [Purpose and usage](context/docs/overview-and-usage.md)
 - [Architecture and request flow](context/docs/architecture.md)
-- [Actor-to-component architecture for Wally / Lenscape](context/docs/architecture-model.md)
+- [Actor-to-component architecture](context/docs/architecture-model.md)
 - [Local setup and testing](context/docs/development.md)
 - [API contract](context/docs/api.md)
 - [Configuration](context/docs/configuration.md)

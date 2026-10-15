@@ -1,12 +1,10 @@
-# Architecture model: entry point for Wally / Lenscape
+# Architecture model
 
 [Context index](../index.md) · [Implementation overview](architecture.md)
 
 This is a source-grounded, tool-neutral model of Ticket Mapper, from actors to
-runtime components. It is intended to let Wally reconstruct the application's
-architecture in Lenscape without guessing relationships. No Lenscape schema,
-importer, or Wally-specific instructions have been supplied or tested. This is
-documentation input, not a claim of a successful Lenscape import.
+runtime components. It describes the application's architecture through explicit
+relationships, source references, and evidence boundaries.
 
 The implementation baseline remains `5cfca982c59cd3afd3c0101a0dcc0b257a57a297` on
 `origin/dev`. These views describe source behavior; the missing-project build
