@@ -63,11 +63,22 @@ src/TicketMapper.Infrastructure.Persistence/TicketMapper.Infrastructure.Persiste
 | `docker compose config --quiet` | Passed with a warning that the top-level `version` field is obsolete. No image/container validation implied. |
 | `git check-ignore` for missing projects, output example, credential examples | Missing projects/output matched; credential examples did not. No real secrets were read. |
 | Template metadata inspection | PNG, 1939 × 364 pixels. No generated document was rendered or printed. |
-| Documentation link and fence check | 16 Markdown files, 134 relative links; all targets exist with exact filename case, and fenced code blocks are balanced. |
+| Documentation link and fence check (initial package) | 16 Markdown files, 134 relative links; all targets exist with exact filename case, and fenced code blocks are balanced. |
 
 Application tests, HTTP requests, OAuth consent, dependency advisory checks, Docker
 build/run, and live deployment verification were not performed. See the task's
 completion report for final staged-diff/whitespace checks.
+
+### Architecture expansion verification
+
+The follow-up actor-to-component package was checked against the same application
+source baseline. Across the expanded documentation, 22 Markdown files and 246
+relative links passed target/exact-case and balanced-fence checks; all 51 model IDs
+matched the architecture catalogs. All eight Mermaid diagrams (seven new, one
+existing) passed Mermaid syntax parsing. This validates syntax, not visual layout
+in Lenscape or successful model import. Application tests and runtime checks were
+not repeated for this documentation-only expansion; the existing restore blocker
+remains unchanged.
 
 ## Suggested follow-up order
 

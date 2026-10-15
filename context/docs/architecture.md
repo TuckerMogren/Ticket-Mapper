@@ -2,6 +2,11 @@
 
 [Context index](../index.md)
 
+For the complete actor-to-component hierarchy, use the
+[architecture model](architecture-model.md), which links the system context,
+actors/use cases, runtime/deployment, component/DI, sequence and traceability views.
+This page remains the compact implementation overview.
+
 ## Runtime shape
 
 The application is one ASP.NET Core Web API process with controllers and MediatR
