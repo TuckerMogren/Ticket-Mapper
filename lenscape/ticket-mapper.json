@@ -1,1 +1,1297 @@
-{"SchemaVersion":"1.0","ModelVersion":202,"Metadata":{"Title":"Ticket Mapper","Author":"Muse Testing","ProductIntent":"","CreatedAt":"2026-10-15T02:31:30.8040221+00:00","UpdatedAt":"2026-10-15T02:42:09.0449643+00:00","DefaultView":"system"},"Actors":[{"Id":"92e37c76-47e8-45c8-8256-9e10f04c7f55","Type":"actor","Name":"Raffle operator","Description":"Chooses a ticket number range, calls the generation endpoint, downloads and prints the DOCX. Coordinates issued ranges manually; no number ledger exists in the app.","Tags":[],"Properties":{"visualShape":"pill"},"References":[]},{"Id":"51a2881d-4672-46d4-8170-d11e74d60840","Type":"actor","Name":"Developer / maintainer","Description":"Edits ticket template and code, builds and tests, manages configuration and documentation. Template changes are file changes; no upload endpoint exists.","Tags":[],"Properties":{"visualShape":"pill"},"References":[]},{"Id":"a69bdabb-8385-4e71-be1f-0ba09e7b49a7","Type":"actor","Name":"Deployment operator","Description":"Provisions the runtime, configures secrets and logging, deploys and rolls back, manually cleans orphaned files.","Tags":[],"Properties":{"visualShape":"pill"},"References":[]},{"Id":"1cc25379-84bc-418c-87d9-c2475dc35aa9","Type":"actor","Name":"Drive account owner","Description":"Grants OAuth consent for Google Drive and can revoke credentials. Only relevant if the Drive client is resolved; the ticket route never uses it.","Tags":[],"Properties":{"visualShape":"pill"},"References":[]}],"Systems":[{"Id":"75907f36-aac4-4ded-b0a5-f8fe4ba7ad18","Type":"system","Name":"Ticket Mapper","Description":"ASP.NET Core 8 Web API that stamps an inclusive integer range onto a PNG ticket template and returns a Word document. Built for the Lake George Alumni Association fall 2023 raffle. No frontend, no sales database, no payment flow, no persisted number allocation.","Tags":[],"Properties":{},"References":[]},{"Id":"826fdc8e-375c-4f6b-a188-e3f5569d4744","Type":"system","Name":"Google OAuth / Drive","Description":"External Google account and Drive service. Adapter code exists and is DI-registered, but the ticket endpoint never calls it. No live grant or API call has been verified.","Tags":[],"Properties":{},"References":[]},{"Id":"90c07571-6894-48f2-8a54-0c48f5f3ebe5","Type":"system","Name":"Document viewer / print workflow","Description":"Manual downstream activity: the operator reviews and prints the downloaded DOCX outside the app. No viewer or printer integration exists.","Tags":[],"Properties":{},"References":[]}],"Containers":[{"SystemId":"75907f36-aac4-4ded-b0a5-f8fe4ba7ad18","Id":"86d93470-dc28-4368-8c3e-c78cfb2abc95","Type":"container","Name":"API process","Description":"Single ASP.NET Core process hosting controllers, MediatR, ImageSharp rendering, file I/O, and the optional Drive adapter.","Tags":[],"Properties":{},"References":[]},{"SystemId":"75907f36-aac4-4ded-b0a5-f8fe4ba7ad18","Id":"93506f13-7969-4a47-99de-b9dd2acad510","Type":"container","Name":"RabbitMQ scaffold","Description":"RabbitMQ 3-management deployed by Docker Compose. No application producer, consumer, or queue code references it; it has no business edge to ticket generation.","Tags":[],"Properties":{},"References":[]}],"Components":[{"ContainerId":"86d93470-dc28-4368-8c3e-c78cfb2abc95","Id":"b9433e4b-9d57-4324-b220-2500ef05ea8f","Type":"component","Name":"Program.cs startup","Description":"Application entry point. Configures DI, middleware, Swagger, Serilog, and the host lifecycle.","Tags":[],"Properties":{},"References":[]},{"ContainerId":"86d93470-dc28-4368-8c3e-c78cfb2abc95","Id":"05e0aa71-80e6-473a-8bd8-9db647f4a851","Type":"component","Name":"DocumentController","Description":"GET /api/v1/Document/DownloadDocument?startNumber=\u0026endNumber=. Orchestrates create, read, cleanup notification, and returns Tickets.docx.","Tags":[],"Properties":{},"References":[]},{"ContainerId":"86d93470-dc28-4368-8c3e-c78cfb2abc95","Id":"a7c18f17-764c-4bb7-a8db-a4631ec20724","Type":"component","Name":"TestController","Description":"GET /api/v1/Test/Hello returns \u0027Hi\u0027. Reachability probe only.","Tags":[],"Properties":{},"References":[]},{"ContainerId":"86d93470-dc28-4368-8c3e-c78cfb2abc95","Id":"ae074b56-9b41-4782-90ba-4edd92bc0ffd","Type":"component","Name":"MediatR wiring","Description":"In-process Send/Publish. Handlers registered as transient; all messaging is in-process, not a message bus.","Tags":[],"Properties":{},"References":[]},{"ContainerId":"86d93470-dc28-4368-8c3e-c78cfb2abc95","Id":"49acd1f6-4585-4c59-a8db-e98221c78953","Type":"component","Name":"CreateDocumentCommandHandler","Description":"Renders tickets: loads the PNG template, resolves Arial 30, clones the template per number, draws the number at (120,290), saves ticket_\u003Cn\u003E.png, embeds into DOCX, deletes the PNG. Uses ImageSharp, OpenXML and System.IO directly.","Tags":[],"Properties":{},"References":[]},{"ContainerId":"86d93470-dc28-4368-8c3e-c78cfb2abc95","Id":"bba9cec9-7c16-49f7-b652-df9ede70da27","Type":"component","Name":"GetDocumentQueryHandler","Description":"Reads the complete DOCX into a byte array via the filesystem abstraction. Rethrows errors; does not forward the cancellation token.","Tags":[],"Properties":{},"References":[]},{"ContainerId":"86d93470-dc28-4368-8c3e-c78cfb2abc95","Id":"0698d1bc-a73b-4935-adfc-ad1b9a685fc1","Type":"component","Name":"TimeToDeleteNotificationHandler","Description":"Consumes the in-process TimeToDeleteNotification and sends a DeleteDocumentCommand. This is an in-process MediatR notification, not a message-bus event.","Tags":[],"Properties":{},"References":[]},{"ContainerId":"86d93470-dc28-4368-8c3e-c78cfb2abc95","Id":"f6822f99-3feb-4ae0-8680-7484aecdca90","Type":"component","Name":"DeleteDocumentCommandHandler","Description":"Best-effort file delete plus existence check via the filesystem abstraction. Swallows errors after logging.","Tags":[],"Properties":{},"References":[]},{"ContainerId":"86d93470-dc28-4368-8c3e-c78cfb2abc95","Id":"2ccad9b5-60c8-44ca-b707-003838bae390","Type":"component","Name":"IFileSystem abstraction","Description":"Read/delete abstraction used by the get and delete handlers only. The create handler bypasses it with direct file I/O.","Tags":[],"Properties":{},"References":[]},{"ContainerId":"86d93470-dc28-4368-8c3e-c78cfb2abc95","Id":"136bb940-fb87-48d9-9e05-9717fbc63bd9","Type":"component","Name":"GoogleDrive adapter","Description":"Upload, download, delete, list, and metadata operations against Google Drive. Implemented but unused: no ticket-route caller exists.","Tags":[],"Properties":{},"References":[]},{"ContainerId":"86d93470-dc28-4368-8c3e-c78cfb2abc95","Id":"5c769925-5a7d-4045-bc44-eece868dc3ea","Type":"component","Name":"DriveService factory \u002B OAuth","Description":"Loads client_secrets.json, requests full Drive scope, fixed user key, on-disk token cache. Blocks on .Result.","Tags":[],"Properties":{},"References":[]},{"ContainerId":"86d93470-dc28-4368-8c3e-c78cfb2abc95","Id":"1da00993-c695-4542-ac85-b01fce6e6c2b","Type":"component","Name":"Settings binder","Description":"Binds user-secrets and environment variables. The checked-in appsettings.json is NOT loaded.","Tags":[],"Properties":{},"References":[]},{"ContainerId":"86d93470-dc28-4368-8c3e-c78cfb2abc95","Id":"ec3145c2-9486-4060-a269-a1bc3d50913c","Type":"component","Name":"Serilog config","Description":"Logging configuration. The active sink is unverified.","Tags":[],"Properties":{},"References":[]},{"ContainerId":"86d93470-dc28-4368-8c3e-c78cfb2abc95","Id":"de11b899-5ff4-49ce-8336-c9fdb428e579","Type":"component","Name":"GoogleDriveRepository","Description":"Placeholder repository boundary. Injects the Drive adapter but exposes no business methods.","Tags":[],"Properties":{},"References":[]},{"ContainerId":"86d93470-dc28-4368-8c3e-c78cfb2abc95","Id":"d026fbae-eeed-46ca-b92b-3df68e3102eb","Type":"component","Name":"FileIO project","Description":"Empty infrastructure project; not referenced by the solution.","Tags":[],"Properties":{},"References":[]}],"ExternalDependencies":[{"Id":"724a0085-f968-47f2-ae54-1c7a0e4ae493","Type":"external-dependency","Name":"NuGet packages","Description":"MediatR 11.1, ImageSharp 3.0.1, DocumentFormat.OpenXml 3.0, System.IO.Abstractions 20.0.4, Google.Apis.Drive.v3, Serilog 3.1.1, Swashbuckle 6.5. No lock file; no dependency audit.","Tags":[],"Properties":{},"References":[]},{"Id":"2c533730-10ee-441f-9efa-4ca0c3084301","Type":"external-dependency","Name":"Ticket.png template","Description":"Source PNG ticket template. Numbers are stamped at coordinates (120,290) in Arial 30.","Tags":[],"Properties":{},"References":[]}],"Relationships":[{"Id":"b6b3d8a7-d836-467c-86b3-2297df453d2c","SourceId":"92e37c76-47e8-45c8-8256-9e10f04c7f55","TargetId":"75907f36-aac4-4ded-b0a5-f8fe4ba7ad18","Kind":"sync","Label":"Generates tickets (uses; HTTP)","Description":"","Direction":"outbound","Technology":"","Tags":[],"Properties":{},"References":[]},{"Id":"2f85aefd-96c8-488d-952c-c39a98d06894","SourceId":"92e37c76-47e8-45c8-8256-9e10f04c7f55","TargetId":"90c07571-6894-48f2-8a54-0c48f5f3ebe5","Kind":"sync","Label":"Reviews and prints (uses; manual)","Description":"","Direction":"outbound","Technology":"","Tags":[],"Properties":{},"References":[]},{"Id":"abf321dd-a63c-47ae-a95a-e25bb7e86579","SourceId":"51a2881d-4672-46d4-8170-d11e74d60840","TargetId":"75907f36-aac4-4ded-b0a5-f8fe4ba7ad18","Kind":"sync","Label":"Maintains source and template (uses; manual)","Description":"","Direction":"outbound","Technology":"","Tags":[],"Properties":{},"References":[]},{"Id":"2a44d515-d05b-4673-9134-70a56affaf32","SourceId":"a69bdabb-8385-4e71-be1f-0ba09e7b49a7","TargetId":"75907f36-aac4-4ded-b0a5-f8fe4ba7ad18","Kind":"sync","Label":"Deploys and configures (uses; manual)","Description":"","Direction":"outbound","Technology":"","Tags":[],"Properties":{},"References":[]},{"Id":"7d4d46d1-7c74-4b0e-a28c-fecd38ccad58","SourceId":"1cc25379-84bc-418c-87d9-c2475dc35aa9","TargetId":"826fdc8e-375c-4f6b-a188-e3f5569d4744","Kind":"sync","Label":"Grants OAuth consent (uses; OAuth 2.0)","Description":"","Direction":"outbound","Technology":"","Tags":[],"Properties":{},"References":[]},{"Id":"5d785a43-a251-449c-856e-25572ce7ef37","SourceId":"75907f36-aac4-4ded-b0a5-f8fe4ba7ad18","TargetId":"826fdc8e-375c-4f6b-a188-e3f5569d4744","Kind":"sync","Label":"Drive adapter (unused) (uses; Google Drive API v3)","Description":"","Direction":"outbound","Technology":"","Tags":[],"Properties":{},"References":[]},{"Id":"09ef38cf-28b5-4e4c-8ef6-8e1ace347bd1","SourceId":"86d93470-dc28-4368-8c3e-c78cfb2abc95","TargetId":"75907f36-aac4-4ded-b0a5-f8fe4ba7ad18","Kind":"sync","Label":"Runs inside (hosts)","Description":"","Direction":"outbound","Technology":"","Tags":[],"Properties":{},"References":[]},{"Id":"3fdfafad-4a82-4a74-9598-34a3e286d1da","SourceId":"93506f13-7969-4a47-99de-b9dd2acad510","TargetId":"75907f36-aac4-4ded-b0a5-f8fe4ba7ad18","Kind":"sync","Label":"Compose scaffold, no business edge (hosts)","Description":"","Direction":"outbound","Technology":"","Tags":[],"Properties":{},"References":[]},{"Id":"636684d9-eedf-42ba-b413-dbb22a6f9c5c","SourceId":"05e0aa71-80e6-473a-8bd8-9db647f4a851","TargetId":"ae074b56-9b41-4782-90ba-4edd92bc0ffd","Kind":"sync","Label":"Sends commands (uses; in-process)","Description":"","Direction":"outbound","Technology":"","Tags":[],"Properties":{},"References":[]},{"Id":"2841c600-6cf6-4d5f-b184-6c5cc1d31218","SourceId":"ae074b56-9b41-4782-90ba-4edd92bc0ffd","TargetId":"49acd1f6-4585-4c59-a8db-e98221c78953","Kind":"sync","Label":"Dispatches create (uses; in-process)","Description":"","Direction":"outbound","Technology":"","Tags":[],"Properties":{},"References":[]},{"Id":"eab3b8a4-9a71-4ac9-8cee-d28b2c3c1d07","SourceId":"ae074b56-9b41-4782-90ba-4edd92bc0ffd","TargetId":"bba9cec9-7c16-49f7-b652-df9ede70da27","Kind":"sync","Label":"Dispatches read (uses; in-process)","Description":"","Direction":"outbound","Technology":"","Tags":[],"Properties":{},"References":[]},{"Id":"b9b550d2-6e06-4f48-9eec-0e1e090ed92f","SourceId":"ae074b56-9b41-4782-90ba-4edd92bc0ffd","TargetId":"0698d1bc-a73b-4935-adfc-ad1b9a685fc1","Kind":"sync","Label":"Publishes cleanup notification (uses; in-process)","Description":"","Direction":"outbound","Technology":"","Tags":[],"Properties":{},"References":[]},{"Id":"73bf0d9a-3ef3-46b2-b20e-e6e14a5d7abc","SourceId":"0698d1bc-a73b-4935-adfc-ad1b9a685fc1","TargetId":"ae074b56-9b41-4782-90ba-4edd92bc0ffd","Kind":"sync","Label":"Sends delete command (uses; in-process)","Description":"","Direction":"outbound","Technology":"","Tags":[],"Properties":{},"References":[]},{"Id":"0afa1bf8-f1fb-480e-825b-20bbcc2c4ceb","SourceId":"ae074b56-9b41-4782-90ba-4edd92bc0ffd","TargetId":"f6822f99-3feb-4ae0-8680-7484aecdca90","Kind":"sync","Label":"Dispatches delete (uses; in-process)","Description":"","Direction":"outbound","Technology":"","Tags":[],"Properties":{},"References":[]},{"Id":"4b6996ae-2944-4c48-b4e1-ef22e6c008b8","SourceId":"bba9cec9-7c16-49f7-b652-df9ede70da27","TargetId":"2ccad9b5-60c8-44ca-b707-003838bae390","Kind":"sync","Label":"Reads DOCX bytes (uses)","Description":"","Direction":"outbound","Technology":"","Tags":[],"Properties":{},"References":[]},{"Id":"80aacf42-285a-41d6-83b3-e586d4cc5641","SourceId":"f6822f99-3feb-4ae0-8680-7484aecdca90","TargetId":"2ccad9b5-60c8-44ca-b707-003838bae390","Kind":"sync","Label":"Deletes file (uses)","Description":"","Direction":"outbound","Technology":"","Tags":[],"Properties":{},"References":[]},{"Id":"ea437987-6454-44a6-8c0e-8f04688fc956","SourceId":"49acd1f6-4585-4c59-a8db-e98221c78953","TargetId":"2c533730-10ee-441f-9efa-4ca0c3084301","Kind":"sync","Label":"Loads template (uses; file I/O)","Description":"","Direction":"outbound","Technology":"","Tags":[],"Properties":{},"References":[]},{"Id":"8cbfb5db-8ac6-44c1-a4a9-d9fe26c7fe90","SourceId":"136bb940-fb87-48d9-9e05-9717fbc63bd9","TargetId":"5c769925-5a7d-4045-bc44-eece868dc3ea","Kind":"sync","Label":"Authenticates via (uses)","Description":"","Direction":"outbound","Technology":"","Tags":[],"Properties":{},"References":[]},{"Id":"b61c691c-246c-46c3-8908-ede7601e871a","SourceId":"b9433e4b-9d57-4324-b220-2500ef05ea8f","TargetId":"ae074b56-9b41-4782-90ba-4edd92bc0ffd","Kind":"sync","Label":"Registers (uses)","Description":"","Direction":"outbound","Technology":"","Tags":[],"Properties":{},"References":[]},{"Id":"260c9fe1-abb0-43a4-84f8-371252991a1d","SourceId":"b9433e4b-9d57-4324-b220-2500ef05ea8f","TargetId":"1da00993-c695-4542-ac85-b01fce6e6c2b","Kind":"sync","Label":"Binds configuration (uses)","Description":"","Direction":"outbound","Technology":"","Tags":[],"Properties":{},"References":[]},{"Id":"41ef1682-7eb9-41c2-a473-5fd462697ea4","SourceId":"de11b899-5ff4-49ce-8336-c9fdb428e579","TargetId":"136bb940-fb87-48d9-9e05-9717fbc63bd9","Kind":"sync","Label":"Injects (placeholder) (uses)","Description":"","Direction":"outbound","Technology":"","Tags":[],"Properties":{},"References":[]}],"Flows":[{"Id":"82b7ea7f-efa2-4fd3-8309-4bbd3d9ef721","Name":"Ticket generation and cleanup","Description":"Operator requests a number range; the API renders each ticket, assembles the DOCX, returns it, then deletes the server-side file.","Intent":"","Tags":[],"Properties":{},"Steps":[{"Id":"51258195-40bf-44d5-825a-02cc940c4485","Order":1,"ActorId":"92e37c76-47e8-45c8-8256-9e10f04c7f55","SourceId":null,"TargetId":"05e0aa71-80e6-473a-8bd8-9db647f4a851","RelationshipId":null,"Label":"Request ticket range","Description":"Operator calls GET /api/v1/Document/DownloadDocument with startNumber and endNumber.","Intent":null,"Verification":"needs-review","References":null},{"Id":"62416fa1-3a01-4b3a-8397-97e74c41075b","Order":2,"ActorId":null,"SourceId":"05e0aa71-80e6-473a-8bd8-9db647f4a851","TargetId":"49acd1f6-4585-4c59-a8db-e98221c78953","RelationshipId":null,"Label":"Dispatch create command","Description":"Controller builds ticket details and sends CreateDocumentCommand via MediatR.","Intent":null,"Verification":"needs-review","References":null},{"Id":"42a46d74-6575-4b46-8caf-a9bb02dde6b6","Order":3,"ActorId":null,"SourceId":"49acd1f6-4585-4c59-a8db-e98221c78953","TargetId":"2c533730-10ee-441f-9efa-4ca0c3084301","RelationshipId":"ea437987-6454-44a6-8c0e-8f04688fc956","Label":"Render tickets","Description":"Handler clones the PNG template per number, draws the number, embeds each PNG into the DOCX, deletes the PNG.","Intent":null,"Verification":"needs-review","References":null},{"Id":"db4fca85-eade-43b7-b1d0-f3e56ddeed64","Order":4,"ActorId":null,"SourceId":"05e0aa71-80e6-473a-8bd8-9db647f4a851","TargetId":"bba9cec9-7c16-49f7-b652-df9ede70da27","RelationshipId":null,"Label":"Read DOCX bytes","Description":"Controller reads the complete DOCX into memory via the get handler.","Intent":null,"Verification":"needs-review","References":null},{"Id":"ccfa1ce2-ff5e-43d4-a2c6-8d2464e532a9","Order":5,"ActorId":null,"SourceId":"05e0aa71-80e6-473a-8bd8-9db647f4a851","TargetId":"0698d1bc-a73b-4935-adfc-ad1b9a685fc1","RelationshipId":null,"Label":"Publish cleanup notification","Description":"Controller publishes the in-process TimeToDeleteNotification.","Intent":null,"Verification":"needs-review","References":null},{"Id":"4edd6944-3e48-4f24-9431-e2448322ca58","Order":6,"ActorId":null,"SourceId":"0698d1bc-a73b-4935-adfc-ad1b9a685fc1","TargetId":"f6822f99-3feb-4ae0-8680-7484aecdca90","RelationshipId":null,"Label":"Delete server file","Description":"Notification handler sends DeleteDocumentCommand; the handler best-effort deletes the DOCX.","Intent":null,"Verification":"needs-review","References":null},{"Id":"5131fffc-860f-412b-be58-507ee6b38ac5","Order":7,"ActorId":null,"SourceId":"05e0aa71-80e6-473a-8bd8-9db647f4a851","TargetId":"92e37c76-47e8-45c8-8256-9e10f04c7f55","RelationshipId":null,"Label":"Return Tickets.docx","Description":"Controller returns HTTP 200 with the buffered document.","Intent":null,"Verification":"needs-review","References":null}]},{"Id":"85b254ab-64b1-4ebc-8e63-9e0eafb9ba2c","Name":"Rendering or read failure","Description":"Per-ticket exceptions are caught and logged while the loop continues, so a 200 response can carry an incomplete document.","Intent":"","Tags":[],"Properties":{},"Steps":[{"Id":"f2c49665-1abf-424c-b3b9-4ea024be60ae","Order":1,"ActorId":null,"SourceId":"49acd1f6-4585-4c59-a8db-e98221c78953","TargetId":null,"RelationshipId":null,"Label":"Ticket render throws","Description":"A per-ticket exception is caught, logged, and the loop continues with the next number.","Intent":null,"Verification":"needs-review","References":null},{"Id":"ee79422d-2064-4937-9f8c-20df7f404713","Order":2,"ActorId":null,"SourceId":"05e0aa71-80e6-473a-8bd8-9db647f4a851","TargetId":"92e37c76-47e8-45c8-8256-9e10f04c7f55","RelationshipId":null,"Label":"Incomplete DOCX returned as 200","Description":"The assembled document may be missing tickets but is still returned successfully.","Intent":null,"Verification":"needs-review","References":null},{"Id":"2fd92c13-596e-424e-a213-a42544485762","Order":3,"ActorId":null,"SourceId":"bba9cec9-7c16-49f7-b652-df9ede70da27","TargetId":"92e37c76-47e8-45c8-8256-9e10f04c7f55","RelationshipId":null,"Label":"Read failure becomes 500","Description":"If the DOCX cannot be read, the get handler rethrows and the controller returns 500.","Intent":null,"Verification":"needs-review","References":null}]},{"Id":"7526eb2b-6240-4bac-82fc-f71211cad2a6","Name":"Request cancellation","Description":"The render loop has no explicit cancellation check; a disconnected client may receive no response.","Intent":"","Tags":[],"Properties":{},"Steps":[{"Id":"1eaba542-b667-4dd0-9549-d3c9ecb85a08","Order":1,"ActorId":"92e37c76-47e8-45c8-8256-9e10f04c7f55","SourceId":null,"TargetId":"49acd1f6-4585-4c59-a8db-e98221c78953","RelationshipId":null,"Label":"Client disconnects mid-render","Description":"No explicit cancellation check exists in the ticket loop.","Intent":null,"Verification":"needs-review","References":null},{"Id":"4c5d1c02-269d-4c6f-aff9-5a3364896417","Order":2,"ActorId":null,"SourceId":"49acd1f6-4585-4c59-a8db-e98221c78953","TargetId":"92e37c76-47e8-45c8-8256-9e10f04c7f55","RelationshipId":null,"Label":"Cancellation surfaces as 400/500","Description":"Escaped cancellation maps to 400; other failures to 500.","Intent":null,"Verification":"needs-review","References":null}]},{"Id":"5a4fe923-9248-44f4-a081-29fc5820ac61","Name":"Cleanup failure leaves orphans","Description":"The delete handler swallows failures after logging; PNG orphans from render errors are never cleaned.","Intent":"","Tags":[],"Properties":{},"Steps":[{"Id":"4d4fd59c-6149-417b-afa0-dfa138289b5a","Order":1,"ActorId":null,"SourceId":"f6822f99-3feb-4ae0-8680-7484aecdca90","TargetId":"2ccad9b5-60c8-44ca-b707-003838bae390","RelationshipId":"80aacf42-285a-41d6-83b3-e586d4cc5641","Label":"Delete fails silently","Description":"DeleteDocumentCommandHandler logs the failure and swallows it.","Intent":null,"Verification":"needs-review","References":null},{"Id":"25955c0d-bf5d-403b-ae93-7778ebac1dce","Order":2,"ActorId":null,"SourceId":"49acd1f6-4585-4c59-a8db-e98221c78953","TargetId":"a69bdabb-8385-4e71-be1f-0ba09e7b49a7","RelationshipId":null,"Label":"Orphan PNGs accumulate","Description":"Intermediate PNGs from failed renders are never removed by the DOCX cleanup path.","Intent":null,"Verification":"needs-review","References":null}]}],"Views":{"75907f36-aac4-4ded-b0a5-f8fe4ba7ad18":{"Position":{"X":160,"Y":120},"ScopedPositions":{"system:global":{"X":160,"Y":120}}},"826fdc8e-375c-4f6b-a188-e3f5569d4744":{"Position":{"X":440,"Y":120},"ScopedPositions":{"system:global":{"X":440,"Y":120}}},"90c07571-6894-48f2-8a54-0c48f5f3ebe5":{"Position":{"X":720,"Y":120},"ScopedPositions":{"system:global":{"X":720,"Y":120}}},"92e37c76-47e8-45c8-8256-9e10f04c7f55":{"Position":{"X":1000,"Y":120},"ScopedPositions":{"system:global":{"X":1000,"Y":120}}},"51a2881d-4672-46d4-8170-d11e74d60840":{"Position":{"X":160,"Y":300},"ScopedPositions":{"system:global":{"X":160,"Y":300}}},"a69bdabb-8385-4e71-be1f-0ba09e7b49a7":{"Position":{"X":440,"Y":300},"ScopedPositions":{"system:global":{"X":440,"Y":300}}},"1cc25379-84bc-418c-87d9-c2475dc35aa9":{"Position":{"X":720,"Y":300},"ScopedPositions":{"system:global":{"X":720,"Y":300}}},"724a0085-f968-47f2-ae54-1c7a0e4ae493":{"Position":{"X":1000,"Y":300},"ScopedPositions":{"system:global":{"X":1000,"Y":300}}},"2c533730-10ee-441f-9efa-4ca0c3084301":{"Position":{"X":160,"Y":480},"ScopedPositions":{"system:global":{"X":160,"Y":480}}},"86d93470-dc28-4368-8c3e-c78cfb2abc95":{"Position":{"X":160,"Y":120},"ScopedPositions":{"container:75907f36-aac4-4ded-b0a5-f8fe4ba7ad18":{"X":160,"Y":120}}},"93506f13-7969-4a47-99de-b9dd2acad510":{"Position":{"X":440,"Y":120},"ScopedPositions":{"container:75907f36-aac4-4ded-b0a5-f8fe4ba7ad18":{"X":440,"Y":120}}},"b9433e4b-9d57-4324-b220-2500ef05ea8f":{"Position":{"X":160,"Y":120},"ScopedPositions":{"component:86d93470-dc28-4368-8c3e-c78cfb2abc95":{"X":160,"Y":120}}},"05e0aa71-80e6-473a-8bd8-9db647f4a851":{"Position":{"X":440,"Y":120},"ScopedPositions":{"component:86d93470-dc28-4368-8c3e-c78cfb2abc95":{"X":440,"Y":120}}},"a7c18f17-764c-4bb7-a8db-a4631ec20724":{"Position":{"X":720,"Y":120},"ScopedPositions":{"component:86d93470-dc28-4368-8c3e-c78cfb2abc95":{"X":720,"Y":120}}},"ae074b56-9b41-4782-90ba-4edd92bc0ffd":{"Position":{"X":1000,"Y":120},"ScopedPositions":{"component:86d93470-dc28-4368-8c3e-c78cfb2abc95":{"X":1000,"Y":120}}},"49acd1f6-4585-4c59-a8db-e98221c78953":{"Position":{"X":160,"Y":300},"ScopedPositions":{"component:86d93470-dc28-4368-8c3e-c78cfb2abc95":{"X":160,"Y":300}}},"bba9cec9-7c16-49f7-b652-df9ede70da27":{"Position":{"X":440,"Y":300},"ScopedPositions":{"component:86d93470-dc28-4368-8c3e-c78cfb2abc95":{"X":440,"Y":300}}},"0698d1bc-a73b-4935-adfc-ad1b9a685fc1":{"Position":{"X":720,"Y":300},"ScopedPositions":{"component:86d93470-dc28-4368-8c3e-c78cfb2abc95":{"X":720,"Y":300}}},"f6822f99-3feb-4ae0-8680-7484aecdca90":{"Position":{"X":1000,"Y":300},"ScopedPositions":{"component:86d93470-dc28-4368-8c3e-c78cfb2abc95":{"X":1000,"Y":300}}},"2ccad9b5-60c8-44ca-b707-003838bae390":{"Position":{"X":160,"Y":480},"ScopedPositions":{"component:86d93470-dc28-4368-8c3e-c78cfb2abc95":{"X":160,"Y":480}}},"136bb940-fb87-48d9-9e05-9717fbc63bd9":{"Position":{"X":440,"Y":480},"ScopedPositions":{"component:86d93470-dc28-4368-8c3e-c78cfb2abc95":{"X":440,"Y":480}}},"5c769925-5a7d-4045-bc44-eece868dc3ea":{"Position":{"X":720,"Y":480},"ScopedPositions":{"component:86d93470-dc28-4368-8c3e-c78cfb2abc95":{"X":720,"Y":480}}},"1da00993-c695-4542-ac85-b01fce6e6c2b":{"Position":{"X":1000,"Y":480},"ScopedPositions":{"component:86d93470-dc28-4368-8c3e-c78cfb2abc95":{"X":1000,"Y":480}}},"ec3145c2-9486-4060-a269-a1bc3d50913c":{"Position":{"X":160,"Y":660},"ScopedPositions":{"component:86d93470-dc28-4368-8c3e-c78cfb2abc95":{"X":160,"Y":660}}},"de11b899-5ff4-49ce-8336-c9fdb428e579":{"Position":{"X":440,"Y":660},"ScopedPositions":{"component:86d93470-dc28-4368-8c3e-c78cfb2abc95":{"X":440,"Y":660}}},"d026fbae-eeed-46ca-b92b-3df68e3102eb":{"Position":{"X":720,"Y":660},"ScopedPositions":{"component:86d93470-dc28-4368-8c3e-c78cfb2abc95":{"X":720,"Y":660}}}},"References":[],"Tags":[]}
+{
+  "schemaVersion": "1.0",
+  "modelVersion": 204,
+  "metadata": {
+    "title": "Ticket Mapper",
+    "author": "Muse Testing",
+    "productIntent": "",
+    "createdAt": "2026-10-15T02:31:30.8040221+00:00",
+    "updatedAt": "2026-10-16T23:48:58.6838116+00:00",
+    "defaultView": "system"
+  },
+  "actors": [
+    {
+      "id": "92e37c76-47e8-45c8-8256-9e10f04c7f55",
+      "type": "actor",
+      "name": "Raffle operator",
+      "description": "Chooses a ticket number range, calls the generation endpoint, downloads and prints the DOCX. Coordinates issued ranges manually; no number ledger exists in the app.",
+      "tags": [],
+      "properties": {
+        "visualShape": "pill"
+      },
+      "references": []
+    },
+    {
+      "id": "51a2881d-4672-46d4-8170-d11e74d60840",
+      "type": "actor",
+      "name": "Developer / maintainer",
+      "description": "Edits ticket template and code, builds and tests, manages configuration and documentation. Template changes are file changes; no upload endpoint exists.",
+      "tags": [],
+      "properties": {
+        "visualShape": "pill"
+      },
+      "references": []
+    },
+    {
+      "id": "a69bdabb-8385-4e71-be1f-0ba09e7b49a7",
+      "type": "actor",
+      "name": "Deployment operator",
+      "description": "Provisions the runtime, configures secrets and logging, deploys and rolls back, manually cleans orphaned files.",
+      "tags": [],
+      "properties": {
+        "visualShape": "pill"
+      },
+      "references": []
+    },
+    {
+      "id": "1cc25379-84bc-418c-87d9-c2475dc35aa9",
+      "type": "actor",
+      "name": "Drive account owner",
+      "description": "Grants OAuth consent for Google Drive and can revoke credentials. Only relevant if the Drive client is resolved; the ticket route never uses it.",
+      "tags": [],
+      "properties": {
+        "visualShape": "pill"
+      },
+      "references": []
+    }
+  ],
+  "systems": [
+    {
+      "id": "75907f36-aac4-4ded-b0a5-f8fe4ba7ad18",
+      "type": "system",
+      "name": "Ticket Mapper",
+      "description": "ASP.NET Core 8 Web API that stamps an inclusive integer range onto a PNG ticket template and returns a Word document. Built for the Lake George Alumni Association fall 2023 raffle. No frontend, no sales database, no payment flow, no persisted number allocation.",
+      "tags": [],
+      "properties": {},
+      "references": []
+    },
+    {
+      "id": "826fdc8e-375c-4f6b-a188-e3f5569d4744",
+      "type": "system",
+      "name": "Google OAuth / Drive",
+      "description": "External Google account and Drive service. Adapter code exists and is DI-registered, but the ticket endpoint never calls it. No live grant or API call has been verified.",
+      "tags": [],
+      "properties": {},
+      "references": []
+    },
+    {
+      "id": "90c07571-6894-48f2-8a54-0c48f5f3ebe5",
+      "type": "system",
+      "name": "Document viewer / print workflow",
+      "description": "Manual downstream activity: the operator reviews and prints the downloaded DOCX outside the app. No viewer or printer integration exists.",
+      "tags": [],
+      "properties": {},
+      "references": []
+    }
+  ],
+  "containers": [
+    {
+      "systemId": "75907f36-aac4-4ded-b0a5-f8fe4ba7ad18",
+      "id": "86d93470-dc28-4368-8c3e-c78cfb2abc95",
+      "type": "container",
+      "name": "API process",
+      "description": "Single ASP.NET Core process hosting controllers, MediatR, ImageSharp rendering, file I/O, and the optional Drive adapter.",
+      "tags": [],
+      "properties": {},
+      "references": []
+    },
+    {
+      "systemId": "75907f36-aac4-4ded-b0a5-f8fe4ba7ad18",
+      "id": "93506f13-7969-4a47-99de-b9dd2acad510",
+      "type": "container",
+      "name": "RabbitMQ scaffold",
+      "description": "RabbitMQ 3-management deployed by Docker Compose. No application producer, consumer, or queue code references it; it has no business edge to ticket generation.",
+      "tags": [],
+      "properties": {},
+      "references": []
+    }
+  ],
+  "components": [
+    {
+      "containerId": "86d93470-dc28-4368-8c3e-c78cfb2abc95",
+      "id": "b9433e4b-9d57-4324-b220-2500ef05ea8f",
+      "type": "component",
+      "name": "Program.cs startup",
+      "description": "Application entry point. Configures DI, middleware, Swagger, Serilog, and the host lifecycle.",
+      "tags": [],
+      "properties": {},
+      "references": []
+    },
+    {
+      "containerId": "86d93470-dc28-4368-8c3e-c78cfb2abc95",
+      "id": "05e0aa71-80e6-473a-8bd8-9db647f4a851",
+      "type": "component",
+      "name": "DocumentController",
+      "description": "GET /api/v1/Document/DownloadDocument?startNumber=\u0026endNumber=. Orchestrates create, read, cleanup notification, and returns Tickets.docx.",
+      "tags": [],
+      "properties": {},
+      "references": []
+    },
+    {
+      "containerId": "86d93470-dc28-4368-8c3e-c78cfb2abc95",
+      "id": "a7c18f17-764c-4bb7-a8db-a4631ec20724",
+      "type": "component",
+      "name": "TestController",
+      "description": "GET /api/v1/Test/Hello returns \u0027Hi\u0027. Reachability probe only.",
+      "tags": [],
+      "properties": {},
+      "references": []
+    },
+    {
+      "containerId": "86d93470-dc28-4368-8c3e-c78cfb2abc95",
+      "id": "ae074b56-9b41-4782-90ba-4edd92bc0ffd",
+      "type": "component",
+      "name": "MediatR wiring",
+      "description": "In-process Send/Publish. Handlers registered as transient; all messaging is in-process, not a message bus.",
+      "tags": [],
+      "properties": {},
+      "references": []
+    },
+    {
+      "containerId": "86d93470-dc28-4368-8c3e-c78cfb2abc95",
+      "id": "49acd1f6-4585-4c59-a8db-e98221c78953",
+      "type": "component",
+      "name": "CreateDocumentCommandHandler",
+      "description": "Renders tickets: loads the PNG template, resolves Arial 30, clones the template per number, draws the number at (120,290), saves ticket_\u003Cn\u003E.png, embeds into DOCX, deletes the PNG. Uses ImageSharp, OpenXML and System.IO directly.",
+      "tags": [],
+      "properties": {},
+      "references": []
+    },
+    {
+      "containerId": "86d93470-dc28-4368-8c3e-c78cfb2abc95",
+      "id": "bba9cec9-7c16-49f7-b652-df9ede70da27",
+      "type": "component",
+      "name": "GetDocumentQueryHandler",
+      "description": "Reads the complete DOCX into a byte array via the filesystem abstraction. Rethrows errors; does not forward the cancellation token.",
+      "tags": [],
+      "properties": {},
+      "references": []
+    },
+    {
+      "containerId": "86d93470-dc28-4368-8c3e-c78cfb2abc95",
+      "id": "0698d1bc-a73b-4935-adfc-ad1b9a685fc1",
+      "type": "component",
+      "name": "TimeToDeleteNotificationHandler",
+      "description": "Consumes the in-process TimeToDeleteNotification and sends a DeleteDocumentCommand. This is an in-process MediatR notification, not a message-bus event.",
+      "tags": [],
+      "properties": {},
+      "references": []
+    },
+    {
+      "containerId": "86d93470-dc28-4368-8c3e-c78cfb2abc95",
+      "id": "f6822f99-3feb-4ae0-8680-7484aecdca90",
+      "type": "component",
+      "name": "DeleteDocumentCommandHandler",
+      "description": "Best-effort file delete plus existence check via the filesystem abstraction. Swallows errors after logging.",
+      "tags": [],
+      "properties": {},
+      "references": []
+    },
+    {
+      "containerId": "86d93470-dc28-4368-8c3e-c78cfb2abc95",
+      "id": "2ccad9b5-60c8-44ca-b707-003838bae390",
+      "type": "component",
+      "name": "IFileSystem abstraction",
+      "description": "Read/delete abstraction used by the get and delete handlers only. The create handler bypasses it with direct file I/O.",
+      "tags": [],
+      "properties": {},
+      "references": []
+    },
+    {
+      "containerId": "86d93470-dc28-4368-8c3e-c78cfb2abc95",
+      "id": "136bb940-fb87-48d9-9e05-9717fbc63bd9",
+      "type": "component",
+      "name": "GoogleDrive adapter",
+      "description": "Upload, download, delete, list, and metadata operations against Google Drive. Implemented but unused: no ticket-route caller exists.",
+      "tags": [],
+      "properties": {},
+      "references": []
+    },
+    {
+      "containerId": "86d93470-dc28-4368-8c3e-c78cfb2abc95",
+      "id": "5c769925-5a7d-4045-bc44-eece868dc3ea",
+      "type": "component",
+      "name": "DriveService factory \u002B OAuth",
+      "description": "Loads client_secrets.json, requests full Drive scope, fixed user key, on-disk token cache. Blocks on .Result.",
+      "tags": [],
+      "properties": {},
+      "references": []
+    },
+    {
+      "containerId": "86d93470-dc28-4368-8c3e-c78cfb2abc95",
+      "id": "1da00993-c695-4542-ac85-b01fce6e6c2b",
+      "type": "component",
+      "name": "Settings binder",
+      "description": "Binds user-secrets and environment variables. The checked-in appsettings.json is NOT loaded.",
+      "tags": [],
+      "properties": {},
+      "references": []
+    },
+    {
+      "containerId": "86d93470-dc28-4368-8c3e-c78cfb2abc95",
+      "id": "ec3145c2-9486-4060-a269-a1bc3d50913c",
+      "type": "component",
+      "name": "Serilog config",
+      "description": "Logging configuration. The active sink is unverified.",
+      "tags": [],
+      "properties": {},
+      "references": []
+    },
+    {
+      "containerId": "86d93470-dc28-4368-8c3e-c78cfb2abc95",
+      "id": "de11b899-5ff4-49ce-8336-c9fdb428e579",
+      "type": "component",
+      "name": "GoogleDriveRepository",
+      "description": "Placeholder repository boundary. Injects the Drive adapter but exposes no business methods.",
+      "tags": [],
+      "properties": {},
+      "references": []
+    },
+    {
+      "containerId": "86d93470-dc28-4368-8c3e-c78cfb2abc95",
+      "id": "d026fbae-eeed-46ca-b92b-3df68e3102eb",
+      "type": "component",
+      "name": "FileIO project",
+      "description": "Empty infrastructure project; not referenced by the solution.",
+      "tags": [],
+      "properties": {},
+      "references": []
+    }
+  ],
+  "externalDependencies": [
+    {
+      "id": "724a0085-f968-47f2-ae54-1c7a0e4ae493",
+      "type": "external-dependency",
+      "name": "NuGet packages",
+      "description": "MediatR 11.1, ImageSharp 3.0.1, DocumentFormat.OpenXml 3.0, System.IO.Abstractions 20.0.4, Google.Apis.Drive.v3, Serilog 3.1.1, Swashbuckle 6.5. No lock file; no dependency audit.",
+      "tags": [],
+      "properties": {},
+      "references": []
+    },
+    {
+      "id": "2c533730-10ee-441f-9efa-4ca0c3084301",
+      "type": "external-dependency",
+      "name": "Ticket.png template",
+      "description": "Source PNG ticket template. Numbers are stamped at coordinates (120,290) in Arial 30.",
+      "tags": [],
+      "properties": {},
+      "references": []
+    }
+  ],
+  "relationships": [
+    {
+      "id": "b6b3d8a7-d836-467c-86b3-2297df453d2c",
+      "sourceId": "92e37c76-47e8-45c8-8256-9e10f04c7f55",
+      "targetId": "75907f36-aac4-4ded-b0a5-f8fe4ba7ad18",
+      "kind": "sync",
+      "label": "Generates tickets (uses; HTTP)",
+      "description": "",
+      "direction": "outbound",
+      "technology": "",
+      "tags": [],
+      "properties": {},
+      "references": [],
+      "viewRoutes": {
+        "system:global": {
+          "signature": "[[[\u002292e37c76-47e8-45c8-8256-9e10f04c7f55\u0022,516,84,\u0022Raffle operator\u0022,\u0022pill\u0022],[\u002251a2881d-4672-46d4-8170-d11e74d60840\u0022,1130,60,\u0022Developer / maintainer\u0022,\u0022pill\u0022],[\u0022a69bdabb-8385-4e71-be1f-0ba09e7b49a7\u0022,1437,84,\u0022Deployment operator\u0022,\u0022pill\u0022],[\u00221cc25379-84bc-418c-87d9-c2475dc35aa9\u0022,1437,406,\u0022Drive account owner\u0022,\u0022pill\u0022],[\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,823,353,\u0022Ticket Mapper\u0022,\u0022rounded\u0022],[\u0022826fdc8e-375c-4f6b-a188-e3f5569d4744\u0022,1130,663,\u0022Google OAuth / Drive\u0022,\u0022rounded\u0022],[\u002290c07571-6894-48f2-8a54-0c48f5f3ebe5\u0022,516,341,\u0022Document viewer / print workflow\u0022,\u0022rounded\u0022],[\u0022724a0085-f968-47f2-ae54-1c7a0e4ae493\u0022,60,60,\u0022NuGet packages\u0022,\u0022rounded\u0022],[\u00222c533730-10ee-441f-9efa-4ca0c3084301\u0022,823,663,\u0022Ticket.png template\u0022,\u0022rounded\u0022]],[[\u0022b6b3d8a7-d836-467c-86b3-2297df453d2c\u0022,\u002292e37c76-47e8-45c8-8256-9e10f04c7f55\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Generates tickets (uses; HTTP)\u0022],[\u00222f85aefd-96c8-488d-952c-c39a98d06894\u0022,\u002292e37c76-47e8-45c8-8256-9e10f04c7f55\u0022,\u002290c07571-6894-48f2-8a54-0c48f5f3ebe5\u0022,\u0022Reviews and prints (uses; manual)\u0022],[\u0022abf321dd-a63c-47ae-a95a-e25bb7e86579\u0022,\u002251a2881d-4672-46d4-8170-d11e74d60840\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Maintains source and template (uses; manual)\u0022],[\u00222a44d515-d05b-4673-9134-70a56affaf32\u0022,\u0022a69bdabb-8385-4e71-be1f-0ba09e7b49a7\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Deploys and configures (uses; manual)\u0022],[\u00227d4d46d1-7c74-4b0e-a28c-fecd38ccad58\u0022,\u00221cc25379-84bc-418c-87d9-c2475dc35aa9\u0022,\u0022826fdc8e-375c-4f6b-a188-e3f5569d4744\u0022,\u0022Grants OAuth consent (uses; OAuth 2.0)\u0022],[\u00225d785a43-a251-449c-856e-25572ce7ef37\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022826fdc8e-375c-4f6b-a188-e3f5569d4744\u0022,\u0022Drive adapter (unused) (uses; Google Drive API v3)\u0022],[\u0022ea437987-6454-44a6-8c0e-8f04688fc956\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u00222c533730-10ee-441f-9efa-4ca0c3084301\u0022,\u0022Loads template (uses; file I/O)\u0022]]]",
+          "points": [
+            {
+              "x": 626,
+              "y": 161
+            },
+            {
+              "x": 626,
+              "y": 189
+            },
+            {
+              "x": 933,
+              "y": 189
+            },
+            {
+              "x": 933,
+              "y": 353
+            }
+          ],
+          "label": {
+            "x": 791,
+            "y": 251
+          },
+          "labelWidth": 280,
+          "labelHeight": 52
+        }
+      }
+    },
+    {
+      "id": "2f85aefd-96c8-488d-952c-c39a98d06894",
+      "sourceId": "92e37c76-47e8-45c8-8256-9e10f04c7f55",
+      "targetId": "90c07571-6894-48f2-8a54-0c48f5f3ebe5",
+      "kind": "sync",
+      "label": "Reviews and prints (uses; manual)",
+      "description": "",
+      "direction": "outbound",
+      "technology": "",
+      "tags": [],
+      "properties": {},
+      "references": [],
+      "viewRoutes": {
+        "system:global": {
+          "signature": "[[[\u002292e37c76-47e8-45c8-8256-9e10f04c7f55\u0022,516,84,\u0022Raffle operator\u0022,\u0022pill\u0022],[\u002251a2881d-4672-46d4-8170-d11e74d60840\u0022,1130,60,\u0022Developer / maintainer\u0022,\u0022pill\u0022],[\u0022a69bdabb-8385-4e71-be1f-0ba09e7b49a7\u0022,1437,84,\u0022Deployment operator\u0022,\u0022pill\u0022],[\u00221cc25379-84bc-418c-87d9-c2475dc35aa9\u0022,1437,406,\u0022Drive account owner\u0022,\u0022pill\u0022],[\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,823,353,\u0022Ticket Mapper\u0022,\u0022rounded\u0022],[\u0022826fdc8e-375c-4f6b-a188-e3f5569d4744\u0022,1130,663,\u0022Google OAuth / Drive\u0022,\u0022rounded\u0022],[\u002290c07571-6894-48f2-8a54-0c48f5f3ebe5\u0022,516,341,\u0022Document viewer / print workflow\u0022,\u0022rounded\u0022],[\u0022724a0085-f968-47f2-ae54-1c7a0e4ae493\u0022,60,60,\u0022NuGet packages\u0022,\u0022rounded\u0022],[\u00222c533730-10ee-441f-9efa-4ca0c3084301\u0022,823,663,\u0022Ticket.png template\u0022,\u0022rounded\u0022]],[[\u0022b6b3d8a7-d836-467c-86b3-2297df453d2c\u0022,\u002292e37c76-47e8-45c8-8256-9e10f04c7f55\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Generates tickets (uses; HTTP)\u0022],[\u00222f85aefd-96c8-488d-952c-c39a98d06894\u0022,\u002292e37c76-47e8-45c8-8256-9e10f04c7f55\u0022,\u002290c07571-6894-48f2-8a54-0c48f5f3ebe5\u0022,\u0022Reviews and prints (uses; manual)\u0022],[\u0022abf321dd-a63c-47ae-a95a-e25bb7e86579\u0022,\u002251a2881d-4672-46d4-8170-d11e74d60840\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Maintains source and template (uses; manual)\u0022],[\u00222a44d515-d05b-4673-9134-70a56affaf32\u0022,\u0022a69bdabb-8385-4e71-be1f-0ba09e7b49a7\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Deploys and configures (uses; manual)\u0022],[\u00227d4d46d1-7c74-4b0e-a28c-fecd38ccad58\u0022,\u00221cc25379-84bc-418c-87d9-c2475dc35aa9\u0022,\u0022826fdc8e-375c-4f6b-a188-e3f5569d4744\u0022,\u0022Grants OAuth consent (uses; OAuth 2.0)\u0022],[\u00225d785a43-a251-449c-856e-25572ce7ef37\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022826fdc8e-375c-4f6b-a188-e3f5569d4744\u0022,\u0022Drive adapter (unused) (uses; Google Drive API v3)\u0022],[\u0022ea437987-6454-44a6-8c0e-8f04688fc956\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u00222c533730-10ee-441f-9efa-4ca0c3084301\u0022,\u0022Loads template (uses; file I/O)\u0022]]]",
+          "points": [
+            {
+              "x": 626,
+              "y": 161
+            },
+            {
+              "x": 626,
+              "y": 341
+            }
+          ],
+          "label": {
+            "x": 484,
+            "y": 251
+          },
+          "labelWidth": 280,
+          "labelHeight": 52
+        }
+      }
+    },
+    {
+      "id": "abf321dd-a63c-47ae-a95a-e25bb7e86579",
+      "sourceId": "51a2881d-4672-46d4-8170-d11e74d60840",
+      "targetId": "75907f36-aac4-4ded-b0a5-f8fe4ba7ad18",
+      "kind": "sync",
+      "label": "Maintains source and template (uses; manual)",
+      "description": "",
+      "direction": "outbound",
+      "technology": "",
+      "tags": [],
+      "properties": {},
+      "references": [],
+      "viewRoutes": {
+        "system:global": {
+          "signature": "[[[\u002292e37c76-47e8-45c8-8256-9e10f04c7f55\u0022,516,84,\u0022Raffle operator\u0022,\u0022pill\u0022],[\u002251a2881d-4672-46d4-8170-d11e74d60840\u0022,1130,60,\u0022Developer / maintainer\u0022,\u0022pill\u0022],[\u0022a69bdabb-8385-4e71-be1f-0ba09e7b49a7\u0022,1437,84,\u0022Deployment operator\u0022,\u0022pill\u0022],[\u00221cc25379-84bc-418c-87d9-c2475dc35aa9\u0022,1437,406,\u0022Drive account owner\u0022,\u0022pill\u0022],[\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,823,353,\u0022Ticket Mapper\u0022,\u0022rounded\u0022],[\u0022826fdc8e-375c-4f6b-a188-e3f5569d4744\u0022,1130,663,\u0022Google OAuth / Drive\u0022,\u0022rounded\u0022],[\u002290c07571-6894-48f2-8a54-0c48f5f3ebe5\u0022,516,341,\u0022Document viewer / print workflow\u0022,\u0022rounded\u0022],[\u0022724a0085-f968-47f2-ae54-1c7a0e4ae493\u0022,60,60,\u0022NuGet packages\u0022,\u0022rounded\u0022],[\u00222c533730-10ee-441f-9efa-4ca0c3084301\u0022,823,663,\u0022Ticket.png template\u0022,\u0022rounded\u0022]],[[\u0022b6b3d8a7-d836-467c-86b3-2297df453d2c\u0022,\u002292e37c76-47e8-45c8-8256-9e10f04c7f55\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Generates tickets (uses; HTTP)\u0022],[\u00222f85aefd-96c8-488d-952c-c39a98d06894\u0022,\u002292e37c76-47e8-45c8-8256-9e10f04c7f55\u0022,\u002290c07571-6894-48f2-8a54-0c48f5f3ebe5\u0022,\u0022Reviews and prints (uses; manual)\u0022],[\u0022abf321dd-a63c-47ae-a95a-e25bb7e86579\u0022,\u002251a2881d-4672-46d4-8170-d11e74d60840\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Maintains source and template (uses; manual)\u0022],[\u00222a44d515-d05b-4673-9134-70a56affaf32\u0022,\u0022a69bdabb-8385-4e71-be1f-0ba09e7b49a7\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Deploys and configures (uses; manual)\u0022],[\u00227d4d46d1-7c74-4b0e-a28c-fecd38ccad58\u0022,\u00221cc25379-84bc-418c-87d9-c2475dc35aa9\u0022,\u0022826fdc8e-375c-4f6b-a188-e3f5569d4744\u0022,\u0022Grants OAuth consent (uses; OAuth 2.0)\u0022],[\u00225d785a43-a251-449c-856e-25572ce7ef37\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022826fdc8e-375c-4f6b-a188-e3f5569d4744\u0022,\u0022Drive adapter (unused) (uses; Google Drive API v3)\u0022],[\u0022ea437987-6454-44a6-8c0e-8f04688fc956\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u00222c533730-10ee-441f-9efa-4ca0c3084301\u0022,\u0022Loads template (uses; file I/O)\u0022]]]",
+          "points": [
+            {
+              "x": 1240,
+              "y": 161
+            },
+            {
+              "x": 1240,
+              "y": 305
+            },
+            {
+              "x": 933,
+              "y": 305
+            },
+            {
+              "x": 933,
+              "y": 353
+            }
+          ],
+          "label": {
+            "x": 1098,
+            "y": 251
+          },
+          "labelWidth": 280,
+          "labelHeight": 52
+        }
+      }
+    },
+    {
+      "id": "2a44d515-d05b-4673-9134-70a56affaf32",
+      "sourceId": "a69bdabb-8385-4e71-be1f-0ba09e7b49a7",
+      "targetId": "75907f36-aac4-4ded-b0a5-f8fe4ba7ad18",
+      "kind": "sync",
+      "label": "Deploys and configures (uses; manual)",
+      "description": "",
+      "direction": "outbound",
+      "technology": "",
+      "tags": [],
+      "properties": {},
+      "references": [],
+      "viewRoutes": {
+        "system:global": {
+          "signature": "[[[\u002292e37c76-47e8-45c8-8256-9e10f04c7f55\u0022,516,84,\u0022Raffle operator\u0022,\u0022pill\u0022],[\u002251a2881d-4672-46d4-8170-d11e74d60840\u0022,1130,60,\u0022Developer / maintainer\u0022,\u0022pill\u0022],[\u0022a69bdabb-8385-4e71-be1f-0ba09e7b49a7\u0022,1437,84,\u0022Deployment operator\u0022,\u0022pill\u0022],[\u00221cc25379-84bc-418c-87d9-c2475dc35aa9\u0022,1437,406,\u0022Drive account owner\u0022,\u0022pill\u0022],[\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,823,353,\u0022Ticket Mapper\u0022,\u0022rounded\u0022],[\u0022826fdc8e-375c-4f6b-a188-e3f5569d4744\u0022,1130,663,\u0022Google OAuth / Drive\u0022,\u0022rounded\u0022],[\u002290c07571-6894-48f2-8a54-0c48f5f3ebe5\u0022,516,341,\u0022Document viewer / print workflow\u0022,\u0022rounded\u0022],[\u0022724a0085-f968-47f2-ae54-1c7a0e4ae493\u0022,60,60,\u0022NuGet packages\u0022,\u0022rounded\u0022],[\u00222c533730-10ee-441f-9efa-4ca0c3084301\u0022,823,663,\u0022Ticket.png template\u0022,\u0022rounded\u0022]],[[\u0022b6b3d8a7-d836-467c-86b3-2297df453d2c\u0022,\u002292e37c76-47e8-45c8-8256-9e10f04c7f55\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Generates tickets (uses; HTTP)\u0022],[\u00222f85aefd-96c8-488d-952c-c39a98d06894\u0022,\u002292e37c76-47e8-45c8-8256-9e10f04c7f55\u0022,\u002290c07571-6894-48f2-8a54-0c48f5f3ebe5\u0022,\u0022Reviews and prints (uses; manual)\u0022],[\u0022abf321dd-a63c-47ae-a95a-e25bb7e86579\u0022,\u002251a2881d-4672-46d4-8170-d11e74d60840\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Maintains source and template (uses; manual)\u0022],[\u00222a44d515-d05b-4673-9134-70a56affaf32\u0022,\u0022a69bdabb-8385-4e71-be1f-0ba09e7b49a7\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Deploys and configures (uses; manual)\u0022],[\u00227d4d46d1-7c74-4b0e-a28c-fecd38ccad58\u0022,\u00221cc25379-84bc-418c-87d9-c2475dc35aa9\u0022,\u0022826fdc8e-375c-4f6b-a188-e3f5569d4744\u0022,\u0022Grants OAuth consent (uses; OAuth 2.0)\u0022],[\u00225d785a43-a251-449c-856e-25572ce7ef37\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022826fdc8e-375c-4f6b-a188-e3f5569d4744\u0022,\u0022Drive adapter (unused) (uses; Google Drive API v3)\u0022],[\u0022ea437987-6454-44a6-8c0e-8f04688fc956\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u00222c533730-10ee-441f-9efa-4ca0c3084301\u0022,\u0022Loads template (uses; file I/O)\u0022]]]",
+          "points": [
+            {
+              "x": 1547,
+              "y": 161
+            },
+            {
+              "x": 1547,
+              "y": 305
+            },
+            {
+              "x": 933,
+              "y": 305
+            },
+            {
+              "x": 933,
+              "y": 353
+            }
+          ],
+          "label": {
+            "x": 1405,
+            "y": 251
+          },
+          "labelWidth": 280,
+          "labelHeight": 52
+        }
+      }
+    },
+    {
+      "id": "7d4d46d1-7c74-4b0e-a28c-fecd38ccad58",
+      "sourceId": "1cc25379-84bc-418c-87d9-c2475dc35aa9",
+      "targetId": "826fdc8e-375c-4f6b-a188-e3f5569d4744",
+      "kind": "sync",
+      "label": "Grants OAuth consent (uses; OAuth 2.0)",
+      "description": "",
+      "direction": "outbound",
+      "technology": "",
+      "tags": [],
+      "properties": {},
+      "references": [],
+      "viewRoutes": {
+        "system:global": {
+          "signature": "[[[\u002292e37c76-47e8-45c8-8256-9e10f04c7f55\u0022,516,84,\u0022Raffle operator\u0022,\u0022pill\u0022],[\u002251a2881d-4672-46d4-8170-d11e74d60840\u0022,1130,60,\u0022Developer / maintainer\u0022,\u0022pill\u0022],[\u0022a69bdabb-8385-4e71-be1f-0ba09e7b49a7\u0022,1437,84,\u0022Deployment operator\u0022,\u0022pill\u0022],[\u00221cc25379-84bc-418c-87d9-c2475dc35aa9\u0022,1437,406,\u0022Drive account owner\u0022,\u0022pill\u0022],[\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,823,353,\u0022Ticket Mapper\u0022,\u0022rounded\u0022],[\u0022826fdc8e-375c-4f6b-a188-e3f5569d4744\u0022,1130,663,\u0022Google OAuth / Drive\u0022,\u0022rounded\u0022],[\u002290c07571-6894-48f2-8a54-0c48f5f3ebe5\u0022,516,341,\u0022Document viewer / print workflow\u0022,\u0022rounded\u0022],[\u0022724a0085-f968-47f2-ae54-1c7a0e4ae493\u0022,60,60,\u0022NuGet packages\u0022,\u0022rounded\u0022],[\u00222c533730-10ee-441f-9efa-4ca0c3084301\u0022,823,663,\u0022Ticket.png template\u0022,\u0022rounded\u0022]],[[\u0022b6b3d8a7-d836-467c-86b3-2297df453d2c\u0022,\u002292e37c76-47e8-45c8-8256-9e10f04c7f55\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Generates tickets (uses; HTTP)\u0022],[\u00222f85aefd-96c8-488d-952c-c39a98d06894\u0022,\u002292e37c76-47e8-45c8-8256-9e10f04c7f55\u0022,\u002290c07571-6894-48f2-8a54-0c48f5f3ebe5\u0022,\u0022Reviews and prints (uses; manual)\u0022],[\u0022abf321dd-a63c-47ae-a95a-e25bb7e86579\u0022,\u002251a2881d-4672-46d4-8170-d11e74d60840\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Maintains source and template (uses; manual)\u0022],[\u00222a44d515-d05b-4673-9134-70a56affaf32\u0022,\u0022a69bdabb-8385-4e71-be1f-0ba09e7b49a7\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Deploys and configures (uses; manual)\u0022],[\u00227d4d46d1-7c74-4b0e-a28c-fecd38ccad58\u0022,\u00221cc25379-84bc-418c-87d9-c2475dc35aa9\u0022,\u0022826fdc8e-375c-4f6b-a188-e3f5569d4744\u0022,\u0022Grants OAuth consent (uses; OAuth 2.0)\u0022],[\u00225d785a43-a251-449c-856e-25572ce7ef37\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022826fdc8e-375c-4f6b-a188-e3f5569d4744\u0022,\u0022Drive adapter (unused) (uses; Google Drive API v3)\u0022],[\u0022ea437987-6454-44a6-8c0e-8f04688fc956\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u00222c533730-10ee-441f-9efa-4ca0c3084301\u0022,\u0022Loads template (uses; file I/O)\u0022]]]",
+          "points": [
+            {
+              "x": 1547,
+              "y": 483
+            },
+            {
+              "x": 1547,
+              "y": 627
+            },
+            {
+              "x": 1240,
+              "y": 627
+            },
+            {
+              "x": 1240,
+              "y": 663
+            }
+          ],
+          "label": {
+            "x": 1405,
+            "y": 573
+          },
+          "labelWidth": 280,
+          "labelHeight": 52
+        }
+      }
+    },
+    {
+      "id": "5d785a43-a251-449c-856e-25572ce7ef37",
+      "sourceId": "75907f36-aac4-4ded-b0a5-f8fe4ba7ad18",
+      "targetId": "826fdc8e-375c-4f6b-a188-e3f5569d4744",
+      "kind": "sync",
+      "label": "Drive adapter (unused) (uses; Google Drive API v3)",
+      "description": "",
+      "direction": "outbound",
+      "technology": "",
+      "tags": [],
+      "properties": {},
+      "references": [],
+      "viewRoutes": {
+        "system:global": {
+          "signature": "[[[\u002292e37c76-47e8-45c8-8256-9e10f04c7f55\u0022,516,84,\u0022Raffle operator\u0022,\u0022pill\u0022],[\u002251a2881d-4672-46d4-8170-d11e74d60840\u0022,1130,60,\u0022Developer / maintainer\u0022,\u0022pill\u0022],[\u0022a69bdabb-8385-4e71-be1f-0ba09e7b49a7\u0022,1437,84,\u0022Deployment operator\u0022,\u0022pill\u0022],[\u00221cc25379-84bc-418c-87d9-c2475dc35aa9\u0022,1437,406,\u0022Drive account owner\u0022,\u0022pill\u0022],[\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,823,353,\u0022Ticket Mapper\u0022,\u0022rounded\u0022],[\u0022826fdc8e-375c-4f6b-a188-e3f5569d4744\u0022,1130,663,\u0022Google OAuth / Drive\u0022,\u0022rounded\u0022],[\u002290c07571-6894-48f2-8a54-0c48f5f3ebe5\u0022,516,341,\u0022Document viewer / print workflow\u0022,\u0022rounded\u0022],[\u0022724a0085-f968-47f2-ae54-1c7a0e4ae493\u0022,60,60,\u0022NuGet packages\u0022,\u0022rounded\u0022],[\u00222c533730-10ee-441f-9efa-4ca0c3084301\u0022,823,663,\u0022Ticket.png template\u0022,\u0022rounded\u0022]],[[\u0022b6b3d8a7-d836-467c-86b3-2297df453d2c\u0022,\u002292e37c76-47e8-45c8-8256-9e10f04c7f55\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Generates tickets (uses; HTTP)\u0022],[\u00222f85aefd-96c8-488d-952c-c39a98d06894\u0022,\u002292e37c76-47e8-45c8-8256-9e10f04c7f55\u0022,\u002290c07571-6894-48f2-8a54-0c48f5f3ebe5\u0022,\u0022Reviews and prints (uses; manual)\u0022],[\u0022abf321dd-a63c-47ae-a95a-e25bb7e86579\u0022,\u002251a2881d-4672-46d4-8170-d11e74d60840\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Maintains source and template (uses; manual)\u0022],[\u00222a44d515-d05b-4673-9134-70a56affaf32\u0022,\u0022a69bdabb-8385-4e71-be1f-0ba09e7b49a7\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Deploys and configures (uses; manual)\u0022],[\u00227d4d46d1-7c74-4b0e-a28c-fecd38ccad58\u0022,\u00221cc25379-84bc-418c-87d9-c2475dc35aa9\u0022,\u0022826fdc8e-375c-4f6b-a188-e3f5569d4744\u0022,\u0022Grants OAuth consent (uses; OAuth 2.0)\u0022],[\u00225d785a43-a251-449c-856e-25572ce7ef37\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022826fdc8e-375c-4f6b-a188-e3f5569d4744\u0022,\u0022Drive adapter (unused) (uses; Google Drive API v3)\u0022],[\u0022ea437987-6454-44a6-8c0e-8f04688fc956\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u00222c533730-10ee-441f-9efa-4ca0c3084301\u0022,\u0022Loads template (uses; file I/O)\u0022]]]",
+          "points": [
+            {
+              "x": 933,
+              "y": 471
+            },
+            {
+              "x": 933,
+              "y": 511
+            },
+            {
+              "x": 1240,
+              "y": 511
+            },
+            {
+              "x": 1240,
+              "y": 663
+            }
+          ],
+          "label": {
+            "x": 1098,
+            "y": 573
+          },
+          "labelWidth": 280,
+          "labelHeight": 52
+        }
+      }
+    },
+    {
+      "id": "09ef38cf-28b5-4e4c-8ef6-8e1ace347bd1",
+      "sourceId": "86d93470-dc28-4368-8c3e-c78cfb2abc95",
+      "targetId": "75907f36-aac4-4ded-b0a5-f8fe4ba7ad18",
+      "kind": "sync",
+      "label": "Runs inside (hosts)",
+      "description": "",
+      "direction": "outbound",
+      "technology": "",
+      "tags": [],
+      "properties": {},
+      "references": [],
+      "viewRoutes": null
+    },
+    {
+      "id": "3fdfafad-4a82-4a74-9598-34a3e286d1da",
+      "sourceId": "93506f13-7969-4a47-99de-b9dd2acad510",
+      "targetId": "75907f36-aac4-4ded-b0a5-f8fe4ba7ad18",
+      "kind": "sync",
+      "label": "Compose scaffold, no business edge (hosts)",
+      "description": "",
+      "direction": "outbound",
+      "technology": "",
+      "tags": [],
+      "properties": {},
+      "references": [],
+      "viewRoutes": null
+    },
+    {
+      "id": "636684d9-eedf-42ba-b413-dbb22a6f9c5c",
+      "sourceId": "05e0aa71-80e6-473a-8bd8-9db647f4a851",
+      "targetId": "ae074b56-9b41-4782-90ba-4edd92bc0ffd",
+      "kind": "sync",
+      "label": "Sends commands (uses; in-process)",
+      "description": "",
+      "direction": "outbound",
+      "technology": "",
+      "tags": [],
+      "properties": {},
+      "references": [],
+      "viewRoutes": null
+    },
+    {
+      "id": "2841c600-6cf6-4d5f-b184-6c5cc1d31218",
+      "sourceId": "ae074b56-9b41-4782-90ba-4edd92bc0ffd",
+      "targetId": "49acd1f6-4585-4c59-a8db-e98221c78953",
+      "kind": "sync",
+      "label": "Dispatches create (uses; in-process)",
+      "description": "",
+      "direction": "outbound",
+      "technology": "",
+      "tags": [],
+      "properties": {},
+      "references": [],
+      "viewRoutes": null
+    },
+    {
+      "id": "eab3b8a4-9a71-4ac9-8cee-d28b2c3c1d07",
+      "sourceId": "ae074b56-9b41-4782-90ba-4edd92bc0ffd",
+      "targetId": "bba9cec9-7c16-49f7-b652-df9ede70da27",
+      "kind": "sync",
+      "label": "Dispatches read (uses; in-process)",
+      "description": "",
+      "direction": "outbound",
+      "technology": "",
+      "tags": [],
+      "properties": {},
+      "references": [],
+      "viewRoutes": null
+    },
+    {
+      "id": "b9b550d2-6e06-4f48-9eec-0e1e090ed92f",
+      "sourceId": "ae074b56-9b41-4782-90ba-4edd92bc0ffd",
+      "targetId": "0698d1bc-a73b-4935-adfc-ad1b9a685fc1",
+      "kind": "sync",
+      "label": "Publishes cleanup notification (uses; in-process)",
+      "description": "",
+      "direction": "outbound",
+      "technology": "",
+      "tags": [],
+      "properties": {},
+      "references": [],
+      "viewRoutes": null
+    },
+    {
+      "id": "73bf0d9a-3ef3-46b2-b20e-e6e14a5d7abc",
+      "sourceId": "0698d1bc-a73b-4935-adfc-ad1b9a685fc1",
+      "targetId": "ae074b56-9b41-4782-90ba-4edd92bc0ffd",
+      "kind": "sync",
+      "label": "Sends delete command (uses; in-process)",
+      "description": "",
+      "direction": "outbound",
+      "technology": "",
+      "tags": [],
+      "properties": {},
+      "references": [],
+      "viewRoutes": null
+    },
+    {
+      "id": "0afa1bf8-f1fb-480e-825b-20bbcc2c4ceb",
+      "sourceId": "ae074b56-9b41-4782-90ba-4edd92bc0ffd",
+      "targetId": "f6822f99-3feb-4ae0-8680-7484aecdca90",
+      "kind": "sync",
+      "label": "Dispatches delete (uses; in-process)",
+      "description": "",
+      "direction": "outbound",
+      "technology": "",
+      "tags": [],
+      "properties": {},
+      "references": [],
+      "viewRoutes": null
+    },
+    {
+      "id": "4b6996ae-2944-4c48-b4e1-ef22e6c008b8",
+      "sourceId": "bba9cec9-7c16-49f7-b652-df9ede70da27",
+      "targetId": "2ccad9b5-60c8-44ca-b707-003838bae390",
+      "kind": "sync",
+      "label": "Reads DOCX bytes (uses)",
+      "description": "",
+      "direction": "outbound",
+      "technology": "",
+      "tags": [],
+      "properties": {},
+      "references": [],
+      "viewRoutes": null
+    },
+    {
+      "id": "80aacf42-285a-41d6-83b3-e586d4cc5641",
+      "sourceId": "f6822f99-3feb-4ae0-8680-7484aecdca90",
+      "targetId": "2ccad9b5-60c8-44ca-b707-003838bae390",
+      "kind": "sync",
+      "label": "Deletes file (uses)",
+      "description": "",
+      "direction": "outbound",
+      "technology": "",
+      "tags": [],
+      "properties": {},
+      "references": [],
+      "viewRoutes": null
+    },
+    {
+      "id": "ea437987-6454-44a6-8c0e-8f04688fc956",
+      "sourceId": "49acd1f6-4585-4c59-a8db-e98221c78953",
+      "targetId": "2c533730-10ee-441f-9efa-4ca0c3084301",
+      "kind": "sync",
+      "label": "Loads template (uses; file I/O)",
+      "description": "",
+      "direction": "outbound",
+      "technology": "",
+      "tags": [],
+      "properties": {},
+      "references": [],
+      "viewRoutes": {
+        "system:global": {
+          "signature": "[[[\u002292e37c76-47e8-45c8-8256-9e10f04c7f55\u0022,516,84,\u0022Raffle operator\u0022,\u0022pill\u0022],[\u002251a2881d-4672-46d4-8170-d11e74d60840\u0022,1130,60,\u0022Developer / maintainer\u0022,\u0022pill\u0022],[\u0022a69bdabb-8385-4e71-be1f-0ba09e7b49a7\u0022,1437,84,\u0022Deployment operator\u0022,\u0022pill\u0022],[\u00221cc25379-84bc-418c-87d9-c2475dc35aa9\u0022,1437,406,\u0022Drive account owner\u0022,\u0022pill\u0022],[\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,823,353,\u0022Ticket Mapper\u0022,\u0022rounded\u0022],[\u0022826fdc8e-375c-4f6b-a188-e3f5569d4744\u0022,1130,663,\u0022Google OAuth / Drive\u0022,\u0022rounded\u0022],[\u002290c07571-6894-48f2-8a54-0c48f5f3ebe5\u0022,516,341,\u0022Document viewer / print workflow\u0022,\u0022rounded\u0022],[\u0022724a0085-f968-47f2-ae54-1c7a0e4ae493\u0022,60,60,\u0022NuGet packages\u0022,\u0022rounded\u0022],[\u00222c533730-10ee-441f-9efa-4ca0c3084301\u0022,823,663,\u0022Ticket.png template\u0022,\u0022rounded\u0022]],[[\u0022b6b3d8a7-d836-467c-86b3-2297df453d2c\u0022,\u002292e37c76-47e8-45c8-8256-9e10f04c7f55\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Generates tickets (uses; HTTP)\u0022],[\u00222f85aefd-96c8-488d-952c-c39a98d06894\u0022,\u002292e37c76-47e8-45c8-8256-9e10f04c7f55\u0022,\u002290c07571-6894-48f2-8a54-0c48f5f3ebe5\u0022,\u0022Reviews and prints (uses; manual)\u0022],[\u0022abf321dd-a63c-47ae-a95a-e25bb7e86579\u0022,\u002251a2881d-4672-46d4-8170-d11e74d60840\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Maintains source and template (uses; manual)\u0022],[\u00222a44d515-d05b-4673-9134-70a56affaf32\u0022,\u0022a69bdabb-8385-4e71-be1f-0ba09e7b49a7\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Deploys and configures (uses; manual)\u0022],[\u00227d4d46d1-7c74-4b0e-a28c-fecd38ccad58\u0022,\u00221cc25379-84bc-418c-87d9-c2475dc35aa9\u0022,\u0022826fdc8e-375c-4f6b-a188-e3f5569d4744\u0022,\u0022Grants OAuth consent (uses; OAuth 2.0)\u0022],[\u00225d785a43-a251-449c-856e-25572ce7ef37\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022826fdc8e-375c-4f6b-a188-e3f5569d4744\u0022,\u0022Drive adapter (unused) (uses; Google Drive API v3)\u0022],[\u0022ea437987-6454-44a6-8c0e-8f04688fc956\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u00222c533730-10ee-441f-9efa-4ca0c3084301\u0022,\u0022Loads template (uses; file I/O)\u0022]]]",
+          "points": [
+            {
+              "x": 933,
+              "y": 471
+            },
+            {
+              "x": 933,
+              "y": 663
+            }
+          ],
+          "label": {
+            "x": 791,
+            "y": 573
+          },
+          "labelWidth": 280,
+          "labelHeight": 52
+        }
+      }
+    },
+    {
+      "id": "8cbfb5db-8ac6-44c1-a4a9-d9fe26c7fe90",
+      "sourceId": "136bb940-fb87-48d9-9e05-9717fbc63bd9",
+      "targetId": "5c769925-5a7d-4045-bc44-eece868dc3ea",
+      "kind": "sync",
+      "label": "Authenticates via (uses)",
+      "description": "",
+      "direction": "outbound",
+      "technology": "",
+      "tags": [],
+      "properties": {},
+      "references": [],
+      "viewRoutes": null
+    },
+    {
+      "id": "b61c691c-246c-46c3-8908-ede7601e871a",
+      "sourceId": "b9433e4b-9d57-4324-b220-2500ef05ea8f",
+      "targetId": "ae074b56-9b41-4782-90ba-4edd92bc0ffd",
+      "kind": "sync",
+      "label": "Registers (uses)",
+      "description": "",
+      "direction": "outbound",
+      "technology": "",
+      "tags": [],
+      "properties": {},
+      "references": [],
+      "viewRoutes": null
+    },
+    {
+      "id": "260c9fe1-abb0-43a4-84f8-371252991a1d",
+      "sourceId": "b9433e4b-9d57-4324-b220-2500ef05ea8f",
+      "targetId": "1da00993-c695-4542-ac85-b01fce6e6c2b",
+      "kind": "sync",
+      "label": "Binds configuration (uses)",
+      "description": "",
+      "direction": "outbound",
+      "technology": "",
+      "tags": [],
+      "properties": {},
+      "references": [],
+      "viewRoutes": null
+    },
+    {
+      "id": "41ef1682-7eb9-41c2-a473-5fd462697ea4",
+      "sourceId": "de11b899-5ff4-49ce-8336-c9fdb428e579",
+      "targetId": "136bb940-fb87-48d9-9e05-9717fbc63bd9",
+      "kind": "sync",
+      "label": "Injects (placeholder) (uses)",
+      "description": "",
+      "direction": "outbound",
+      "technology": "",
+      "tags": [],
+      "properties": {},
+      "references": [],
+      "viewRoutes": null
+    }
+  ],
+  "flows": [
+    {
+      "id": "82b7ea7f-efa2-4fd3-8309-4bbd3d9ef721",
+      "name": "Ticket generation and cleanup",
+      "description": "Operator requests a number range; the API renders each ticket, assembles the DOCX, returns it, then deletes the server-side file.",
+      "intent": "",
+      "tags": [],
+      "properties": {},
+      "steps": [
+        {
+          "id": "51258195-40bf-44d5-825a-02cc940c4485",
+          "order": 1,
+          "actorId": "92e37c76-47e8-45c8-8256-9e10f04c7f55",
+          "sourceId": null,
+          "targetId": "05e0aa71-80e6-473a-8bd8-9db647f4a851",
+          "relationshipId": null,
+          "label": "Request ticket range",
+          "description": "Operator calls GET /api/v1/Document/DownloadDocument with startNumber and endNumber.",
+          "intent": null,
+          "verification": "needs-review",
+          "references": null
+        },
+        {
+          "id": "62416fa1-3a01-4b3a-8397-97e74c41075b",
+          "order": 2,
+          "actorId": null,
+          "sourceId": "05e0aa71-80e6-473a-8bd8-9db647f4a851",
+          "targetId": "49acd1f6-4585-4c59-a8db-e98221c78953",
+          "relationshipId": null,
+          "label": "Dispatch create command",
+          "description": "Controller builds ticket details and sends CreateDocumentCommand via MediatR.",
+          "intent": null,
+          "verification": "needs-review",
+          "references": null
+        },
+        {
+          "id": "42a46d74-6575-4b46-8caf-a9bb02dde6b6",
+          "order": 3,
+          "actorId": null,
+          "sourceId": "49acd1f6-4585-4c59-a8db-e98221c78953",
+          "targetId": "2c533730-10ee-441f-9efa-4ca0c3084301",
+          "relationshipId": "ea437987-6454-44a6-8c0e-8f04688fc956",
+          "label": "Render tickets",
+          "description": "Handler clones the PNG template per number, draws the number, embeds each PNG into the DOCX, deletes the PNG.",
+          "intent": null,
+          "verification": "needs-review",
+          "references": null
+        },
+        {
+          "id": "db4fca85-eade-43b7-b1d0-f3e56ddeed64",
+          "order": 4,
+          "actorId": null,
+          "sourceId": "05e0aa71-80e6-473a-8bd8-9db647f4a851",
+          "targetId": "bba9cec9-7c16-49f7-b652-df9ede70da27",
+          "relationshipId": null,
+          "label": "Read DOCX bytes",
+          "description": "Controller reads the complete DOCX into memory via the get handler.",
+          "intent": null,
+          "verification": "needs-review",
+          "references": null
+        },
+        {
+          "id": "ccfa1ce2-ff5e-43d4-a2c6-8d2464e532a9",
+          "order": 5,
+          "actorId": null,
+          "sourceId": "05e0aa71-80e6-473a-8bd8-9db647f4a851",
+          "targetId": "0698d1bc-a73b-4935-adfc-ad1b9a685fc1",
+          "relationshipId": null,
+          "label": "Publish cleanup notification",
+          "description": "Controller publishes the in-process TimeToDeleteNotification.",
+          "intent": null,
+          "verification": "needs-review",
+          "references": null
+        },
+        {
+          "id": "4edd6944-3e48-4f24-9431-e2448322ca58",
+          "order": 6,
+          "actorId": null,
+          "sourceId": "0698d1bc-a73b-4935-adfc-ad1b9a685fc1",
+          "targetId": "f6822f99-3feb-4ae0-8680-7484aecdca90",
+          "relationshipId": null,
+          "label": "Delete server file",
+          "description": "Notification handler sends DeleteDocumentCommand; the handler best-effort deletes the DOCX.",
+          "intent": null,
+          "verification": "needs-review",
+          "references": null
+        },
+        {
+          "id": "5131fffc-860f-412b-be58-507ee6b38ac5",
+          "order": 7,
+          "actorId": null,
+          "sourceId": "05e0aa71-80e6-473a-8bd8-9db647f4a851",
+          "targetId": "92e37c76-47e8-45c8-8256-9e10f04c7f55",
+          "relationshipId": null,
+          "label": "Return Tickets.docx",
+          "description": "Controller returns HTTP 200 with the buffered document.",
+          "intent": null,
+          "verification": "needs-review",
+          "references": null
+        }
+      ]
+    },
+    {
+      "id": "85b254ab-64b1-4ebc-8e63-9e0eafb9ba2c",
+      "name": "Rendering or read failure",
+      "description": "Per-ticket exceptions are caught and logged while the loop continues, so a 200 response can carry an incomplete document.",
+      "intent": "",
+      "tags": [],
+      "properties": {},
+      "steps": [
+        {
+          "id": "f2c49665-1abf-424c-b3b9-4ea024be60ae",
+          "order": 1,
+          "actorId": null,
+          "sourceId": "49acd1f6-4585-4c59-a8db-e98221c78953",
+          "targetId": null,
+          "relationshipId": null,
+          "label": "Ticket render throws",
+          "description": "A per-ticket exception is caught, logged, and the loop continues with the next number.",
+          "intent": null,
+          "verification": "needs-review",
+          "references": null
+        },
+        {
+          "id": "ee79422d-2064-4937-9f8c-20df7f404713",
+          "order": 2,
+          "actorId": null,
+          "sourceId": "05e0aa71-80e6-473a-8bd8-9db647f4a851",
+          "targetId": "92e37c76-47e8-45c8-8256-9e10f04c7f55",
+          "relationshipId": null,
+          "label": "Incomplete DOCX returned as 200",
+          "description": "The assembled document may be missing tickets but is still returned successfully.",
+          "intent": null,
+          "verification": "needs-review",
+          "references": null
+        },
+        {
+          "id": "2fd92c13-596e-424e-a213-a42544485762",
+          "order": 3,
+          "actorId": null,
+          "sourceId": "bba9cec9-7c16-49f7-b652-df9ede70da27",
+          "targetId": "92e37c76-47e8-45c8-8256-9e10f04c7f55",
+          "relationshipId": null,
+          "label": "Read failure becomes 500",
+          "description": "If the DOCX cannot be read, the get handler rethrows and the controller returns 500.",
+          "intent": null,
+          "verification": "needs-review",
+          "references": null
+        }
+      ]
+    },
+    {
+      "id": "7526eb2b-6240-4bac-82fc-f71211cad2a6",
+      "name": "Request cancellation",
+      "description": "The render loop has no explicit cancellation check; a disconnected client may receive no response.",
+      "intent": "",
+      "tags": [],
+      "properties": {},
+      "steps": [
+        {
+          "id": "1eaba542-b667-4dd0-9549-d3c9ecb85a08",
+          "order": 1,
+          "actorId": "92e37c76-47e8-45c8-8256-9e10f04c7f55",
+          "sourceId": null,
+          "targetId": "49acd1f6-4585-4c59-a8db-e98221c78953",
+          "relationshipId": null,
+          "label": "Client disconnects mid-render",
+          "description": "No explicit cancellation check exists in the ticket loop.",
+          "intent": null,
+          "verification": "needs-review",
+          "references": null
+        },
+        {
+          "id": "4c5d1c02-269d-4c6f-aff9-5a3364896417",
+          "order": 2,
+          "actorId": null,
+          "sourceId": "49acd1f6-4585-4c59-a8db-e98221c78953",
+          "targetId": "92e37c76-47e8-45c8-8256-9e10f04c7f55",
+          "relationshipId": null,
+          "label": "Cancellation surfaces as 400/500",
+          "description": "Escaped cancellation maps to 400; other failures to 500.",
+          "intent": null,
+          "verification": "needs-review",
+          "references": null
+        }
+      ]
+    },
+    {
+      "id": "5a4fe923-9248-44f4-a081-29fc5820ac61",
+      "name": "Cleanup failure leaves orphans",
+      "description": "The delete handler swallows failures after logging; PNG orphans from render errors are never cleaned.",
+      "intent": "",
+      "tags": [],
+      "properties": {},
+      "steps": [
+        {
+          "id": "4d4fd59c-6149-417b-afa0-dfa138289b5a",
+          "order": 1,
+          "actorId": null,
+          "sourceId": "f6822f99-3feb-4ae0-8680-7484aecdca90",
+          "targetId": "2ccad9b5-60c8-44ca-b707-003838bae390",
+          "relationshipId": "80aacf42-285a-41d6-83b3-e586d4cc5641",
+          "label": "Delete fails silently",
+          "description": "DeleteDocumentCommandHandler logs the failure and swallows it.",
+          "intent": null,
+          "verification": "needs-review",
+          "references": null
+        },
+        {
+          "id": "25955c0d-bf5d-403b-ae93-7778ebac1dce",
+          "order": 2,
+          "actorId": null,
+          "sourceId": "49acd1f6-4585-4c59-a8db-e98221c78953",
+          "targetId": "a69bdabb-8385-4e71-be1f-0ba09e7b49a7",
+          "relationshipId": null,
+          "label": "Orphan PNGs accumulate",
+          "description": "Intermediate PNGs from failed renders are never removed by the DOCX cleanup path.",
+          "intent": null,
+          "verification": "needs-review",
+          "references": null
+        }
+      ]
+    }
+  ],
+  "views": {
+    "75907f36-aac4-4ded-b0a5-f8fe4ba7ad18": {
+      "position": {
+        "x": 160,
+        "y": 120
+      },
+      "scopedPositions": {
+        "system:global": {
+          "x": 823,
+          "y": 353
+        }
+      }
+    },
+    "826fdc8e-375c-4f6b-a188-e3f5569d4744": {
+      "position": {
+        "x": 440,
+        "y": 120
+      },
+      "scopedPositions": {
+        "system:global": {
+          "x": 1130,
+          "y": 663
+        }
+      }
+    },
+    "90c07571-6894-48f2-8a54-0c48f5f3ebe5": {
+      "position": {
+        "x": 720,
+        "y": 120
+      },
+      "scopedPositions": {
+        "system:global": {
+          "x": 516,
+          "y": 341
+        }
+      }
+    },
+    "92e37c76-47e8-45c8-8256-9e10f04c7f55": {
+      "position": {
+        "x": 1000,
+        "y": 120
+      },
+      "scopedPositions": {
+        "system:global": {
+          "x": 516,
+          "y": 84
+        }
+      }
+    },
+    "51a2881d-4672-46d4-8170-d11e74d60840": {
+      "position": {
+        "x": 160,
+        "y": 300
+      },
+      "scopedPositions": {
+        "system:global": {
+          "x": 1130,
+          "y": 60
+        }
+      }
+    },
+    "a69bdabb-8385-4e71-be1f-0ba09e7b49a7": {
+      "position": {
+        "x": 440,
+        "y": 300
+      },
+      "scopedPositions": {
+        "system:global": {
+          "x": 1437,
+          "y": 84
+        }
+      }
+    },
+    "1cc25379-84bc-418c-87d9-c2475dc35aa9": {
+      "position": {
+        "x": 720,
+        "y": 300
+      },
+      "scopedPositions": {
+        "system:global": {
+          "x": 1437,
+          "y": 406
+        }
+      }
+    },
+    "724a0085-f968-47f2-ae54-1c7a0e4ae493": {
+      "position": {
+        "x": 1000,
+        "y": 300
+      },
+      "scopedPositions": {
+        "system:global": {
+          "x": 60,
+          "y": 60
+        }
+      }
+    },
+    "2c533730-10ee-441f-9efa-4ca0c3084301": {
+      "position": {
+        "x": 160,
+        "y": 480
+      },
+      "scopedPositions": {
+        "system:global": {
+          "x": 823,
+          "y": 663
+        }
+      }
+    },
+    "86d93470-dc28-4368-8c3e-c78cfb2abc95": {
+      "position": {
+        "x": 160,
+        "y": 120
+      },
+      "scopedPositions": {
+        "container:75907f36-aac4-4ded-b0a5-f8fe4ba7ad18": {
+          "x": 160,
+          "y": 120
+        }
+      }
+    },
+    "93506f13-7969-4a47-99de-b9dd2acad510": {
+      "position": {
+        "x": 440,
+        "y": 120
+      },
+      "scopedPositions": {
+        "container:75907f36-aac4-4ded-b0a5-f8fe4ba7ad18": {
+          "x": 440,
+          "y": 120
+        }
+      }
+    },
+    "b9433e4b-9d57-4324-b220-2500ef05ea8f": {
+      "position": {
+        "x": 160,
+        "y": 120
+      },
+      "scopedPositions": {
+        "component:86d93470-dc28-4368-8c3e-c78cfb2abc95": {
+          "x": 160,
+          "y": 120
+        }
+      }
+    },
+    "05e0aa71-80e6-473a-8bd8-9db647f4a851": {
+      "position": {
+        "x": 440,
+        "y": 120
+      },
+      "scopedPositions": {
+        "component:86d93470-dc28-4368-8c3e-c78cfb2abc95": {
+          "x": 440,
+          "y": 120
+        }
+      }
+    },
+    "a7c18f17-764c-4bb7-a8db-a4631ec20724": {
+      "position": {
+        "x": 720,
+        "y": 120
+      },
+      "scopedPositions": {
+        "component:86d93470-dc28-4368-8c3e-c78cfb2abc95": {
+          "x": 720,
+          "y": 120
+        }
+      }
+    },
+    "ae074b56-9b41-4782-90ba-4edd92bc0ffd": {
+      "position": {
+        "x": 1000,
+        "y": 120
+      },
+      "scopedPositions": {
+        "component:86d93470-dc28-4368-8c3e-c78cfb2abc95": {
+          "x": 1000,
+          "y": 120
+        }
+      }
+    },
+    "49acd1f6-4585-4c59-a8db-e98221c78953": {
+      "position": {
+        "x": 160,
+        "y": 300
+      },
+      "scopedPositions": {
+        "component:86d93470-dc28-4368-8c3e-c78cfb2abc95": {
+          "x": 160,
+          "y": 300
+        }
+      }
+    },
+    "bba9cec9-7c16-49f7-b652-df9ede70da27": {
+      "position": {
+        "x": 440,
+        "y": 300
+      },
+      "scopedPositions": {
+        "component:86d93470-dc28-4368-8c3e-c78cfb2abc95": {
+          "x": 440,
+          "y": 300
+        }
+      }
+    },
+    "0698d1bc-a73b-4935-adfc-ad1b9a685fc1": {
+      "position": {
+        "x": 720,
+        "y": 300
+      },
+      "scopedPositions": {
+        "component:86d93470-dc28-4368-8c3e-c78cfb2abc95": {
+          "x": 720,
+          "y": 300
+        }
+      }
+    },
+    "f6822f99-3feb-4ae0-8680-7484aecdca90": {
+      "position": {
+        "x": 1000,
+        "y": 300
+      },
+      "scopedPositions": {
+        "component:86d93470-dc28-4368-8c3e-c78cfb2abc95": {
+          "x": 1000,
+          "y": 300
+        }
+      }
+    },
+    "2ccad9b5-60c8-44ca-b707-003838bae390": {
+      "position": {
+        "x": 160,
+        "y": 480
+      },
+      "scopedPositions": {
+        "component:86d93470-dc28-4368-8c3e-c78cfb2abc95": {
+          "x": 160,
+          "y": 480
+        }
+      }
+    },
+    "136bb940-fb87-48d9-9e05-9717fbc63bd9": {
+      "position": {
+        "x": 440,
+        "y": 480
+      },
+      "scopedPositions": {
+        "component:86d93470-dc28-4368-8c3e-c78cfb2abc95": {
+          "x": 440,
+          "y": 480
+        }
+      }
+    },
+    "5c769925-5a7d-4045-bc44-eece868dc3ea": {
+      "position": {
+        "x": 720,
+        "y": 480
+      },
+      "scopedPositions": {
+        "component:86d93470-dc28-4368-8c3e-c78cfb2abc95": {
+          "x": 720,
+          "y": 480
+        }
+      }
+    },
+    "1da00993-c695-4542-ac85-b01fce6e6c2b": {
+      "position": {
+        "x": 1000,
+        "y": 480
+      },
+      "scopedPositions": {
+        "component:86d93470-dc28-4368-8c3e-c78cfb2abc95": {
+          "x": 1000,
+          "y": 480
+        }
+      }
+    },
+    "ec3145c2-9486-4060-a269-a1bc3d50913c": {
+      "position": {
+        "x": 160,
+        "y": 660
+      },
+      "scopedPositions": {
+        "component:86d93470-dc28-4368-8c3e-c78cfb2abc95": {
+          "x": 160,
+          "y": 660
+        }
+      }
+    },
+    "de11b899-5ff4-49ce-8336-c9fdb428e579": {
+      "position": {
+        "x": 440,
+        "y": 660
+      },
+      "scopedPositions": {
+        "component:86d93470-dc28-4368-8c3e-c78cfb2abc95": {
+          "x": 440,
+          "y": 660
+        }
+      }
+    },
+    "d026fbae-eeed-46ca-b92b-3df68e3102eb": {
+      "position": {
+        "x": 720,
+        "y": 660
+      },
+      "scopedPositions": {
+        "component:86d93470-dc28-4368-8c3e-c78cfb2abc95": {
+          "x": 720,
+          "y": 660
+        }
+      }
+    }
+  },
+  "references": [],
+  "tags": []
+}
