@@ -1,12 +1,12 @@
 {
   "schemaVersion": "1.0",
-  "modelVersion": 206,
+  "modelVersion": 208,
   "metadata": {
     "title": "Ticket Mapper",
     "author": "Muse Testing",
     "productIntent": "",
     "createdAt": "2026-10-15T02:31:30.8040221+00:00",
-    "updatedAt": "2026-10-16T23:49:56.1489385+00:00",
+    "updatedAt": "2026-10-16T23:50:03.2348442+00:00",
     "defaultView": "system"
   },
   "actors": [
@@ -318,6 +318,33 @@
           },
           "labelWidth": 280,
           "labelHeight": 52
+        },
+        "component:93506f13-7969-4a47-99de-b9dd2acad510": {
+          "signature": "[[[\u002292e37c76-47e8-45c8-8256-9e10f04c7f55\u0022,1153,118,\u0022Raffle operator\u0022,\u0022pill\u0022],[\u002251a2881d-4672-46d4-8170-d11e74d60840\u0022,539,94,\u0022Developer / maintainer\u0022,\u0022pill\u0022],[\u0022a69bdabb-8385-4e71-be1f-0ba09e7b49a7\u0022,232,118,\u0022Deployment operator\u0022,\u0022pill\u0022],[\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,539,375,\u0022Ticket Mapper\u0022,\u0022rounded\u0022],[\u002293506f13-7969-4a47-99de-b9dd2acad510\u0022,846,60,\u0022RabbitMQ scaffold\u0022,\u0022rounded\u0022]],[[\u0022b6b3d8a7-d836-467c-86b3-2297df453d2c\u0022,\u002292e37c76-47e8-45c8-8256-9e10f04c7f55\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Generates tickets (uses; HTTP)\u0022],[\u0022abf321dd-a63c-47ae-a95a-e25bb7e86579\u0022,\u002251a2881d-4672-46d4-8170-d11e74d60840\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Maintains source and template (uses; manual)\u0022],[\u00222a44d515-d05b-4673-9134-70a56affaf32\u0022,\u0022a69bdabb-8385-4e71-be1f-0ba09e7b49a7\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Deploys and configures (uses; manual)\u0022],[\u00223fdfafad-4a82-4a74-9598-34a3e286d1da\u0022,\u002293506f13-7969-4a47-99de-b9dd2acad510\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Compose scaffold, no business edge (hosts)\u0022]]]",
+          "points": [
+            {
+              "x": 1263,
+              "y": 195
+            },
+            {
+              "x": 1263,
+              "y": 339
+            },
+            {
+              "x": 649,
+              "y": 339
+            },
+            {
+              "x": 649,
+              "y": 375
+            }
+          ],
+          "label": {
+            "x": 1121,
+            "y": 285
+          },
+          "labelWidth": 280,
+          "labelHeight": 52
         }
       }
     },
@@ -394,6 +421,25 @@
           },
           "labelWidth": 280,
           "labelHeight": 52
+        },
+        "component:93506f13-7969-4a47-99de-b9dd2acad510": {
+          "signature": "[[[\u002292e37c76-47e8-45c8-8256-9e10f04c7f55\u0022,1153,118,\u0022Raffle operator\u0022,\u0022pill\u0022],[\u002251a2881d-4672-46d4-8170-d11e74d60840\u0022,539,94,\u0022Developer / maintainer\u0022,\u0022pill\u0022],[\u0022a69bdabb-8385-4e71-be1f-0ba09e7b49a7\u0022,232,118,\u0022Deployment operator\u0022,\u0022pill\u0022],[\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,539,375,\u0022Ticket Mapper\u0022,\u0022rounded\u0022],[\u002293506f13-7969-4a47-99de-b9dd2acad510\u0022,846,60,\u0022RabbitMQ scaffold\u0022,\u0022rounded\u0022]],[[\u0022b6b3d8a7-d836-467c-86b3-2297df453d2c\u0022,\u002292e37c76-47e8-45c8-8256-9e10f04c7f55\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Generates tickets (uses; HTTP)\u0022],[\u0022abf321dd-a63c-47ae-a95a-e25bb7e86579\u0022,\u002251a2881d-4672-46d4-8170-d11e74d60840\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Maintains source and template (uses; manual)\u0022],[\u00222a44d515-d05b-4673-9134-70a56affaf32\u0022,\u0022a69bdabb-8385-4e71-be1f-0ba09e7b49a7\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Deploys and configures (uses; manual)\u0022],[\u00223fdfafad-4a82-4a74-9598-34a3e286d1da\u0022,\u002293506f13-7969-4a47-99de-b9dd2acad510\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Compose scaffold, no business edge (hosts)\u0022]]]",
+          "points": [
+            {
+              "x": 649,
+              "y": 195
+            },
+            {
+              "x": 649,
+              "y": 375
+            }
+          ],
+          "label": {
+            "x": 507,
+            "y": 285
+          },
+          "labelWidth": 280,
+          "labelHeight": 52
         }
       }
     },
@@ -433,6 +479,33 @@
           "label": {
             "x": 1405,
             "y": 251
+          },
+          "labelWidth": 280,
+          "labelHeight": 52
+        },
+        "component:93506f13-7969-4a47-99de-b9dd2acad510": {
+          "signature": "[[[\u002292e37c76-47e8-45c8-8256-9e10f04c7f55\u0022,1153,118,\u0022Raffle operator\u0022,\u0022pill\u0022],[\u002251a2881d-4672-46d4-8170-d11e74d60840\u0022,539,94,\u0022Developer / maintainer\u0022,\u0022pill\u0022],[\u0022a69bdabb-8385-4e71-be1f-0ba09e7b49a7\u0022,232,118,\u0022Deployment operator\u0022,\u0022pill\u0022],[\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,539,375,\u0022Ticket Mapper\u0022,\u0022rounded\u0022],[\u002293506f13-7969-4a47-99de-b9dd2acad510\u0022,846,60,\u0022RabbitMQ scaffold\u0022,\u0022rounded\u0022]],[[\u0022b6b3d8a7-d836-467c-86b3-2297df453d2c\u0022,\u002292e37c76-47e8-45c8-8256-9e10f04c7f55\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Generates tickets (uses; HTTP)\u0022],[\u0022abf321dd-a63c-47ae-a95a-e25bb7e86579\u0022,\u002251a2881d-4672-46d4-8170-d11e74d60840\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Maintains source and template (uses; manual)\u0022],[\u00222a44d515-d05b-4673-9134-70a56affaf32\u0022,\u0022a69bdabb-8385-4e71-be1f-0ba09e7b49a7\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Deploys and configures (uses; manual)\u0022],[\u00223fdfafad-4a82-4a74-9598-34a3e286d1da\u0022,\u002293506f13-7969-4a47-99de-b9dd2acad510\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Compose scaffold, no business edge (hosts)\u0022]]]",
+          "points": [
+            {
+              "x": 342,
+              "y": 195
+            },
+            {
+              "x": 342,
+              "y": 339
+            },
+            {
+              "x": 649,
+              "y": 339
+            },
+            {
+              "x": 649,
+              "y": 375
+            }
+          ],
+          "label": {
+            "x": 200,
+            "y": 285
           },
           "labelWidth": 280,
           "labelHeight": 52
@@ -592,6 +665,33 @@
           ],
           "label": {
             "x": 200,
+            "y": 285
+          },
+          "labelWidth": 280,
+          "labelHeight": 52
+        },
+        "component:93506f13-7969-4a47-99de-b9dd2acad510": {
+          "signature": "[[[\u002292e37c76-47e8-45c8-8256-9e10f04c7f55\u0022,1153,118,\u0022Raffle operator\u0022,\u0022pill\u0022],[\u002251a2881d-4672-46d4-8170-d11e74d60840\u0022,539,94,\u0022Developer / maintainer\u0022,\u0022pill\u0022],[\u0022a69bdabb-8385-4e71-be1f-0ba09e7b49a7\u0022,232,118,\u0022Deployment operator\u0022,\u0022pill\u0022],[\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,539,375,\u0022Ticket Mapper\u0022,\u0022rounded\u0022],[\u002293506f13-7969-4a47-99de-b9dd2acad510\u0022,846,60,\u0022RabbitMQ scaffold\u0022,\u0022rounded\u0022]],[[\u0022b6b3d8a7-d836-467c-86b3-2297df453d2c\u0022,\u002292e37c76-47e8-45c8-8256-9e10f04c7f55\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Generates tickets (uses; HTTP)\u0022],[\u0022abf321dd-a63c-47ae-a95a-e25bb7e86579\u0022,\u002251a2881d-4672-46d4-8170-d11e74d60840\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Maintains source and template (uses; manual)\u0022],[\u00222a44d515-d05b-4673-9134-70a56affaf32\u0022,\u0022a69bdabb-8385-4e71-be1f-0ba09e7b49a7\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Deploys and configures (uses; manual)\u0022],[\u00223fdfafad-4a82-4a74-9598-34a3e286d1da\u0022,\u002293506f13-7969-4a47-99de-b9dd2acad510\u0022,\u002275907f36-aac4-4ded-b0a5-f8fe4ba7ad18\u0022,\u0022Compose scaffold, no business edge (hosts)\u0022]]]",
+          "points": [
+            {
+              "x": 956,
+              "y": 195
+            },
+            {
+              "x": 956,
+              "y": 339
+            },
+            {
+              "x": 649,
+              "y": 339
+            },
+            {
+              "x": 649,
+              "y": 375
+            }
+          ],
+          "label": {
+            "x": 814,
             "y": 285
           },
           "labelWidth": 280,
@@ -1040,6 +1140,10 @@
         "container:75907f36-aac4-4ded-b0a5-f8fe4ba7ad18": {
           "x": 232,
           "y": 375
+        },
+        "component:93506f13-7969-4a47-99de-b9dd2acad510": {
+          "x": 539,
+          "y": 375
         }
       }
     },
@@ -1076,6 +1180,10 @@
         "system:global": {
           "x": 516,
           "y": 84
+        },
+        "component:93506f13-7969-4a47-99de-b9dd2acad510": {
+          "x": 1153,
+          "y": 118
         }
       }
     },
@@ -1088,6 +1196,10 @@
         "system:global": {
           "x": 1130,
           "y": 60
+        },
+        "component:93506f13-7969-4a47-99de-b9dd2acad510": {
+          "x": 539,
+          "y": 94
         }
       }
     },
@@ -1100,6 +1212,10 @@
         "system:global": {
           "x": 1437,
           "y": 84
+        },
+        "component:93506f13-7969-4a47-99de-b9dd2acad510": {
+          "x": 232,
+          "y": 118
         }
       }
     },
@@ -1159,6 +1275,10 @@
       "scopedPositions": {
         "container:75907f36-aac4-4ded-b0a5-f8fe4ba7ad18": {
           "x": 232,
+          "y": 60
+        },
+        "component:93506f13-7969-4a47-99de-b9dd2acad510": {
+          "x": 846,
           "y": 60
         }
       }
